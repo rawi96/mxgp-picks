@@ -35,15 +35,11 @@ jobs:
           prettier: true
 
   cypress-run:
-    name: End-to-end tests
-    on: [push]
-    jobs:
-      cypress-run:
-        runs-on: ubuntu-20.04
-        steps:
-          - name: Checkout
-            uses: actions/checkout@v2
-          # Install NPM dependencies, cache them correctly
-          # and run all Cypress tests
-          - name: Cypress run
-            uses: cypress-io/github-action@v4
+    runs-on: ubuntu-20.04
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+      # Install NPM dependencies, cache them correctly
+      # and run all Cypress tests
+      - name: Cypress run
+        uses: cypress-io/github-action@v4

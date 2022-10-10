@@ -1,4 +1,4 @@
-name: Lint
+name: CI
 
 on:
   # Trigger the workflow on push or pull request,
@@ -12,7 +12,7 @@ on:
 
 jobs:
   run-linters:
-    name: Run linters
+    name: Run Linters
     runs-on: ubuntu-latest
 
     steps:
@@ -34,16 +34,16 @@ jobs:
           eslint: true
           prettier: true
 
-  run-cypress:
-    runs-on: ubuntu-20.04
-    steps:
-      - name: Run E2E tests
-        uses: cypress-io/github-action@v4
-
-      - name: Run Component tests
-        uses: cypress-io/github-action@v4
-        with:
-          # we have already installed everything
-          install: false
-          # to run component tests we need to use "component: true"
-          component: true
+  cypress-run:
+    name: End-to-end tests
+    on: [push]
+    jobs:
+      cypress-run:
+        runs-on: ubuntu-20.04
+        steps:
+          - name: Checkout
+            uses: actions/checkout@v2
+          # Install NPM dependencies, cache them correctly
+          # and run all Cypress tests
+          - name: Cypress run
+            uses: cypress-io/github-action@v4

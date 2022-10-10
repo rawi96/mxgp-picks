@@ -44,4 +44,4 @@ jobs:
       - name: Cypress run
         uses: cypress-io/github-action@v4
         with:
-          command: npm run test
+          command: npm run test:component

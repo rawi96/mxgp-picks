@@ -1,4 +1,4 @@
-name: Lint
+name: CI
 
 on:
   # Trigger the workflow on push or pull request,
@@ -33,3 +33,15 @@ jobs:
         with:
           eslint: true
           prettier: true
+
+  cypress-run:
+    runs-on: ubuntu-20.04
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+      # Install NPM dependencies, cache them correctly
+      # and run all Cypress tests
+      - name: Cypress run
+        uses: cypress-io/github-action@v4
+        with:
+          command: npm run test:component

@@ -1,6 +1,7 @@
+import { SessionProvider } from 'next-auth/react';
+import { AppProps } from 'next/app';
 import Head from 'next/head';
 import '../styles/globals.css';
-import { AppProps } from 'next/app';
 
 export default function MyApp({ Component, pageProps }: AppProps) {
   return (
@@ -22,7 +23,9 @@ export default function MyApp({ Component, pageProps }: AppProps) {
         <link rel="apple-touch-icon" href="/apple-icon.png"></link>
         <meta name="theme-color" content="#317EFB" />
       </Head>
-      <Component {...pageProps} />
+      <SessionProvider session={pageProps.session}>
+        <Component {...pageProps} />
+      </SessionProvider>
     </>
   );
 }

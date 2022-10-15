@@ -1,4 +1,4 @@
-import Navigation from '../../components/Navigation';
+import { Navigation } from '../../components/Navigation';
 import { NAVIGATION_SELECTOR } from '../selectors';
 
 describe('Navigation', () => {

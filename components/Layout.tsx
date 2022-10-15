@@ -1,11 +1,11 @@
 import { FC, ReactNode } from 'react';
-import Navigation from './Navigation';
+import { Navigation } from './Navigation';
 
 type Props = {
   children: ReactNode;
 };
 
-const Layout: FC<Props> = ({ children }) => {
+export const Layout: FC<Props> = ({ children }) => {
   return (
     <div className="bg-slate-600">
       <Navigation />
@@ -13,5 +13,3 @@ const Layout: FC<Props> = ({ children }) => {
     </div>
   );
 };
-
-export default Layout;

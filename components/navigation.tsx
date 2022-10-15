@@ -1,5 +1,7 @@
 import { FC } from 'react';
 
-export const Navigation: FC = () => {
+const Navigation: FC = () => {
   return <nav data-test-id="navigation">NAVIGATION</nav>;
 };
+
+export default Navigation;

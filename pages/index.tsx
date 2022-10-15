@@ -1,7 +1,7 @@
 import { User } from '@prisma/client';
 import type { GetStaticProps } from 'next';
 import { FC } from 'react';
-import { Layout } from '../components/Layout';
+import Layout from '../components/Layout';
 import prisma from '../lib/prisma';
 
 export const getStaticProps: GetStaticProps = async () => {

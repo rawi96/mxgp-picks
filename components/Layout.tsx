@@ -4,7 +4,7 @@ type Props = {
   children: ReactNode;
 };
 
-export const Layout: FC<Props> = ({ children }) => {
+const Layout: FC<Props> = ({ children }) => {
   return (
     <div className="bg-slate-600">
       <nav data-test-id="navigation">NAVIGATION</nav>
@@ -12,3 +12,5 @@ export const Layout: FC<Props> = ({ children }) => {
     </div>
   );
 };
+
+export default Layout;

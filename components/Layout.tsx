@@ -1,5 +1,4 @@
 import { FC, ReactNode } from 'react';
-import { Navigation } from './Navigation';
 
 type Props = {
   children: ReactNode;
@@ -8,7 +7,7 @@ type Props = {
 export const Layout: FC<Props> = ({ children }) => {
   return (
     <div className="bg-slate-600">
-      <Navigation />
+      <nav data-test-id="navigation">NAVIGATION</nav>
       {children}
     </div>
   );

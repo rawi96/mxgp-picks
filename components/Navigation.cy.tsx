@@ -1,5 +1,5 @@
-import { Navigation } from '../../components/navigation';
-import { NAVIGATION_SELECTOR } from '../testUtils';
+import { NAVIGATION_SELECTOR } from '../cypress/selectors';
+import Navigation from './Navigation';
 
 describe('Navigation', () => {
   it('should render navigation properly', () => {

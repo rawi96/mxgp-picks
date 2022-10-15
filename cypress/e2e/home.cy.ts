@@ -1,4 +1,4 @@
-import { NAVIGATION_SELECTOR } from '../testUtils';
+import { NAVIGATION_SELECTOR } from '../selectors';
 
 describe('/home opens properly', () => {
   beforeEach(() => {

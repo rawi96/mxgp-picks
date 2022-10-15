@@ -1,10 +1,31 @@
-import { Navigation } from '../components/navigation';
+import { User } from '@prisma/client';
+import type { GetStaticProps } from 'next';
+import { FC } from 'react';
+import Layout from '../components/Layout';
+import prisma from '../lib/prisma';
 
-export default function Home() {
+export const getStaticProps: GetStaticProps = async () => {
+  const users = await prisma.user.findMany({});
+  return {
+    props: { users },
+    revalidate: 10,
+  };
+};
+
+type Props = {
+  users: User[];
+};
+
+const Index: FC<Props> = ({ users }) => {
   return (
-    <>
-      <Navigation />
-      <h1 className="text-3xl font-bold underline">Hello world ASDFASDF!</h1>
-    </>
+    <Layout>
+      {users.map((user) => (
+        <div key={user.id} className="post">
+          {user.firstname}
+        </div>
+      ))}
+    </Layout>
   );
-}
+};
+
+export default Index;

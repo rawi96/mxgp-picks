@@ -1,9 +1,7 @@
 import { FC } from 'react';
 
-export const Navigation: FC = () => {
-  return (
-    <div data-test-id="navigation" className="text-red-500">
-      NAVIGATION
-    </div>
-  );
+const Navigation: FC = () => {
+  return <nav data-test-id="navigation">NAVIGATION</nav>;
 };
+
+export default Navigation;

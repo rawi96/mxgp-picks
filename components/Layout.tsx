@@ -1,12 +1,11 @@
 import { Disclosure, Menu, Transition } from '@headlessui/react';
 import { Bars3Icon, XMarkIcon } from '@heroicons/react/24/outline';
+import Image from 'next/image';
 import { FC, Fragment, ReactNode } from 'react';
 
 const user = {
   name: 'Tom Cook',
   email: 'tom@example.com',
-  imageUrl:
-    'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80',
 };
 export const navigation = [
   { name: 'Home', href: '#', current: true },
@@ -37,7 +36,7 @@ const Layout: FC<Props> = ({ children }) => {
                   <div className="flex h-16 items-center justify-between px-4 sm:px-0">
                     <div className="flex items-center">
                       <div className="flex-shrink-0">
-                        <img className="w-72" src="/images/logo_white.svg" alt="mxgp-picks" />
+                        <Image height="300" width="300" src="/images/logo_white.svg" alt="mxgp-picks" />
                       </div>
                       <div className="hidden md:block">
                         <div className="ml-10 flex items-baseline space-x-4">
@@ -64,7 +63,9 @@ const Layout: FC<Props> = ({ children }) => {
                           <div>
                             <Menu.Button className="flex max-w-xs items-center rounded-full bg-gray-800 text-sm focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800">
                               <span className="sr-only">Open user menu</span>
-                              <img className="h-8 w-8 rounded-full" src={user.imageUrl} alt="" />
+                              <span className="inline-flex h-8 w-8 items-center justify-center rounded-full bg-gray-500">
+                                <span className="text-sm font-medium leading-none text-white">TW</span>
+                              </span>
                             </Menu.Button>
                           </div>
                           <Transition
@@ -131,9 +132,7 @@ const Layout: FC<Props> = ({ children }) => {
                 </div>
                 <div className="border-t border-gray-700 pt-4 pb-3">
                   <div className="flex items-center px-5">
-                    <div className="flex-shrink-0">
-                      <img className="h-10 w-10 rounded-full" src={user.imageUrl} alt="" />
-                    </div>
+                    <div className="flex-shrink-0"></div>
                     <div className="ml-3">
                       <div className="text-base font-medium leading-none text-white">{user.name}</div>
                       <div className="text-sm font-medium leading-none text-gray-400">{user.email}</div>

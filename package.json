@@ -12,7 +12,7 @@
     "test": "cypress run && cypress run --component"
   },
   "dependencies": {
-    "@next-auth/prisma-adapter": "1.0.1",
+    "@next-auth/prisma-adapter": "1.0.5",
     "@prisma/client": "3.9.1",
     "next": "12.0.10",
     "next-auth": "4.1.2",

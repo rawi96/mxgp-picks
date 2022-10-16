@@ -1,1 +1,1 @@
-export const NAVIGATION_SELECTOR = '[data-test-id="navigation"]';
+export const LAYOUT_SELECTOR = '[data-test-id="layout"]';

@@ -15,13 +15,13 @@ export default function MyApp({ Component, pageProps }: AppProps) {
         />
         <meta name="description" content="Description" />
         <meta name="keywords" content="Keywords" />
-        <title>Next.js PWA Example</title>
+        <title>mxgp-picks.com</title>
 
         <link rel="manifest" href="/manifest.json" />
-        <link href="/icons/favicon-16x16.png" rel="icon" type="image/png" sizes="16x16" />
-        <link href="/icons/favicon-32x32.png" rel="icon" type="image/png" sizes="32x32" />
-        <link rel="apple-touch-icon" href="/apple-icon.png"></link>
-        <meta name="theme-color" content="#317EFB" />
+        <link rel="apple-touch-icon" sizes="180x180" href="/icons/apple-touch-icon.png" />
+        <link rel="icon" type="image/png" sizes="32x32" href="/icons/favicon-32x32.png" />
+        <link rel="icon" type="image/png" sizes="16x16" href="/icons/favicon-16x16.png" />
+        <meta name="theme-color" content="#ffffff" />
       </Head>
       <SessionProvider session={pageProps.session}>
         <Component {...pageProps} />

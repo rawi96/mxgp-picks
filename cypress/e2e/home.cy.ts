@@ -1,11 +1,11 @@
-import { NAVIGATION_SELECTOR } from '../selectors';
+import { LAYOUT_SELECTOR } from '../selectors';
 
 describe('/home opens properly', () => {
   beforeEach(() => {
     cy.visit('http://localhost:3000');
   });
 
-  it('displays navigation', () => {
-    cy.get(NAVIGATION_SELECTOR).should('exist');
+  it('displays layout', () => {
+    cy.get(LAYOUT_SELECTOR).should('exist');
   });
 });

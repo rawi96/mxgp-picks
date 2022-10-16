@@ -1,7 +1,9 @@
-import { User } from '@prisma/client';
 import type { GetStaticProps } from 'next';
 import { FC } from 'react';
+import Footer from '../components/Footer';
 import Layout from '../components/Layout';
+import Modal from '../components/Modal';
+import SignUp from '../components/SignUp';
 import prisma from '../lib/prisma';
 
 export const getStaticProps: GetStaticProps = async () => {
@@ -13,7 +15,7 @@ export const getStaticProps: GetStaticProps = async () => {
 };
 
 type Props = {
-  users: User[];
+  users: any[];
 };
 
 const Index: FC<Props> = ({ users }) => {
@@ -24,6 +26,10 @@ const Index: FC<Props> = ({ users }) => {
           {user.firstname}
         </div>
       ))}
+      <Modal>
+        <SignUp />
+      </Modal>
+      <Footer />
     </Layout>
   );
 };

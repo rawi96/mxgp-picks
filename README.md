@@ -43,10 +43,9 @@
 
 - [![Next][next.js]][next-url]
 - [![React][react.js]][react-url]
-- [![Prisma](https://img.shields.io/badge/prisma-3982ce?style=for-the-badge&logo=prisma&logocolor=white)](https://www.prisma.io/)
 - [![Prisma][https://img.shields.io/badge/prisma-3982ce?style=for-the-badge&logo=prisma&logocolor=white]][prisma-url]
-- [![Cypress][cypress-shield]][cypress-url]
-- [![Supabase][supabase-shield]][supabase-url]
+- [![Cypress][https://img.shields.io/badge/cypress-17202c?style=for-the-badge&logo=cypress&logocolor=white]][cypress-url]
+- [![Supabase][https://img.shields.io/badge/supabase-181818?style=for-the-badge&logo=supabase&logocolor=white]][supabase-url]
 
 <!-- GETTING STARTED -->
 

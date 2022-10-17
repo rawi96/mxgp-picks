@@ -1,6 +1,8 @@
 import { SessionProvider } from 'next-auth/react';
 import { AppProps } from 'next/app';
 import Head from 'next/head';
+import SessionModals from '../components/SessionModals';
+import { ModalsContextProvider } from '../context/modalsContext';
 import '../styles/globals.css';
 
 export default function MyApp({ Component, pageProps }: AppProps) {
@@ -25,7 +27,10 @@ export default function MyApp({ Component, pageProps }: AppProps) {
         <meta name="theme-color" content="#ffffff" />
       </Head>
       <SessionProvider session={pageProps.session}>
-        <Component {...pageProps} />
+        <ModalsContextProvider>
+          <SessionModals />
+          <Component {...pageProps} />
+        </ModalsContextProvider>
       </SessionProvider>
     </>
   );

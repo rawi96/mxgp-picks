@@ -1,7 +1,8 @@
+import CredentialsProvider from 'next-auth/providers/credentials';
+import { comparePasswords } from '../../../lib/bcrypt';
+
 import { NextApiHandler } from 'next';
 import NextAuth from 'next-auth';
-import { PrismaAdapter } from '@next-auth/prisma-adapter';
-import GitHubProvider from 'next-auth/providers/github';
 import prisma from '../../../lib/prisma';
 
 const authHandler: NextApiHandler = (req, res) => NextAuth(req, res, options);
@@ -9,11 +10,30 @@ export default authHandler;
 
 const options = {
   providers: [
-    GitHubProvider({
-      clientId: process.env.GITHUB_ID,
-      clientSecret: process.env.GITHUB_SECRET,
+    CredentialsProvider({
+      name: 'Credentials',
+      credentials: {
+        email: { label: 'Email address', type: 'text' },
+        password: { label: 'Password', type: 'password' },
+      },
+      async authorize(credentials?: { email: string; password: string }) {
+        if (!credentials) {
+          return null;
+        }
+        try {
+          const user = await prisma.user.findUnique({
+            where: { email: credentials.email },
+          });
+          if (user && (await comparePasswords(credentials.password, user.password))) {
+            return user;
+          } else {
+            return null;
+          }
+        } catch (error) {
+          return null;
+        }
+      },
     }),
   ],
-  adapter: PrismaAdapter(prisma),
   secret: process.env.SECRET,
 };

@@ -1,13 +1,14 @@
 import { Dialog, Transition } from '@headlessui/react';
-import { FC, Fragment, ReactNode, useState } from 'react';
+import { XMarkIcon } from '@heroicons/react/24/outline';
+import { FC, Fragment, ReactNode } from 'react';
 
 type Props = {
   children: ReactNode;
+  open: boolean;
+  setOpen: (open: boolean) => void;
 };
 
-const Modal: FC<Props> = ({ children }) => {
-  const [open, setOpen] = useState(true);
-
+const Modal: FC<Props> = ({ children, open, setOpen }) => {
   return (
     <Transition.Root show={open} as={Fragment}>
       <Dialog as="div" className="relative z-10" onClose={setOpen}>
@@ -35,6 +36,16 @@ const Modal: FC<Props> = ({ children }) => {
               leaveTo="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
             >
               <Dialog.Panel className="relative transform overflow-hidden rounded-lg bg-white px-4 pt-5 pb-4 text-left shadow-xl transition-all sm:my-8 sm:w-full sm:max-w-md sm:p-6">
+                <div className="absolute top-0 right-0 hidden pt-4 pr-4 sm:block">
+                  <button
+                    type="button"
+                    className="rounded-md bg-white text-gray-400 hover:text-gray-500 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
+                    onClick={() => setOpen(false)}
+                  >
+                    <span className="sr-only">Close</span>
+                    <XMarkIcon className="h-6 w-6" aria-hidden="true" />
+                  </button>
+                </div>
                 {children}
               </Dialog.Panel>
             </Transition.Child>

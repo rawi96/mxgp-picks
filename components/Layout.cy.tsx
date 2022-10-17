@@ -4,7 +4,7 @@ import Layout from './Layout';
 describe('Layout', () => {
   it('should render navigation properly', () => {
     cy.mount(
-      <Layout>
+      <Layout pathname="/">
         <></>
       </Layout>
     );

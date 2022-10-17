@@ -1,4 +1,5 @@
 import { GetStaticProps } from 'next';
+import { useRouter } from 'next/router';
 import { FC } from 'react';
 import Layout from '../components/Layout';
 import prisma from '../lib/prisma';
@@ -17,8 +18,10 @@ type Props = {
 };
 
 const Ranking: FC<Props> = ({ users }) => {
+  const router = useRouter();
+
   return (
-    <Layout>
+    <Layout pathname={router.pathname}>
       <div className="sm:flex sm:items-center">
         <div className="sm:flex-auto">
           <h1 className="text-xl font-semibold text-gray-900">Ranking</h1>

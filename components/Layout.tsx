@@ -2,7 +2,6 @@ import { Disclosure, Menu, Transition } from '@headlessui/react';
 import { Bars3Icon, XMarkIcon } from '@heroicons/react/24/outline';
 import Image from 'next/image';
 import Link from 'next/link';
-import { useRouter } from 'next/router';
 import { FC, Fragment, ReactNode } from 'react';
 import Footer from './Footer';
 
@@ -25,11 +24,10 @@ const classNames = (...classes: string[]) => classes.filter(Boolean).join(' ');
 
 type Props = {
   children: ReactNode;
+  pathname: string;
 };
 
-const Layout: FC<Props> = ({ children }) => {
-  const router = useRouter();
-
+const Layout: FC<Props> = ({ children, pathname }) => {
   return (
     <>
       <div data-test-id="layout" className="min-h-full">
@@ -54,12 +52,12 @@ const Layout: FC<Props> = ({ children }) => {
                               <Link key={item.name} href={item.href}>
                                 <a
                                   className={classNames(
-                                    router.pathname === item.href
+                                    pathname === item.href
                                       ? 'bg-gray-900 text-white'
                                       : 'text-gray-300 hover:bg-gray-700 hover:text-white',
                                     'px-3 py-2 rounded-md text-sm font-medium'
                                   )}
-                                  aria-current={router.pathname === item.href ? 'page' : undefined}
+                                  aria-current={pathname === item.href ? 'page' : undefined}
                                 >
                                   {item.name}
                                 </a>
@@ -134,12 +132,12 @@ const Layout: FC<Props> = ({ children }) => {
                         as="a"
                         href={item.href}
                         className={classNames(
-                          router.pathname === item.href
+                          pathname === item.href
                             ? 'bg-gray-900 text-white'
                             : 'text-gray-300 hover:bg-gray-700 hover:text-white',
                           'block px-3 py-2 rounded-md text-base font-medium'
                         )}
-                        aria-current={router.pathname === item.href ? 'page' : undefined}
+                        aria-current={pathname === item.href ? 'page' : undefined}
                       >
                         {item.name}
                       </Disclosure.Button>

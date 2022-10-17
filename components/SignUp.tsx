@@ -9,12 +9,10 @@ const INPUT_INVALID_CLASSES =
   'block w-full rounded-md border-red-300 text-red-900 placeholder-red-300 focus:border-red-500 focus:outline-none focus:ring-red-500 sm:text-sm';
 
 interface FormInput {
-  firstname: String;
-  lastname: String;
-  email: String;
-  username: String;
-  password: String;
-  confirmPassword: String;
+  email: string;
+  username: string;
+  password: string;
+  confirmPassword: string;
 }
 
 const SignUp: FC = () => {

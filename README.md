@@ -43,6 +43,7 @@
 
 - [![Next][next.js]][next-url]
 - [![React][react.js]][react-url]
+- [![Prisma](https://img.shields.io/badge/prisma-3982ce?style=for-the-badge&logo=prisma&logocolor=white)](https://www.prisma.io/)
 - [![Prisma][https://img.shields.io/badge/prisma-3982ce?style=for-the-badge&logo=prisma&logocolor=white]][prisma-url]
 - [![Cypress][cypress-shield]][cypress-url]
 - [![Supabase][supabase-shield]][supabase-url]

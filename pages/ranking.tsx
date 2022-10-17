@@ -1,7 +1,7 @@
-import { User } from '@prisma/client';
 import { GetStaticProps } from 'next';
 import { FC } from 'react';
 import Layout from '../components/Layout';
+import { User } from '../lib/types';
 
 export const getStaticProps: GetStaticProps = async () => {
   const users = await prisma.user.findMany({});

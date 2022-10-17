@@ -1,6 +1,6 @@
 <div align="center">
 
-[![SonarCloud](https://sonarcloud.io/images/project_badges/sonarcloud-white.svg)](https://sonarcloud.io/summary/new_code?id=rawi96_mxgp-picks)</div>
+[![SonarCloud](https://sonarcloud.io/images/project_badges/sonarcloud-white.svg)](https://sonarcloud.io/summary/new_code?id=rawi96_mxgp-picks)
 [![Security Rating](https://sonarcloud.io/api/project_badges/measure?project=rawi96_mxgp-picks&metric=security_rating)](https://sonarcloud.io/summary/new_code?id=rawi96_mxgp-picks)
 [![Bugs](https://sonarcloud.io/api/project_badges/measure?project=rawi96_mxgp-picks&metric=bugs)](https://sonarcloud.io/summary/new_code?id=rawi96_mxgp-picks)
 [![Vulnerabilities](https://sonarcloud.io/api/project_badges/measure?project=rawi96_mxgp-picks&metric=vulnerabilities)](https://sonarcloud.io/summary/new_code?id=rawi96_mxgp-picks)
@@ -13,11 +13,12 @@
 [![Code Smells](https://sonarcloud.io/api/project_badges/measure?project=rawi96_mxgp-picks&metric=code_smells)](https://sonarcloud.io/summary/new_code?id=rawi96_mxgp-picks)
 [![Maintainability Rating](https://sonarcloud.io/api/project_badges/measure?project=rawi96_mxgp-picks&metric=sqale_rating)](https://sonarcloud.io/summary/new_code?id=rawi96_mxgp-picks)
 
+</div>
 <!-- PROJECT LOGO -->
 <br />
 <div align="center">
   <a href="https://github.com/rawi96/mxgp-picks">
-    <img src="public/images/logo_black.svg" alt="Logo" width="80" height="80">
+    <img src="public/images/logo_black.svg" alt="Logo" width="200" height="80">
   </a>
 
   <h3 align="center">Best-README-Template</h3>

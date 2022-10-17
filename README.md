@@ -43,10 +43,10 @@
 
 - [![Next][next.js]][next-url]
 - [![React][react.js]][react-url]
-- [![Prisma](https://img.shields.io/badge/prisma-3982ce?style=for-the-badge&logo=prisma&logocolor=white)](https://www.prisma.io/)
-- [![Prisma][https://img.shields.io/badge/prisma-3982ce?style=for-the-badge&logo=prisma&logocolor=white]][prisma-url]
-- [![Cypress][cypress-shield]][cypress-url]
-- [![Supabase][supabase-shield]][supabase-url]
+- [![Vercel](https://img.shields.io/badge/Vercel-000000?style=for-the-badge&logo=vercel&logoColor=white)](https://www.prisma.io/)
+- [![Prisma](https://img.shields.io/badge/prisma-3982ce?style=for-the-badge&logo=prisma&logocolor=white)](https://vercel.com)
+- [![Cypress](https://img.shields.io/badge/Cypress-17202C?style=for-the-badge&logo=cypress&logoColor=white)](https://www.cypress.io/)
+- [![Supabase](https://img.shields.io/badge/Supabase-181818?style=for-the-badge&logo=supabase&logoColor=white)](https://app.supabase.com/)
 
 <!-- GETTING STARTED -->
 

@@ -1,35 +1,19 @@
-import type { GetStaticProps } from 'next';
 import { FC } from 'react';
-import Footer from '../components/Footer';
 import Layout from '../components/Layout';
 import Modal from '../components/Modal';
 import SignUp from '../components/SignUp';
-import prisma from '../lib/prisma';
 
-export const getStaticProps: GetStaticProps = async () => {
-  const users = await prisma.user.findMany({});
-  return {
-    props: { users },
-    revalidate: 10,
-  };
-};
-
-type Props = {
-  users: any[];
-};
-
-const Index: FC<Props> = ({ users }) => {
+const Index: FC = () => {
   return (
     <Layout>
-      {users.map((user) => (
-        <div key={user.id} className="post">
-          {user.firstname}
-        </div>
-      ))}
+      <h1 className="text-xl font-semibold text-gray-900">Home</h1>
+      <p className="mt-2 text-sm text-gray-700">
+        Welcome to mxgp-picks.com. Here you can try to predict the results of the mxgp races as precisely as possible in
+        order to collect points
+      </p>
       <Modal>
         <SignUp />
       </Modal>
-      <Footer />
     </Layout>
   );
 };

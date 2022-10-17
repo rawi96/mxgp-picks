@@ -1,6 +1,6 @@
-<a name="readme-top"></a>
+<div align="center">
 
-<div align="center">[![SonarCloud](https://sonarcloud.io/images/project_badges/sonarcloud-white.svg)](https://sonarcloud.io/summary/new_code?id=rawi96_mxgp-picks)</div>
+[![SonarCloud](https://sonarcloud.io/images/project_badges/sonarcloud-white.svg)](https://sonarcloud.io/summary/new_code?id=rawi96_mxgp-picks)</div>
 [![Security Rating](https://sonarcloud.io/api/project_badges/measure?project=rawi96_mxgp-picks&metric=security_rating)](https://sonarcloud.io/summary/new_code?id=rawi96_mxgp-picks)
 [![Bugs](https://sonarcloud.io/api/project_badges/measure?project=rawi96_mxgp-picks&metric=bugs)](https://sonarcloud.io/summary/new_code?id=rawi96_mxgp-picks)
 [![Vulnerabilities](https://sonarcloud.io/api/project_badges/measure?project=rawi96_mxgp-picks&metric=vulnerabilities)](https://sonarcloud.io/summary/new_code?id=rawi96_mxgp-picks)

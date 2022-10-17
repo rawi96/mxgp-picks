@@ -1,6 +1,7 @@
 import { GetStaticProps } from 'next';
 import { FC } from 'react';
 import Layout from '../components/Layout';
+import prisma from '../lib/prisma';
 import { User } from '../lib/types';
 
 export const getStaticProps: GetStaticProps = async () => {

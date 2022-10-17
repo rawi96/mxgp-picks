@@ -25,7 +25,7 @@ const options = {
             where: { email: credentials.email },
           });
           if (user && (await comparePasswords(credentials.password, user.password))) {
-            return user;
+            return { email: user.email, name: user.username };
           } else {
             return null;
           }

@@ -9,12 +9,14 @@ const Footer: FC = () => {
     <>
       <footer className="rounded-lg bg-white px-5 py-6 shadow sm:px-6 -mt-5">
         <div className="mx-auto max-w-7xl overflow-hidden py-12 px-4 sm:px-6 lg:px-8">
-          <nav className="-mx-5 -my-2 flex flex-wrap justify-center" aria-label="Footer">
+          <div className="-mx-5 -my-2 flex flex-wrap justify-center" aria-label="Footer">
             <Link href="/">
               <a>
-                <Image height="40" width="200" src="/images/logo_black.svg" alt="mxgp-picks" />
+                <Image height="30" width="200" src="/images/logo_black.svg" alt="mxgp-picks" />
               </a>
             </Link>
+          </div>
+          <nav className="flex flex-wrap justify-center mt-5" aria-label="Footer">
             {navigation.map((item) => (
               <div key={item.name} className="px-5 py-2">
                 <Link href={item.href}>

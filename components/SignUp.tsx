@@ -46,7 +46,7 @@ const SignUp: FC = () => {
     }
   };
   return (
-    <div className="flex min-h-full flex-col py-12 sm:px-6 lg:px-8">
+    <div className="flex min-h-full flex-col py-8 px-8">
       <h2 className="text-3xl font-bold tracking-tight text-gray-900">Sign up</h2>
 
       <div className="mt-8 sm:mx-auto sm:w-full sm:max-w-md">

@@ -6,13 +6,15 @@ import Layout from '../components/Layout';
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
   const session = await getSession(context);
+  console.log(session);
 
   if (session?.user.isAdmin) {
+    console.log('isAdmin');
     return {
       props: { session },
     };
   }
-
+  console.log('isNotAdmin');
   return {
     redirect: {
       destination: '/',

@@ -12,7 +12,7 @@ const Footer: FC = () => {
   return (
     <>
       <footer className="rounded-lg bg-white px-5 py-6 shadow sm:px-6 -mt-5">
-        <div className="mx-auto max-w-7xl overflow-hidden py-12 px-4 sm:px-6 lg:px-8">
+        <div className="mx-auto max-w-7xl overflow-hidden pt-20">
           <div className="-mx-5 -my-2 flex flex-wrap justify-center" aria-label="Footer">
             <Link href="/">
               <a href="javascript:;">
@@ -34,10 +34,8 @@ const Footer: FC = () => {
         </div>
       </footer>
 
-      <footer className="fixed bottom-0 right-0 left-0 bg-gray-800 px-5 py-6 sm:px-6 -mt-5">
-        <p className="text-center text-base text-gray-400">
-          &copy; {new Date().getFullYear()} mxgp-picks.com, All rights reserved.
-        </p>
+      <footer className="fixed bottom-0 right-0 left-0 bg-gray-800 px-5 py-3 sm:px-6 -mt-5">
+        <p className="text-center text-base text-gray-400">&copy; {new Date().getFullYear()} mxgp-picks.com</p>
       </footer>
     </>
   );

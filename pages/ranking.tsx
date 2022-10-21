@@ -4,14 +4,6 @@ import Layout from '../components/Layout';
 import prisma from '../lib/prisma';
 import { User } from '../lib/types';
 
-export const getStaticProps: GetStaticProps = async () => {
-  const users = await prisma.user.findMany({});
-  return {
-    props: { users },
-    revalidate: 10,
-  };
-};
-
 type Props = {
   users: User[];
 };
@@ -95,6 +87,14 @@ const Ranking: FC<Props> = ({ users }) => {
       </div>
     </Layout>
   );
+};
+
+export const getStaticProps: GetStaticProps = async () => {
+  const users = await prisma.user.findMany({});
+  return {
+    props: { users },
+    revalidate: 10,
+  };
 };
 
 export default Ranking;

@@ -1,8 +1,11 @@
+import { GetServerSideProps } from 'next';
 import { useSession } from 'next-auth/react';
 import { useRouter } from 'next/router';
 import { FC, useEffect } from 'react';
 import Layout from '../components/Layout';
 import RidersCrud from '../components/RidersCrud';
+import prisma from '../lib/prisma';
+import { Rider } from '../lib/types';
 
 /*
 Server-Side protection would be cleaner.
@@ -25,6 +28,10 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
 };
 */
 
+type Props = {
+  serverSideRiders: Rider[];
+};
+
 const useAdminRoute = () => {
   const session = useSession();
   const router = useRouter();
@@ -38,7 +45,7 @@ const useAdminRoute = () => {
   return session;
 };
 
-const Admin: FC = () => {
+const Admin: FC<Props> = ({ serverSideRiders }) => {
   const session = useAdminRoute();
 
   return (
@@ -46,7 +53,7 @@ const Admin: FC = () => {
       {session.data?.user?.isAdmin ? (
         <Layout>
           <h1 className="text-xl font-semibold text-gray-900">Admin</h1>
-          <RidersCrud />
+          <RidersCrud serverSideRiders={serverSideRiders} />
         </Layout>
       ) : (
         <></>
@@ -54,6 +61,13 @@ const Admin: FC = () => {
       ;
     </>
   );
+};
+
+export const getServerSideProps: GetServerSideProps = async () => {
+  const serverSideRiders = await prisma.rider.findMany();
+  return {
+    props: { serverSideRiders },
+  };
 };
 
 export default Admin;

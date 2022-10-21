@@ -6,3 +6,10 @@ export type User = {
   password: string;
   isAdmin: boolean;
 };
+
+export type Rider = {
+  id: string;
+  firstname: string;
+  lastname: string;
+  numberplate: number;
+};

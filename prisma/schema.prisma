@@ -15,3 +15,10 @@ model User {
   password           String
   isAdmin            Boolean
 }
+
+model Rider {
+  id                 String             @id @default(uuid())
+  firstname          String         
+  lastname           String             
+  numberplate        Int          
+}

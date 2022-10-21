@@ -59,9 +59,9 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
     const createdUser = await prisma.user.create({
       data: newUser,
     });
-    res.status(200).json(createdUser);
+    return res.status(200).json(createdUser);
   } catch (error) {
-    res.status(500).json({ message: 'Internal server error' });
+    return res.status(500).json({ message: 'Internal server error' });
   }
 };
 

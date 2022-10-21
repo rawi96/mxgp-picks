@@ -37,8 +37,8 @@ const Layout: FC<Props> = ({ children, pathname }) => {
                     <div className="flex items-center">
                       <div className="flex-shrink-0">
                         <Link href="/">
-                          <a>
-                            <Image height="40" width="250" src="/images/logo_white.svg" alt="mxgp-picks" />
+                          <a href="javascript:;">
+                            <Image height="31.6" width="250" src="/images/logo_white.svg" alt="mxgp-picks" />
                           </a>
                         </Link>
                       </div>
@@ -54,6 +54,7 @@ const Layout: FC<Props> = ({ children, pathname }) => {
                                   'px-3 py-2 rounded-md text-sm font-medium'
                                 )}
                                 aria-current={pathname === item.href ? 'page' : undefined}
+                                href="javascript:;"
                               >
                                 {item.name}
                               </a>
@@ -94,6 +95,7 @@ const Layout: FC<Props> = ({ children, pathname }) => {
                                           active ? 'bg-gray-100' : '',
                                           'block px-4 py-2 text-sm text-gray-700'
                                         )}
+                                        href="javascript:;"
                                       >
                                         Profile
                                       </a>
@@ -103,6 +105,7 @@ const Layout: FC<Props> = ({ children, pathname }) => {
                                 <Menu.Item>
                                   {({ active }) => (
                                     <a
+                                      href="javascript:;"
                                       onClick={() => signOut()}
                                       className={classNames(
                                         active ? 'bg-gray-100' : '',
@@ -123,6 +126,7 @@ const Layout: FC<Props> = ({ children, pathname }) => {
                               onClick={() => setSignUpModalOpen(true)}
                               onKeyDown={(e) => e.key === 'Enter' && setSignUpModalOpen(true)}
                               className="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium cursor-pointer whitespace-nowrap"
+                              href="javascript:;"
                             >
                               Sign up
                             </a>
@@ -131,6 +135,7 @@ const Layout: FC<Props> = ({ children, pathname }) => {
                               onClick={() => setLoginModalOpen(true)}
                               onKeyDown={(e) => e.key === 'Enter' && setLoginModalOpen(true)}
                               className="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium cursor-pointer"
+                              href="javascript:;"
                             >
                               Login
                             </a>
@@ -194,6 +199,7 @@ const Layout: FC<Props> = ({ children, pathname }) => {
                           as="a"
                           className="block rounded-md px-3 py-2 text-base font-medium text-gray-400 hover:bg-gray-700 hover:text-white cursor-pointer"
                           onClick={() => signOut()}
+                          href="javascript:;"
                         >
                           Sign out
                         </Disclosure.Button>
@@ -206,6 +212,7 @@ const Layout: FC<Props> = ({ children, pathname }) => {
                           as="a"
                           onClick={() => setSignUpModalOpen(true)}
                           className="block rounded-md px-3 py-2 text-base font-medium text-gray-400 hover:bg-gray-700 hover:text-white cursor-pointer whitespace-nowrap"
+                          href="javascript:;"
                         >
                           Sign up
                         </Disclosure.Button>
@@ -213,6 +220,7 @@ const Layout: FC<Props> = ({ children, pathname }) => {
                           as="a"
                           className="block rounded-md px-3 py-2 text-base font-medium text-gray-400 hover:bg-gray-700 hover:text-white cursor-pointer"
                           onClick={() => setLoginModalOpen(true)}
+                          href="javascript:;"
                         >
                           Login
                         </Disclosure.Button>

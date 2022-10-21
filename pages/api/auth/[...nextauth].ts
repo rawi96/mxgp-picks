@@ -25,7 +25,7 @@ const options = {
             where: { email: credentials.email },
           });
           if (user && (await comparePasswords(credentials.password, user.password))) {
-            return { email: user.email, name: user.username };
+            return { email: user.email, username: user.username, isAdmin: user.isAdmin };
           } else {
             return null;
           }
@@ -36,4 +36,14 @@ const options = {
     }),
   ],
   secret: process.env.SECRET,
+  callbacks: {
+    async session({ session }) {
+      const user = await prisma.user.findUnique({
+        where: { email: session.user.email },
+      });
+      session.user = { email: user?.email, username: user?.username, isAdmin: user?.isAdmin };
+
+      return session;
+    },
+  },
 };

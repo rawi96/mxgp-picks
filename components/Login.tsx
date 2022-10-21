@@ -1,7 +1,7 @@
 import { signIn } from 'next-auth/react';
 import { FC, useContext, useState } from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
-import { ModalsContext } from '../context/modalsContext';
+import { ModalsContext } from '../context/ModalsContext';
 import Alert from './Alert';
 
 const INPUT_VALID_CLASSES =

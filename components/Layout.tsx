@@ -3,32 +3,37 @@ import { Bars3Icon, XMarkIcon } from '@heroicons/react/24/outline';
 import { signOut, useSession } from 'next-auth/react';
 import Image from 'next/image';
 import Link from 'next/link';
+import { useRouter } from 'next/router';
 import { FC, Fragment, ReactNode, useContext } from 'react';
-import { ModalsContext } from '../context/modalsContext';
+import { ModalsContext } from '../context/ModalsContext';
 import Footer from './Footer';
 
 export const navigation = [
   { name: 'Home', href: '/' },
   { name: 'Ranking', href: '/ranking' },
   { name: 'Rules', href: '/rules' },
-  { name: 'Admin', href: '/admin' },
 ];
+
+export const adminNavigation = [...navigation, { name: 'Admin', href: '/admin' }];
 
 const classNames = (...classes: string[]) => classes.filter(Boolean).join(' ');
 
 type Props = {
   children: ReactNode;
-  pathname: string;
 };
 
-const Layout: FC<Props> = ({ children, pathname }) => {
-  const session = useSession();
+const Layout: FC<Props> = ({ children }) => {
   const { setLoginModalOpen, setSignUpModalOpen } = useContext(ModalsContext);
+  const session = useSession();
+  const router = useRouter();
+  const pathname = router.pathname;
+
+  const sessionNavigation = session?.data?.user?.isAdmin ? adminNavigation : navigation;
 
   const MobileMenu = (
     <Disclosure.Panel className="border-b border-gray-700 md:hidden">
       <div className="space-y-1 px-2 py-3 sm:px-3">
-        {navigation.map((item) => (
+        {sessionNavigation.map((item) => (
           <Disclosure.Button
             key={item.name}
             as="a"
@@ -49,7 +54,7 @@ const Layout: FC<Props> = ({ children, pathname }) => {
             <div className="flex items-center px-5">
               <div className="flex-shrink-0"></div>
               <div className="ml-3">
-                <div className="text-base font-medium leading-none text-white">{session.data.user.name}</div>
+                <div className="text-base font-medium leading-none text-white">{session.data.user.username}</div>
                 <div className="text-sm font-medium leading-none text-gray-400">{session.data.user.email}</div>
               </div>
             </div>
@@ -116,7 +121,7 @@ const Layout: FC<Props> = ({ children, pathname }) => {
                       </div>
                       <div className="hidden md:block">
                         <div className="ml-10 flex items-baseline space-x-4">
-                          {navigation.map((item) => (
+                          {sessionNavigation.map((item) => (
                             <Link key={item.name} href={item.href}>
                               <a
                                 className={classNames(
@@ -144,7 +149,7 @@ const Layout: FC<Props> = ({ children, pathname }) => {
                                 <span className="sr-only">Open user menu</span>
                                 <span className="inline-flex h-8 w-8 items-center justify-center rounded-full bg-gray-500">
                                   <span className="text-sm font-medium leading-none text-white">
-                                    {session.data.user.name?.substring(0, 2).toUpperCase()}
+                                    {session.data.user.username.substring(0, 2).toUpperCase()}
                                   </span>
                                 </span>
                               </Menu.Button>

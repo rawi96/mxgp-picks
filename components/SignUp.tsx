@@ -1,6 +1,6 @@
 import { FC, useContext, useState } from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
-import { ModalsContext } from '../context/modalsContext';
+import { ModalsContext } from '../context/ModalsContext';
 import { REGEX_EMAIL, REGEX_PASSWORD } from '../utils/utils';
 import Alert from './Alert';
 

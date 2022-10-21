@@ -25,6 +25,78 @@ const Layout: FC<Props> = ({ children, pathname }) => {
   const session = useSession();
   const { setLoginModalOpen, setSignUpModalOpen } = useContext(ModalsContext);
 
+  const MobileMenu = (
+    <Disclosure.Panel className="border-b border-gray-700 md:hidden">
+      <div className="space-y-1 px-2 py-3 sm:px-3">
+        {navigation.map((item) => (
+          <Disclosure.Button
+            key={item.name}
+            as="a"
+            href={item.href}
+            className={classNames(
+              pathname === item.href ? 'bg-gray-900 text-white' : 'text-gray-300 hover:bg-gray-700 hover:text-white',
+              'block px-3 py-2 rounded-md text-base font-medium'
+            )}
+            aria-current={pathname === item.href ? 'page' : undefined}
+          >
+            {item.name}
+          </Disclosure.Button>
+        ))}
+      </div>
+      <div className="border-t border-gray-700 pt-4 pb-3">
+        {session.data?.user ? (
+          <>
+            <div className="flex items-center px-5">
+              <div className="flex-shrink-0"></div>
+              <div className="ml-3">
+                <div className="text-base font-medium leading-none text-white">{session.data.user.name}</div>
+                <div className="text-sm font-medium leading-none text-gray-400">{session.data.user.email}</div>
+              </div>
+            </div>
+            <div className="mt-3 space-y-1 px-2">
+              <Disclosure.Button
+                as="a"
+                href={'/profile'}
+                className="block rounded-md px-3 py-2 text-base font-medium text-gray-400 hover:bg-gray-700 hover:text-white"
+              >
+                Profile
+              </Disclosure.Button>
+              <Disclosure.Button
+                as="a"
+                className="block rounded-md px-3 py-2 text-base font-medium text-gray-400 hover:bg-gray-700 hover:text-white cursor-pointer"
+                onClick={() => signOut()}
+                href="javascript:;"
+              >
+                Sign out
+              </Disclosure.Button>
+            </div>
+          </>
+        ) : (
+          <>
+            <div className="mt-3 space-y-1 px-2">
+              <Disclosure.Button
+                as="a"
+                onClick={() => setSignUpModalOpen(true)}
+                className="block rounded-md px-3 py-2 text-base font-medium text-gray-400 hover:bg-gray-700 hover:text-white cursor-pointer whitespace-nowrap"
+                href="javascript:;"
+              >
+                Sign up
+              </Disclosure.Button>
+              <Disclosure.Button
+                as="a"
+                className="block rounded-md px-3 py-2 text-base font-medium text-gray-400 hover:bg-gray-700 hover:text-white cursor-pointer"
+                onClick={() => setLoginModalOpen(true)}
+                href="javascript:;"
+              >
+                Login
+              </Disclosure.Button>
+            </div>
+          </>
+        )}
+      </div>
+    </Disclosure.Panel>
+  );
+
   return (
     <div data-test-id="layout" className="min-h-full">
       <div className="bg-gray-800 pb-32">
@@ -37,8 +109,8 @@ const Layout: FC<Props> = ({ children, pathname }) => {
                     <div className="flex items-center">
                       <div className="flex-shrink-0">
                         <Link href="/">
-                          <a>
-                            <Image height="40" width="250" src="/images/logo_white.svg" alt="mxgp-picks" />
+                          <a href="javascript:;">
+                            <Image height="31.6" width="250" src="/images/logo_white.svg" alt="mxgp-picks" />
                           </a>
                         </Link>
                       </div>
@@ -54,6 +126,7 @@ const Layout: FC<Props> = ({ children, pathname }) => {
                                   'px-3 py-2 rounded-md text-sm font-medium'
                                 )}
                                 aria-current={pathname === item.href ? 'page' : undefined}
+                                href="javascript:;"
                               >
                                 {item.name}
                               </a>
@@ -94,6 +167,7 @@ const Layout: FC<Props> = ({ children, pathname }) => {
                                           active ? 'bg-gray-100' : '',
                                           'block px-4 py-2 text-sm text-gray-700'
                                         )}
+                                        href="javascript:;"
                                       >
                                         Profile
                                       </a>
@@ -103,6 +177,7 @@ const Layout: FC<Props> = ({ children, pathname }) => {
                                 <Menu.Item>
                                   {({ active }) => (
                                     <a
+                                      href="javascript:;"
                                       onClick={() => signOut()}
                                       className={classNames(
                                         active ? 'bg-gray-100' : '',
@@ -123,6 +198,7 @@ const Layout: FC<Props> = ({ children, pathname }) => {
                               onClick={() => setSignUpModalOpen(true)}
                               onKeyDown={(e) => e.key === 'Enter' && setSignUpModalOpen(true)}
                               className="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium cursor-pointer whitespace-nowrap"
+                              href="javascript:;"
                             >
                               Sign up
                             </a>
@@ -131,6 +207,7 @@ const Layout: FC<Props> = ({ children, pathname }) => {
                               onClick={() => setLoginModalOpen(true)}
                               onKeyDown={(e) => e.key === 'Enter' && setLoginModalOpen(true)}
                               className="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium cursor-pointer"
+                              href="javascript:;"
                             >
                               Login
                             </a>
@@ -152,75 +229,7 @@ const Layout: FC<Props> = ({ children, pathname }) => {
                   </div>
                 </div>
               </div>
-
-              <Disclosure.Panel className="border-b border-gray-700 md:hidden">
-                <div className="space-y-1 px-2 py-3 sm:px-3">
-                  {navigation.map((item) => (
-                    <Disclosure.Button
-                      key={item.name}
-                      as="a"
-                      href={item.href}
-                      className={classNames(
-                        pathname === item.href
-                          ? 'bg-gray-900 text-white'
-                          : 'text-gray-300 hover:bg-gray-700 hover:text-white',
-                        'block px-3 py-2 rounded-md text-base font-medium'
-                      )}
-                      aria-current={pathname === item.href ? 'page' : undefined}
-                    >
-                      {item.name}
-                    </Disclosure.Button>
-                  ))}
-                </div>
-                <div className="border-t border-gray-700 pt-4 pb-3">
-                  {session.data?.user ? (
-                    <>
-                      <div className="flex items-center px-5">
-                        <div className="flex-shrink-0"></div>
-                        <div className="ml-3">
-                          <div className="text-base font-medium leading-none text-white">{session.data.user.name}</div>
-                          <div className="text-sm font-medium leading-none text-gray-400">{session.data.user.email}</div>
-                        </div>
-                      </div>
-                      <div className="mt-3 space-y-1 px-2">
-                        <Disclosure.Button
-                          as="a"
-                          href={'/profile'}
-                          className="block rounded-md px-3 py-2 text-base font-medium text-gray-400 hover:bg-gray-700 hover:text-white"
-                        >
-                          Profile
-                        </Disclosure.Button>
-                        <Disclosure.Button
-                          as="a"
-                          className="block rounded-md px-3 py-2 text-base font-medium text-gray-400 hover:bg-gray-700 hover:text-white cursor-pointer"
-                          onClick={() => signOut()}
-                        >
-                          Sign out
-                        </Disclosure.Button>
-                      </div>
-                    </>
-                  ) : (
-                    <>
-                      <div className="mt-3 space-y-1 px-2">
-                        <Disclosure.Button
-                          as="a"
-                          onClick={() => setSignUpModalOpen(true)}
-                          className="block rounded-md px-3 py-2 text-base font-medium text-gray-400 hover:bg-gray-700 hover:text-white cursor-pointer whitespace-nowrap"
-                        >
-                          Sign up
-                        </Disclosure.Button>
-                        <Disclosure.Button
-                          as="a"
-                          className="block rounded-md px-3 py-2 text-base font-medium text-gray-400 hover:bg-gray-700 hover:text-white cursor-pointer"
-                          onClick={() => setLoginModalOpen(true)}
-                        >
-                          Login
-                        </Disclosure.Button>
-                      </div>
-                    </>
-                  )}
-                </div>
-              </Disclosure.Panel>
+              {MobileMenu}
             </>
           )}
         </Disclosure>

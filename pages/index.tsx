@@ -1,10 +1,6 @@
 import { useRouter } from 'next/router';
-import { FC, useContext } from 'react';
+import { FC } from 'react';
 import Layout from '../components/Layout';
-import Login from '../components/Login';
-import Modal from '../components/Modal';
-import SignUp from '../components/SignUp';
-import { ModalsContext } from '../context/modalsContext';
 
 const Index: FC = () => {
   const router = useRouter();

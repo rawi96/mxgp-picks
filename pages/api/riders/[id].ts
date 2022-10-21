@@ -57,6 +57,7 @@ const deleteRider = async (req: NextApiRequest, res: NextApiResponse) => {
     });
     return res.status(200).json(deletedRider);
   } catch (error) {
+    console.error(error);
     return res.status(500).json({ message: 'Internal server error' });
   }
 };

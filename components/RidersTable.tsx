@@ -3,7 +3,7 @@ import { Rider } from '../lib/types';
 
 type Props = {
   riders: Rider[];
-  onEdit: (id: string, rider: Rider) => void;
+  onEdit: (rider: Rider) => void;
   onDelete: (id: string) => void;
 };
 
@@ -38,10 +38,7 @@ const RiderTable: FC<Props> = ({ riders, onEdit, onDelete }) => {
                       </div>
                     </td>
                     <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
-                      <div
-                        onClick={() => onEdit(rider.id, rider)}
-                        className="text-gray-500 cursor-pointer hover:text-gray-800"
-                      >
+                      <div onClick={() => onEdit(rider)} className="text-gray-500 cursor-pointer hover:text-gray-800">
                         Edit
                       </div>
                     </td>

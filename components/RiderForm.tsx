@@ -1,8 +1,7 @@
-import { FC, useState } from 'react';
+import { FC } from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { v4 as uuidv4 } from 'uuid';
 import { Rider } from '../lib/types';
-import Alert from './Alert';
 
 const INPUT_VALID_CLASSES =
   'block w-full appearance-none rounded-md border border-gray-300 px-3 py-2 placeholder-gray-400 shadow-sm focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm';
@@ -21,14 +20,11 @@ type Props = {
   prefilledRider: Rider | null;
 };
 
-const AddRider: FC<Props> = ({ addRider, editRider, prefilledRider }) => {
-  const [alert, setAlert] = useState('');
-
+const RiderForm: FC<Props> = ({ addRider, editRider, prefilledRider }) => {
   const {
     register,
     handleSubmit,
     formState: { errors },
-    getValues,
   } = useForm<FormInput>();
 
   const onSubmit: SubmitHandler<FormInput> = async (data) => {
@@ -51,7 +47,6 @@ const AddRider: FC<Props> = ({ addRider, editRider, prefilledRider }) => {
 
       <div className="mt-8 sm:mx-auto sm:w-full sm:max-w-md">
         <form className="space-y-6" onSubmit={handleSubmit(onSubmit)}>
-          {alert && <Alert text={alert} />}
           <div>
             <label htmlFor="email" className="block text-sm font-medium text-gray-700">
               Firstname
@@ -124,4 +119,4 @@ const AddRider: FC<Props> = ({ addRider, editRider, prefilledRider }) => {
   );
 };
 
-export default AddRider;
+export default RiderForm;

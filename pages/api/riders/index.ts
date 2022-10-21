@@ -38,6 +38,7 @@ const addRider = async (req: NextApiRequest, res: NextApiResponse) => {
     });
     return res.status(200).json(createdRider);
   } catch (error) {
+    console.error(error);
     return res.status(500).json({ message: 'Internal server error' });
   }
 };
@@ -47,6 +48,7 @@ const getRiders = async (req: NextApiRequest, res: NextApiResponse) => {
     const riders = await prisma.rider.findMany();
     return res.status(200).json(riders);
   } catch (error) {
+    console.error(error);
     return res.status(500).json({ message: 'Internal server error' });
   }
 };

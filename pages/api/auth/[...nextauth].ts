@@ -38,6 +38,8 @@ const options = {
   secret: process.env.SECRET,
   callbacks: {
     async session({ session }: { session: any }) {
+      console.log('SESSION');
+      console.log(session);
       const user = await prisma.user.findUnique({
         where: { email: session.user.email },
       });

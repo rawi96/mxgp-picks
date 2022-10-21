@@ -37,7 +37,7 @@ const options = {
   ],
   secret: process.env.SECRET,
   callbacks: {
-    async session({ session }) {
+    async session({ session }: { session: any }) {
       const user = await prisma.user.findUnique({
         where: { email: session.user.email },
       });

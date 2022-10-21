@@ -1,10 +1,14 @@
+import { useSession } from 'next-auth/react';
 import Image from 'next/image';
 import Link from 'next/link';
 import { FC } from 'react';
 
-import { navigation } from './Layout';
+import { adminNavigation, navigation } from './Layout';
 
 const Footer: FC = () => {
+  const session = useSession();
+  const sessionNavigation = session?.data?.user?.isAdmin ? adminNavigation : navigation;
+
   return (
     <>
       <footer className="rounded-lg bg-white px-5 py-6 shadow sm:px-6 -mt-5">
@@ -17,7 +21,7 @@ const Footer: FC = () => {
             </Link>
           </div>
           <nav className="flex flex-wrap justify-center mt-5" aria-label="Footer">
-            {navigation.map((item) => (
+            {sessionNavigation.map((item) => (
               <div key={item.name} className="px-5 py-2">
                 <Link href={item.href}>
                   <a href="javascript:;" className="text-base text-gray-500 hover:text-gray-900">

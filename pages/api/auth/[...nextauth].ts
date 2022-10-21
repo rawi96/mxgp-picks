@@ -1,8 +1,7 @@
-import CredentialsProvider from 'next-auth/providers/credentials';
-import { comparePasswords } from '../../../lib/bcrypt';
-
 import { NextApiHandler } from 'next';
 import NextAuth from 'next-auth';
+import CredentialsProvider from 'next-auth/providers/credentials';
+import { comparePasswords } from '../../../lib/bcrypt';
 import prisma from '../../../lib/prisma';
 
 const authHandler: NextApiHandler = (req, res) => NextAuth(req, res, options);
@@ -25,7 +24,7 @@ const options = {
             where: { email: credentials.email },
           });
           if (user && (await comparePasswords(credentials.password, user.password))) {
-            return { email: user.email, name: user.username };
+            return { email: user.email, username: user.username, isAdmin: user.isAdmin };
           } else {
             return null;
           }
@@ -36,4 +35,21 @@ const options = {
     }),
   ],
   secret: process.env.SECRET,
+  callbacks: {
+    async session({ session }: { session: any }) {
+      const user = await prisma.user.findUnique({
+        where: { email: session.user.email },
+      });
+      session = {
+        ...session,
+        user: {
+          ...session.user,
+          username: user?.username,
+          isAdmin: user?.isAdmin,
+        },
+      };
+
+      return session;
+    },
+  },
 };

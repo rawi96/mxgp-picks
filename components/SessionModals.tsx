@@ -1,5 +1,5 @@
 import { FC, useContext } from 'react';
-import { ModalsContext } from '../context/ModalsContext';
+import { ModalsContext } from '../context/modalsContext';
 import Login from './Login';
 import Modal from './Modal';
 import SignUp from './SignUp';

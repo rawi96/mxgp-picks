@@ -5,7 +5,7 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 import { FC, Fragment, ReactNode, useContext } from 'react';
-import { ModalsContext } from '../context/ModalsContext';
+import { ModalsContext } from '../context/modalsContext';
 import Footer from './Footer';
 
 export const navigation = [

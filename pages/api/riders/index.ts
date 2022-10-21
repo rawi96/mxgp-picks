@@ -1,9 +1,15 @@
 import type { NextApiRequest, NextApiResponse } from 'next';
+import { getSession } from 'next-auth/react';
 import { v4 as uuidv4 } from 'uuid';
 import prisma from '../../../lib/prisma';
 import { Rider } from '../../../lib/types';
 
 const handler = async (req: NextApiRequest, res: NextApiResponse) => {
+  const session = await getSession({ req });
+
+  if (!session?.user.isAdmin) {
+    return res.status(401).json({ message: 'Unauthorized' });
+  }
   const { method } = req;
 
   if (method === 'POST') {

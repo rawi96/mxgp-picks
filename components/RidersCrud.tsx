@@ -1,8 +1,8 @@
 import { PlusIcon } from '@heroicons/react/24/outline';
 import { FC, useEffect, useState } from 'react';
 import { Rider } from '../lib/types';
-import RiderForm from './RiderForm';
 import Modal from './Modal';
+import RiderForm from './RiderForm';
 import RiderTable from './RidersTable';
 
 type UseRiders = {
@@ -26,10 +26,11 @@ const useRiders = (): UseRiders => {
     reloadRiders();
   }, [modalOpen]);
 
-  const reloadRiders = () => {
-    fetch('/api/riders')
-      .then((res) => res.json())
-      .then((data) => setRiders(data));
+  const reloadRiders = async () => {
+    const res = await fetch('/api/riders');
+    const data = await res.json();
+    data.sort((a: Rider, b: Rider) => a.numberplate - b.numberplate);
+    setRiders(data);
   };
 
   const onAddClick = () => {
@@ -92,18 +93,20 @@ const RidersCrud: FC = () => {
 
   return (
     <>
-      <button
-        onClick={onAddClick}
-        type="button"
-        className="inline-flex items-center rounded-md border border-transparent bg-indigo-600 px-3 py-2 text-sm font-medium leading-4 text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
-      >
-        <PlusIcon className="-ml-0.5 mr-2 h-4 w-4" aria-hidden="true" />
-        Add Rider
-      </button>
       <Modal open={modalOpen} setOpen={setModalOpen}>
         <RiderForm prefilledRider={selectedRider} addRider={addRider} editRider={editRider} />
       </Modal>
       <RiderTable riders={riders} onEdit={onEditClick} onDelete={deleteRider} />
+      <div className="flex justify-center mt-10">
+        <button
+          onClick={onAddClick}
+          type="button"
+          className="inline-flex items-center rounded-md border border-transparent bg-indigo-600 px-3 py-2 text-sm font-medium leading-4 text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
+        >
+          <PlusIcon className="-ml-0.5 mr-2 h-4 w-4" aria-hidden="true" />
+          Add Rider
+        </button>
+      </div>
     </>
   );
 };

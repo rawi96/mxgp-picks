@@ -22,8 +22,12 @@ const RiderTable: FC<Props> = ({ riders, onEdit, onDelete }) => {
                   <th scope="col" className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">
                     Fullname
                   </th>
-                  <th scope="col" className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900"></th>
-                  <th scope="col" className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900"></th>
+                  <th scope="col" className="relative py-3.5 pl-3 pr-4 sm:pr-6">
+                    <span className="sr-only">Edit</span>
+                  </th>
+                  <th scope="col" className="relative py-3.5 pl-3 pr-4 sm:pr-6">
+                    <span className="sr-only">Delete</span>
+                  </th>
                 </tr>
               </thead>
               <tbody className="divide-y divide-gray-200 bg-white">
@@ -37,12 +41,12 @@ const RiderTable: FC<Props> = ({ riders, onEdit, onDelete }) => {
                         {rider.firstname} {rider.lastname}
                       </div>
                     </td>
-                    <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
+                    <td className="relative whitespace-nowrap py-4 pl-3 pr-4 text-right text-sm font-medium sm:pr-6">
                       <div onClick={() => onEdit(rider)} className="text-gray-500 cursor-pointer hover:text-gray-800">
                         Edit
                       </div>
                     </td>
-                    <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
+                    <td className="relative whitespace-nowrap py-4 pl-3 pr-4 text-right text-sm font-medium sm:pr-6">
                       <div onClick={() => onDelete(rider.id)} className="text-red-600 cursor-pointer hover:text-red-900">
                         Delete
                       </div>

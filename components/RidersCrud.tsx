@@ -1,12 +1,16 @@
 import { PlusIcon } from '@heroicons/react/24/outline';
-import { FC, useEffect, useState } from 'react';
+import { FC, useState } from 'react';
 import { Rider } from '../lib/types';
 import Modal from './Modal';
 import RiderForm from './RiderForm';
 import RiderTable from './RidersTable';
 
+type Props = {
+  serverSideRiders: Rider[];
+};
+
 type UseRiders = {
-  riders: Rider[] | [];
+  riders: Rider[];
   onEditClick: (rider: Rider) => void;
   onAddClick: () => void;
   addRider: (rider: Rider) => void;
@@ -17,14 +21,10 @@ type UseRiders = {
   selectedRider: Rider | null;
 };
 
-const useRiders = (): UseRiders => {
-  const [riders, setRiders] = useState<Rider[] | []>([]);
+const useRiders = (serverSideRiders: Rider[]): UseRiders => {
+  const [riders, setRiders] = useState<Rider[]>(serverSideRiders);
   const [modalOpen, setModalOpen] = useState(false);
   const [selectedRider, setSelectedRider] = useState<Rider | null>(null);
-
-  useEffect(() => {
-    reloadRiders();
-  }, [modalOpen]);
 
   const reloadRiders = async () => {
     const res = await fetch('/api/riders');
@@ -87,9 +87,10 @@ const useRiders = (): UseRiders => {
   };
 };
 
-const RidersCrud: FC = () => {
+const RidersCrud: FC<Props> = ({ serverSideRiders }) => {
+  console.log(serverSideRiders);
   const { riders, addRider, editRider, deleteRider, modalOpen, setModalOpen, selectedRider, onEditClick, onAddClick } =
-    useRiders();
+    useRiders(serverSideRiders);
 
   return (
     <>

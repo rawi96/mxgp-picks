@@ -1,20 +1,33 @@
-import { GetServerSideProps } from 'next';
-import { Session } from 'next-auth';
-import { getSession } from 'next-auth/react';
-import { FC } from 'react';
+import { useSession } from 'next-auth/react';
+import { useRouter } from 'next/router';
+import { FC, useEffect } from 'react';
 import Layout from '../components/Layout';
+
+const useAdminRoute = () => {
+  const session = useSession();
+  const router = useRouter();
+
+  useEffect(() => {
+    if (!session.data?.user?.isAdmin) {
+      router.push('/');
+    }
+  }, [session]);
+
+  return session;
+};
+
+/*
+Server-Side protection would be cleaner.
+Unfortunately it doesn't work in the productive environment.
+There you somehow ONLY get the email but not the isAdmin flag
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
   const session = await getSession(context);
-  console.log(session);
-
   if (session?.user.isAdmin) {
-    console.log('isAdmin');
     return {
       props: { session },
     };
   }
-  console.log('isNotAdmin');
   return {
     redirect: {
       destination: '/',
@@ -22,13 +35,12 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
     },
   };
 };
+*/
 
-type Props = {
-  session: Session;
-};
+const Admin: FC = () => {
+  const session = useAdminRoute();
 
-const Admin: FC<Props> = ({ session }) => {
-  return <Layout>ADMIN</Layout>;
+  return <>{session.data?.user?.isAdmin ? <Layout>ADMIN</Layout> : <></>};</>;
 };
 
 export default Admin;

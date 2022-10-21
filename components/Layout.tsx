@@ -26,7 +26,7 @@ const Layout: FC<Props> = ({ children }) => {
   const { setLoginModalOpen, setSignUpModalOpen } = useContext(ModalsContext);
   const session = useSession();
   const router = useRouter();
-  const pathname = router.pathname;
+  const pathname = (router && router.pathname) || '';
 
   const sessionNavigation = session?.data?.user?.isAdmin ? adminNavigation : navigation;
 

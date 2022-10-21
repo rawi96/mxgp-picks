@@ -3,7 +3,6 @@ import { Session } from 'next-auth';
 import { getSession } from 'next-auth/react';
 import { FC } from 'react';
 import Layout from '../components/Layout';
-import { User } from '../lib/types';
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
   const session = await getSession(context);

@@ -24,7 +24,7 @@ const options = {
             where: { email: credentials.email },
           });
           if (user && (await comparePasswords(credentials.password, user.password))) {
-            return { email: user.email, username: user.username, isAdmin: user.isAdmin };
+            return { id: user.id, email: user.email, username: user.username, isAdmin: user.isAdmin };
           } else {
             return null;
           }
@@ -44,6 +44,7 @@ const options = {
         ...session,
         user: {
           ...session.user,
+          id: user?.id,
           username: user?.username,
           isAdmin: user?.isAdmin,
         },

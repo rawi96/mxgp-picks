@@ -3,9 +3,10 @@ import { useSession } from 'next-auth/react';
 import { useRouter } from 'next/router';
 import { FC, useEffect } from 'react';
 import Layout from '../components/Layout';
+import RacesCrud from '../components/RacesCrud';
 import RidersCrud from '../components/RidersCrud';
 import prisma from '../lib/prisma';
-import { Rider } from '../lib/types';
+import { Race, Rider } from '../lib/types';
 
 /*
 Server-Side protection would be cleaner.
@@ -30,6 +31,7 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
 
 type Props = {
   serverSideRiders: Rider[];
+  serverSideRaces: Race[];
 };
 
 const useAdminRoute = () => {
@@ -45,14 +47,21 @@ const useAdminRoute = () => {
   return session;
 };
 
-const Admin: FC<Props> = ({ serverSideRiders }) => {
+const Admin: FC<Props> = ({ serverSideRiders, serverSideRaces }) => {
   const session = useAdminRoute();
 
   return (
     <>
       {session.data?.user?.isAdmin ? (
         <Layout>
-          <h1 className="text-xl font-semibold text-gray-900">Admin</h1>
+          <div className="flex justify-center">
+            <h2 className="font-semibold text-gray-700 text-2xl mb-10">Races</h2>
+          </div>
+
+          <RacesCrud serverSideRaces={serverSideRaces} />
+          <div className="flex justify-center">
+            <h2 className="font-semibold text-gray-700 text-2xl mt-20 mb-10">Riders</h2>
+          </div>
           <RidersCrud serverSideRiders={serverSideRiders} />
         </Layout>
       ) : (
@@ -64,9 +73,19 @@ const Admin: FC<Props> = ({ serverSideRiders }) => {
 };
 
 export const getServerSideProps: GetServerSideProps = async () => {
-  const serverSideRiders = await prisma.rider.findMany();
+  const serverSideRiders = await prisma.rider.findMany({
+    orderBy: {
+      numberplate: 'asc',
+    },
+  });
+  const serverSideRaces = await prisma.race.findMany({
+    orderBy: {
+      date: 'asc',
+    },
+  });
+
   return {
-    props: { serverSideRiders },
+    props: { serverSideRiders, serverSideRaces: JSON.parse(JSON.stringify(serverSideRaces)) },
   };
 };
 

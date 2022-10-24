@@ -39,7 +39,7 @@ const Layout: FC<Props> = ({ children }) => {
             as="a"
             href={item.href}
             className={classNames(
-              pathname === item.href ? 'bg-gray-900 text-white' : 'text-gray-300 hover:bg-gray-700 hover:text-white',
+              pathname === item.href ? 'bg-gray-800 text-white' : 'text-gray-300 hover:bg-gray-600 hover:text-white',
               'block px-3 py-2 rounded-md text-base font-medium'
             )}
             aria-current={pathname === item.href ? 'page' : undefined}
@@ -62,15 +62,14 @@ const Layout: FC<Props> = ({ children }) => {
               <Disclosure.Button
                 as="a"
                 href={'/profile'}
-                className="block rounded-md px-3 py-2 text-base font-medium text-gray-400 hover:bg-gray-700 hover:text-white"
+                className="block rounded-md px-3 py-2 text-base font-medium text-gray-400 hover:bg-gray-600 hover:text-white"
               >
                 Profile
               </Disclosure.Button>
               <Disclosure.Button
                 as="a"
-                className="block rounded-md px-3 py-2 text-base font-medium text-gray-400 hover:bg-gray-700 hover:text-white cursor-pointer"
+                className="block rounded-md px-3 py-2 text-base font-medium text-gray-400 hover:bg-gray-600 hover:text-white cursor-pointer"
                 onClick={() => signOut()}
-                href="javascript:;"
               >
                 Sign out
               </Disclosure.Button>
@@ -82,16 +81,14 @@ const Layout: FC<Props> = ({ children }) => {
               <Disclosure.Button
                 as="a"
                 onClick={() => setSignUpModalOpen(true)}
-                className="block rounded-md px-3 py-2 text-base font-medium text-gray-400 hover:bg-gray-700 hover:text-white cursor-pointer whitespace-nowrap"
-                href="javascript:;"
+                className="block rounded-md px-3 py-2 text-base font-medium text-gray-400 hover:bg-gray-600 hover:text-white cursor-pointer whitespace-nowrap"
               >
                 Sign up
               </Disclosure.Button>
               <Disclosure.Button
                 as="a"
-                className="block rounded-md px-3 py-2 text-base font-medium text-gray-400 hover:bg-gray-700 hover:text-white cursor-pointer"
+                className="block rounded-md px-3 py-2 text-base font-medium text-gray-400 hover:bg-gray-600 hover:text-white cursor-pointer"
                 onClick={() => setLoginModalOpen(true)}
-                href="javascript:;"
               >
                 Login
               </Disclosure.Button>
@@ -104,8 +101,8 @@ const Layout: FC<Props> = ({ children }) => {
 
   return (
     <div data-test-id="layout" className="min-h-full">
-      <div className="bg-gray-800 pb-32">
-        <Disclosure as="nav" className="bg-gray-800">
+      <div className="bg-gray-700 pb-32">
+        <Disclosure as="nav" className="bg-gray-700">
           {({ open }) => (
             <>
               <div className="mx-auto max-w-7xl sm:px-6 lg:px-8">
@@ -114,7 +111,7 @@ const Layout: FC<Props> = ({ children }) => {
                     <div className="flex items-center">
                       <div className="flex-shrink-0">
                         <Link href="/">
-                          <a href="javascript:;">
+                          <a>
                             <Image height="31.6" width="250" src="/images/logo_white.svg" alt="mxgp-picks" />
                           </a>
                         </Link>
@@ -126,12 +123,11 @@ const Layout: FC<Props> = ({ children }) => {
                               <a
                                 className={classNames(
                                   pathname === item.href
-                                    ? 'bg-gray-900 text-white'
-                                    : 'text-gray-300 hover:bg-gray-700 hover:text-white',
+                                    ? 'bg-gray-800 text-white'
+                                    : 'text-gray-300 hover:bg-gray-600 hover:text-white',
                                   'px-3 py-2 rounded-md text-sm font-medium'
                                 )}
                                 aria-current={pathname === item.href ? 'page' : undefined}
-                                href="javascript:;"
                               >
                                 {item.name}
                               </a>
@@ -145,9 +141,9 @@ const Layout: FC<Props> = ({ children }) => {
                         {session.data?.user ? (
                           <Menu as="div" className="relative ml-3">
                             <div>
-                              <Menu.Button className="flex max-w-xs items-center rounded-full bg-gray-800 text-sm focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800">
+                              <Menu.Button className="flex max-w-xs items-center rounded-full bg-gray-700 text-sm focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-700">
                                 <span className="sr-only">Open user menu</span>
-                                <span className="inline-flex h-8 w-8 items-center justify-center rounded-full bg-gray-500">
+                                <span className="inline-flex h-10 w-10 items-center justify-center rounded-full bg-red-600">
                                   <span className="text-sm font-medium leading-none text-white">
                                     {session.data.user.username.substring(0, 2).toUpperCase()}
                                   </span>
@@ -172,7 +168,6 @@ const Layout: FC<Props> = ({ children }) => {
                                           active ? 'bg-gray-100' : '',
                                           'block px-4 py-2 text-sm text-gray-700'
                                         )}
-                                        href="javascript:;"
                                       >
                                         Profile
                                       </a>
@@ -182,7 +177,6 @@ const Layout: FC<Props> = ({ children }) => {
                                 <Menu.Item>
                                   {({ active }) => (
                                     <a
-                                      href="javascript:;"
                                       onClick={() => signOut()}
                                       className={classNames(
                                         active ? 'bg-gray-100' : '',
@@ -202,8 +196,7 @@ const Layout: FC<Props> = ({ children }) => {
                               tabIndex={0}
                               onClick={() => setSignUpModalOpen(true)}
                               onKeyDown={(e) => e.key === 'Enter' && setSignUpModalOpen(true)}
-                              className="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium cursor-pointer whitespace-nowrap"
-                              href="javascript:;"
+                              className="text-gray-300 hover:bg-gray-600 hover:text-white px-3 py-2 rounded-md text-sm font-medium cursor-pointer whitespace-nowrap"
                             >
                               Sign up
                             </a>
@@ -211,8 +204,7 @@ const Layout: FC<Props> = ({ children }) => {
                               tabIndex={0}
                               onClick={() => setLoginModalOpen(true)}
                               onKeyDown={(e) => e.key === 'Enter' && setLoginModalOpen(true)}
-                              className="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium cursor-pointer"
-                              href="javascript:;"
+                              className="text-gray-300 hover:bg-gray-600 hover:text-white px-3 py-2 rounded-md text-sm font-medium cursor-pointer"
                             >
                               Login
                             </a>
@@ -222,7 +214,7 @@ const Layout: FC<Props> = ({ children }) => {
                     </div>
                     <div className="-mr-2 flex md:hidden">
                       {/* Mobile menu button */}
-                      <Disclosure.Button className="inline-flex items-center justify-center rounded-md bg-gray-800 p-2 text-gray-400 hover:bg-gray-700 hover:text-white focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800">
+                      <Disclosure.Button className="inline-flex items-center justify-center rounded-md bg-gray-700 p-2 text-gray-400 hover:bg-gray-600 hover:text-white focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-700">
                         <span className="sr-only">Open main menu</span>
                         {open ? (
                           <XMarkIcon className="block h-6 w-6" aria-hidden="true" />
@@ -242,7 +234,7 @@ const Layout: FC<Props> = ({ children }) => {
 
       <main className="-mt-32">
         <div className="mx-auto max-w-7xl px-4 pb-12 sm:px-6 lg:px-8">
-          <div className="rounded-lg bg-white px-8 py-8 shadow">{children}</div>
+          <div className="rounded-lg bg-gray-50 px-8 py-8 shadow">{children}</div>
           <Footer />
         </div>
       </main>

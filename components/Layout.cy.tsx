@@ -5,6 +5,7 @@ import Layout from './Layout';
 
 const MOCK_SESSION: Session = {
   user: {
+    id: '1',
     email: 'john@doe.com',
     username: 'john',
     isAdmin: false,

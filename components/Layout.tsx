@@ -242,7 +242,7 @@ const Layout: FC<Props> = ({ children }) => {
 
       <main className="-mt-32">
         <div className="mx-auto max-w-7xl px-4 pb-12 sm:px-6 lg:px-8">
-          <div className="rounded-lg bg-white px-8 py-8 shadow">{children}</div>
+          <div className="rounded-lg bg-gray-50 px-8 py-8 shadow">{children}</div>
           <Footer />
         </div>
       </main>

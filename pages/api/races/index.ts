@@ -2,59 +2,60 @@ import type { NextApiRequest, NextApiResponse } from 'next';
 import { getSession } from 'next-auth/react';
 import { v4 as uuidv4 } from 'uuid';
 import prisma from '../../../lib/prisma';
-import { Rider } from '../../../lib/types';
+import { Race } from '../../../lib/types';
 
 const handler = async (req: NextApiRequest, res: NextApiResponse) => {
   const { method } = req;
 
   if (method === 'POST') {
-    return await addRider(req, res);
+    return await addRace(req, res);
   }
 
   if (method === 'GET') {
-    return await getRiders(req, res);
+    return await getRaces(req, res);
   }
 
   res.setHeader('Allow', ['POST', 'GET']);
   return res.status(405).end(`Method ${method} Not Allowed`);
 };
 
-const addRider = async (req: NextApiRequest, res: NextApiResponse) => {
+const addRace = async (req: NextApiRequest, res: NextApiResponse) => {
   const session = await getSession({ req });
 
   if (!session?.user.isAdmin) {
     return res.status(401).json({ message: 'Unauthorized' });
   }
 
-  const { firstname, lastname, numberplate } = req.body;
+  const { title, date, factor, wildcardPos } = req.body;
 
-  if (!firstname || !lastname || !numberplate) {
+  if (!title || !date || !factor || !wildcardPos) {
     return res.status(400).json({ message: 'Missing fields' });
   }
 
   try {
-    const newRider: Rider = {
+    const newRace: Race = {
       id: uuidv4(),
-      firstname,
-      lastname,
-      numberplate: Number(numberplate),
+      title,
+      date: new Date(date),
+      factor: Number(factor),
+      wildcardPos: Number(wildcardPos),
     };
 
-    const createdRider = await prisma.rider.create({
-      data: newRider,
+    const createdRace = await prisma.race.create({
+      data: newRace,
     });
-    return res.status(200).json(createdRider);
+    return res.status(200).json(createdRace);
   } catch (error) {
     console.error(error);
     return res.status(500).json({ message: 'Internal server error' });
   }
 };
 
-const getRiders = async (req: NextApiRequest, res: NextApiResponse) => {
+const getRaces = async (req: NextApiRequest, res: NextApiResponse) => {
   try {
-    const riders = await prisma.rider.findMany();
-    riders.sort((a: Rider, b: Rider) => a.numberplate - b.numberplate);
-    return res.status(200).json(riders);
+    const races = await prisma.race.findMany();
+    races.sort((a, b) => (a.date > b.date ? 1 : -1));
+    return res.status(200).json(races);
   } catch (error) {
     console.error(error);
     return res.status(500).json({ message: 'Internal server error' });

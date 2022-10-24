@@ -6,7 +6,6 @@ datasource db {
 generator client {
   provider = "prisma-client-js"
 }
-
 model User {
   id                 String             @id @default(uuid())
   email              String             @unique
@@ -15,10 +14,16 @@ model User {
   password           String
   isAdmin            Boolean
 }
-
 model Rider {
   id                 String             @id @default(uuid())
   firstname          String         
   lastname           String             
   numberplate        Int          
+}
+model Race {
+  id                String             @id @default(uuid())
+  title             String         
+  date              DateTime             
+  factor            Int          
+  wildcardPos       Int          
 }

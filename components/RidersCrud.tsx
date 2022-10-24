@@ -88,7 +88,6 @@ const useRiders = (serverSideRiders: Rider[]): UseRiders => {
 };
 
 const RidersCrud: FC<Props> = ({ serverSideRiders }) => {
-  console.log(serverSideRiders);
   const { riders, addRider, editRider, deleteRider, modalOpen, setModalOpen, selectedRider, onEditClick, onAddClick } =
     useRiders(serverSideRiders);
 

@@ -3,7 +3,7 @@ import { SessionProvider } from 'next-auth/react';
 import { LAYOUT_SELECTOR } from '../cypress/selectors';
 import Layout from './Layout';
 
-const MOCK_SESSION: Session = {
+const SESSION: Session = {
   user: {
     id: '1',
     email: 'john@doe.com',
@@ -16,7 +16,7 @@ const MOCK_SESSION: Session = {
 describe('Layout', () => {
   it('should render navigation properly', () => {
     cy.mount(
-      <SessionProvider session={MOCK_SESSION}>
+      <SessionProvider session={SESSION}>
         <Layout>
           <></>
         </Layout>

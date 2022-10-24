@@ -55,12 +55,12 @@ const Admin: FC<Props> = ({ serverSideRiders, serverSideRaces }) => {
       {session.data?.user?.isAdmin ? (
         <Layout>
           <div className="flex justify-center">
-            <h2 className="font-semibold text-gray-900 text-4xl mb-10">Races</h2>
+            <h2 className="font-semibold text-gray-700 text-2xl mb-10">Races</h2>
           </div>
 
           <RacesCrud serverSideRaces={serverSideRaces} />
           <div className="flex justify-center">
-            <h2 className="font-semibold text-gray-900 text-4xl mt-20 mb-10">Riders</h2>
+            <h2 className="font-semibold text-gray-700 text-2xl mt-20 mb-10">Riders</h2>
           </div>
           <RidersCrud serverSideRiders={serverSideRiders} />
         </Layout>
@@ -73,13 +73,19 @@ const Admin: FC<Props> = ({ serverSideRiders, serverSideRaces }) => {
 };
 
 export const getServerSideProps: GetServerSideProps = async () => {
-  const serverSideRiders = await prisma.rider.findMany();
-  const serverSideRaces = await prisma.race.findMany();
-  const sortedServerSideRiders = serverSideRiders.sort((a: Rider, b: Rider) => a.numberplate - b.numberplate);
+  const serverSideRiders = await prisma.rider.findMany({
+    orderBy: {
+      numberplate: 'asc',
+    },
+  });
+  const serverSideRaces = await prisma.race.findMany({
+    orderBy: {
+      date: 'asc',
+    },
+  });
 
-  const sortedServerSideRaces = serverSideRaces.sort((a: Race, b: Race) => (a.date > b.date ? 1 : -1));
   return {
-    props: { serverSideRiders: sortedServerSideRiders, serverSideRaces: JSON.parse(JSON.stringify(sortedServerSideRaces)) },
+    props: { serverSideRiders, serverSideRaces: JSON.parse(JSON.stringify(serverSideRaces)) },
   };
 };
 

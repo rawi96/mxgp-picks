@@ -52,8 +52,11 @@ const addRider = async (req: NextApiRequest, res: NextApiResponse) => {
 
 const getRiders = async (req: NextApiRequest, res: NextApiResponse) => {
   try {
-    const riders = await prisma.rider.findMany();
-    riders.sort((a: Rider, b: Rider) => a.numberplate - b.numberplate);
+    const riders = await prisma.rider.findMany({
+      orderBy: {
+        numberplate: 'asc',
+      },
+    });
     return res.status(200).json(riders);
   } catch (error) {
     console.error(error);

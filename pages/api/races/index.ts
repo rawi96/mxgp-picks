@@ -53,8 +53,11 @@ const addRace = async (req: NextApiRequest, res: NextApiResponse) => {
 
 const getRaces = async (req: NextApiRequest, res: NextApiResponse) => {
   try {
-    const races = await prisma.race.findMany();
-    races.sort((a, b) => (a.date > b.date ? 1 : -1));
+    const races = await prisma.race.findMany({
+      orderBy: {
+        date: 'asc',
+      },
+    });
     return res.status(200).json(races);
   } catch (error) {
     console.error(error);

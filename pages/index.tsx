@@ -16,7 +16,7 @@ const Index: FC<Props> = ({ serverSideRaces, serverSideRiders, serverSideUsers }
   return (
     <Layout>
       <div className="flex justify-center">
-        <h2 className="font-semibold text-gray-900 text-4xl mb-10">Races</h2>
+        <h2 className="font-semibold text-gray-700 text-2xl mb-10">Races</h2>
       </div>
       <RacesCarousel type="home" races={serverSideRaces} onEdit={() => {}} onDelete={() => {}} />
       <PersonalRanking users={serverSideUsers} />
@@ -25,19 +25,32 @@ const Index: FC<Props> = ({ serverSideRaces, serverSideRiders, serverSideUsers }
 };
 
 export const getStaticProps: GetStaticProps = async () => {
-  const serverSideRiders = await prisma.rider.findMany();
-  const serverSideRaces = await prisma.race.findMany();
-  const serverSideUsers = await prisma.user.findMany();
-  const sortedServerSideUsers = serverSideUsers.sort((a, b) => (a.score > b.score ? -1 : 1));
-  const sortedServerSideUsersWithPosition = sortedServerSideUsers.map((user, index) => ({
+  const serverSideRiders = await prisma.rider.findMany({
+    orderBy: {
+      numberplate: 'asc',
+    },
+  });
+  const serverSideRaces = await prisma.race.findMany({
+    orderBy: {
+      date: 'asc',
+    },
+  });
+  const serverSideUsers = await prisma.user.findMany({
+    orderBy: {
+      score: 'asc',
+    },
+  });
+
+  const serverSideUsersWithPosition = serverSideUsers.map((user, index) => ({
     ...user,
     position: index + 1,
   }));
+
   return {
     props: {
       serverSideRiders,
       serverSideRaces: JSON.parse(JSON.stringify(serverSideRaces)),
-      serverSideUsers: sortedServerSideUsersWithPosition,
+      serverSideUsers: serverSideUsersWithPosition,
     },
     revalidate: 10,
   };

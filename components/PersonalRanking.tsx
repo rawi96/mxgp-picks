@@ -20,7 +20,7 @@ const PersonalRanking: FC<Props> = ({ users }) => {
   return (
     <>
       <div className="flex justify-center">
-        <h2 className="font-semibold text-gray-900 text-4xl mt-16">
+        <h2 className="font-semibold text-gray-700 text-2xl mt-16">
           {session.data?.user && indexToMakeLoggedInUserVisible > -1 ? (
             <>You are on Position {users[indexOfLoggedInUser].position}!</>
           ) : (

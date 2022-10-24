@@ -20,8 +20,3 @@ export const dateToStringForNativeInput = (date: Date) => {
   const yyyy = castedDate.getFullYear();
   return `${yyyy}-${mm < 10 ? '0' + mm : mm}-${dd < 10 ? '0' + dd : dd}`;
 };
-
-// export const stringToDate = (date: string) => {
-//   const [dd, mm, yyyy] = date.split('.');
-//   return new Date(Number(yyyy), Number(mm) - 1, Number(dd));
-// };

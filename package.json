@@ -31,7 +31,7 @@
   "devDependencies": {
     "@smartive/prettier-config": "3.0.0",
     "@tailwindcss/forms": "0.5.3",
-    "@types/node": "18.11.4",
+    "@types/node": "18.11.8",
     "@types/react": "18.0.21",
     "@types/uuid": "8.3.4",
     "autoprefixer": "10.4.8",

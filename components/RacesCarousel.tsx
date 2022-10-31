@@ -47,11 +47,15 @@ const RightArrow = () => (
 const RacesCarousel: FC<Props> = ({ races, onEdit, onDelete, type }) => {
   return (
     <div className="flex justify-center">
-      <Carousel slide={false} leftControl={<LeftArrow />} rightControl={<RightArrow />}>
-        {races.map((race, index) => {
-          return <RaceCard index={index} key={race.id} race={race} onEdit={onEdit} onDelete={onDelete} type={type} />;
-        })}
-      </Carousel>
+      {races.length > 0 ? (
+        <Carousel slide={false} leftControl={<LeftArrow />} rightControl={<RightArrow />}>
+          {races.map((race, index) => {
+            return <RaceCard index={index} key={race.id} race={race} onEdit={onEdit} onDelete={onDelete} type={type} />;
+          })}
+        </Carousel>
+      ) : (
+        <p>No races scheduled!</p>
+      )}
     </div>
   );
 };

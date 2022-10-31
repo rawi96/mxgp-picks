@@ -75,8 +75,8 @@ export default class RaceRepo {
     this.prisma = prisma;
   }
 
-  public async getAll(): Promise<Race[]> {
-    return await prisma.race.findMany({
+  public async getAll(): Promise<any[]> {
+    return await this.prisma.race.findMany({
       ...this.includeNested,
       orderBy: {
         date: 'asc',
@@ -93,13 +93,13 @@ export default class RaceRepo {
   }
 
   public async create(entity: Race): Promise<Race> {
-    return await prisma.race.create({
+    return await this.prisma.race.create({
       data: entity,
     });
   }
 
-  public async createNested(entity: Race): Promise<Race> {
-    return await prisma.race.create({
+  public async createNested(entity: Race): Promise<any> {
+    return await this.prisma.race.create({
       ...this.getNestedData(entity),
       ...this.includeNested,
     });
@@ -114,8 +114,8 @@ export default class RaceRepo {
     });
   }
 
-  public async updateNested(id: string, entity: Race): Promise<Race> {
-    return await prisma.race.update({
+  public async updateNested(id: string, entity: Race): Promise<any> {
+    return await this.prisma.race.update({
       where: {
         id,
       },

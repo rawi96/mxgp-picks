@@ -3,7 +3,7 @@
   "scripts": {
     "dev": "npx prisma migrate dev && npx prisma db seed && next dev",
     "build": "next build",
-    "vercel-build": "prisma generate && prisma migrate deploy && next build",
+    "vercel-build": "prisma generate && prisma migrate deploy && prisma db seed && next build",
     "start": "next start",
     "lint": "next lint",
     "lint:fix": "prettier --write --ignore-path .gitignore .",

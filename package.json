@@ -1,7 +1,7 @@
 {
   "private": true,
   "scripts": {
-    "dev": "next dev",
+    "dev": "npx prisma migrate dev && next dev",
     "build": "next build",
     "vercel-build": "next build",
     "start": "next start",

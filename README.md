@@ -52,11 +52,10 @@
 
 ## Getting Started
 
-Add a `DATABASE_URL`to your local `.env`file.
+Add a Postgres `DATABASE_URL`to your local `.env`file.
 
 ```sh
 npm install
-npx prisma migrate dev
 npm run dev
 ```
 

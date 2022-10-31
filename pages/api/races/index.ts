@@ -26,24 +26,90 @@ const addRace = async (req: NextApiRequest, res: NextApiResponse) => {
     return res.status(401).json({ message: 'Unauthorized' });
   }
 
-  const { title, date, factor, wildcardPos } = req.body;
+  const { title, date, factor, wildcardPos, raceResult } = req.body;
 
   if (!title || !date || !factor || !wildcardPos) {
     return res.status(400).json({ message: 'Missing fields' });
   }
 
-  try {
-    const newRace: Race = {
-      id: uuidv4(),
-      title,
-      date: new Date(date),
-      factor: Number(factor),
-      wildcardPos: Number(wildcardPos),
-    };
+  const newRace: Race = {
+    id: uuidv4(),
+    title,
+    date: new Date(date),
+    factor: Number(factor),
+    wildcardPos: Number(wildcardPos),
+    raceResult,
+  };
 
-    const createdRace = await prisma.race.create({
-      data: newRace,
-    });
+  try {
+    let createdRace;
+    if (newRace.raceResult?.id && newRace.raceResult?.result && newRace.raceResult?.result.id) {
+      createdRace = await prisma.race.create({
+        data: {
+          ...newRace,
+          raceResult: {
+            create: {
+              id: newRace.raceResult?.id,
+              result: {
+                create: {
+                  id: newRace.raceResult?.result.id,
+                  first: {
+                    connect: {
+                      id: newRace.raceResult?.result.first.id,
+                    },
+                  },
+                  second: {
+                    connect: {
+                      id: newRace.raceResult?.result.second.id,
+                    },
+                  },
+                  third: {
+                    connect: {
+                      id: newRace.raceResult?.result.third.id,
+                    },
+                  },
+                  forth: {
+                    connect: {
+                      id: newRace.raceResult?.result.forth.id,
+                    },
+                  },
+                  fifth: {
+                    connect: {
+                      id: newRace.raceResult?.result.fifth.id,
+                    },
+                  },
+                  wildcard: {
+                    connect: {
+                      id: newRace.raceResult?.result.wildcard.id,
+                    },
+                  },
+                },
+              },
+            },
+          },
+        },
+        include: {
+          raceResult: {
+            include: {
+              result: {
+                include: {
+                  first: true,
+                  second: true,
+                  third: true,
+                  forth: true,
+                  fifth: true,
+                  wildcard: true,
+                },
+              },
+            },
+          },
+        },
+      });
+    } else {
+      createdRace = await prisma.race.create({
+        data: newRace,
+      });
+    }
     return res.status(200).json(createdRace);
   } catch (error) {
     console.error(error);
@@ -54,6 +120,22 @@ const addRace = async (req: NextApiRequest, res: NextApiResponse) => {
 const getRaces = async (req: NextApiRequest, res: NextApiResponse) => {
   try {
     const races = await prisma.race.findMany({
+      include: {
+        raceResult: {
+          include: {
+            result: {
+              include: {
+                first: true,
+                second: true,
+                third: true,
+                forth: true,
+                fifth: true,
+                wildcard: true,
+              },
+            },
+          },
+        },
+      },
       orderBy: {
         date: 'asc',
       },

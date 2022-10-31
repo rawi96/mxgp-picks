@@ -1,6 +1,7 @@
 import type { NextApiRequest, NextApiResponse } from 'next';
 import { getSession } from 'next-auth/react';
 import prisma from '../../../lib/prisma';
+import { Race } from '../../../lib/types';
 
 const handler = async (req: NextApiRequest, res: NextApiResponse) => {
   const session = await getSession({ req });
@@ -25,24 +26,101 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
 
 const updateRace = async (req: NextApiRequest, res: NextApiResponse) => {
   const id = req.query.id as string;
-  const { title, date, factor, wildcardPos } = req.body;
+  const { title, date, factor, wildcardPos, raceResult } = req.body;
 
   if (!title || !date || !factor || !wildcardPos) {
     return res.status(400).json({ message: 'Missing fields' });
   }
 
+  const newRace: Race = {
+    id,
+    title,
+    date: new Date(date),
+    factor: Number(factor),
+    wildcardPos: Number(wildcardPos),
+    raceResult,
+  };
+
   try {
-    const updatedRace = await prisma.race.update({
-      where: {
-        id,
-      },
-      data: {
-        title,
-        date: new Date(date),
-        factor: Number(factor),
-        wildcardPos: Number(wildcardPos),
-      },
-    });
+    let updatedRace;
+    if (newRace.raceResult?.id && newRace.raceResult?.result && newRace.raceResult?.result.id) {
+      updatedRace = await prisma.race.update({
+        where: {
+          id,
+        },
+        data: {
+          ...newRace,
+          raceResult: {
+            create: {
+              id: newRace.raceResult?.id,
+              result: {
+                create: {
+                  id: newRace.raceResult?.result.id,
+                  first: {
+                    connect: {
+                      id: newRace.raceResult?.result.first.id,
+                    },
+                  },
+                  second: {
+                    connect: {
+                      id: newRace.raceResult?.result.second.id,
+                    },
+                  },
+                  third: {
+                    connect: {
+                      id: newRace.raceResult?.result.third.id,
+                    },
+                  },
+                  forth: {
+                    connect: {
+                      id: newRace.raceResult?.result.forth.id,
+                    },
+                  },
+                  fifth: {
+                    connect: {
+                      id: newRace.raceResult?.result.fifth.id,
+                    },
+                  },
+                  wildcard: {
+                    connect: {
+                      id: newRace.raceResult?.result.wildcard.id,
+                    },
+                  },
+                },
+              },
+            },
+          },
+        },
+        include: {
+          raceResult: {
+            include: {
+              result: {
+                include: {
+                  first: true,
+                  second: true,
+                  third: true,
+                  forth: true,
+                  fifth: true,
+                  wildcard: true,
+                },
+              },
+            },
+          },
+        },
+      });
+    } else {
+      updatedRace = await prisma.race.update({
+        where: {
+          id,
+        },
+        data: {
+          title,
+          date: new Date(date),
+          factor: Number(factor),
+          wildcardPos: Number(wildcardPos),
+        },
+      });
+    }
     return res.status(200).json(updatedRace);
   } catch (error) {
     console.error(error);

@@ -2,6 +2,7 @@ import { Session } from 'next-auth';
 import { SessionProvider } from 'next-auth/react';
 import { AppProps } from 'next/app';
 import Head from 'next/head';
+import Notification from '../components/Notification';
 import SessionModals from '../components/SessionModals';
 import { ModalsContextProvider } from '../context/modalsContext';
 import '../styles/globals.css';
@@ -31,6 +32,7 @@ export default function MyApp({
       <SessionProvider session={pageProps.session}>
         <ModalsContextProvider>
           <SessionModals />
+          <Notification />
           <Component {...pageProps} />
         </ModalsContextProvider>
       </SessionProvider>

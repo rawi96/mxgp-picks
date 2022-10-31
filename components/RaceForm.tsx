@@ -1,8 +1,9 @@
-import { FC } from 'react';
+import { FC, useState } from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { v4 as uuidv4 } from 'uuid';
-import { Race } from '../lib/types';
+import { Race, Rider } from '../lib/types';
 import { dateToStringForNativeInput, REGEX_DATE } from '../utils/utils';
+import RiderSelector from './RiderSelector';
 
 const INPUT_VALID_CLASSES =
   'block w-full appearance-none rounded-md border border-gray-300 px-3 py-2 placeholder-gray-400 shadow-sm focus:border-gray-500 focus:outline-none focus:ring-gray-500 sm:text-sm';
@@ -14,29 +15,65 @@ interface FormInput {
   date: string;
   factor: string;
   wildcardPos: string;
+  pos1: string;
 }
 
 type Props = {
   addRace: (race: Race) => void;
   editRace: (id: string, race: Race) => void;
   prefilledRace: Race | null;
+  serverSideRiders: Rider[];
 };
 
-const RaceForm: FC<Props> = ({ addRace, editRace, prefilledRace }) => {
+const RaceForm: FC<Props> = ({ addRace, editRace, prefilledRace, serverSideRiders }) => {
   const {
     register,
     handleSubmit,
     formState: { errors },
   } = useForm<FormInput>();
 
+  const [selectedFirst, setSelectedFirst] = useState<Rider | null>(prefilledRace?.raceResult?.result.first || null);
+  const [selectedSecond, setSelectedSecond] = useState<Rider | null>(prefilledRace?.raceResult?.result.second || null);
+  const [selectedThird, setSelectedThird] = useState<Rider | null>(prefilledRace?.raceResult?.result.third || null);
+  const [selectedForth, setSelectedForth] = useState<Rider | null>(prefilledRace?.raceResult?.result.forth || null);
+  const [selectedFifth, setSelectedFifth] = useState<Rider | null>(prefilledRace?.raceResult?.result.fifth || null);
+  const [selectedWildcard, setSelectedWildcard] = useState<Rider | null>(prefilledRace?.raceResult?.result.wildcard || null);
+
+  const allRidersExceptSelected = serverSideRiders.filter(
+    (rider) =>
+      rider.id !== selectedFirst?.id &&
+      rider.id !== selectedSecond?.id &&
+      rider.id !== selectedThird?.id &&
+      rider.id !== selectedForth?.id &&
+      rider.id !== selectedFifth?.id &&
+      rider.id !== selectedWildcard?.id
+  );
+
   const onSubmit: SubmitHandler<FormInput> = async (data) => {
-    const race: Race = {
+    let race: Race = {
       id: prefilledRace?.id || uuidv4(),
       title: data.title,
       date: new Date(data.date),
       factor: Number(data.factor),
       wildcardPos: Number(data.wildcardPos),
     };
+    if (selectedFirst && selectedSecond && selectedThird && selectedForth && selectedFifth && selectedWildcard) {
+      race = {
+        ...race,
+        raceResult: {
+          id: prefilledRace?.raceResult?.id || uuidv4(),
+          result: {
+            id: prefilledRace?.raceResult?.result?.id || uuidv4(),
+            first: selectedFirst,
+            second: selectedSecond,
+            third: selectedThird,
+            forth: selectedForth,
+            fifth: selectedFifth,
+            wildcard: selectedWildcard,
+          },
+        },
+      };
+    }
 
     if (prefilledRace) {
       editRace(race.id, race);
@@ -128,6 +165,42 @@ const RaceForm: FC<Props> = ({ addRace, editRace, prefilledRace }) => {
               )}
             </div>
           </div>
+          <RiderSelector
+            label="1st"
+            riders={allRidersExceptSelected}
+            selectedRider={selectedFirst}
+            setSelectedRider={setSelectedFirst}
+          />
+          <RiderSelector
+            label="2nd"
+            riders={allRidersExceptSelected}
+            selectedRider={selectedSecond}
+            setSelectedRider={setSelectedSecond}
+          />
+          <RiderSelector
+            label="3rd"
+            riders={allRidersExceptSelected}
+            selectedRider={selectedThird}
+            setSelectedRider={setSelectedThird}
+          />
+          <RiderSelector
+            label="4th"
+            riders={allRidersExceptSelected}
+            selectedRider={selectedForth}
+            setSelectedRider={setSelectedForth}
+          />
+          <RiderSelector
+            label="5th"
+            riders={allRidersExceptSelected}
+            selectedRider={selectedFifth}
+            setSelectedRider={setSelectedFifth}
+          />
+          <RiderSelector
+            label="Wildcard"
+            riders={allRidersExceptSelected}
+            selectedRider={selectedWildcard}
+            setSelectedRider={setSelectedWildcard}
+          />
           <div>
             <button
               type="submit"

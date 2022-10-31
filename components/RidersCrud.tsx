@@ -1,6 +1,7 @@
 import { PlusIcon } from '@heroicons/react/24/outline';
 import { FC, useState } from 'react';
 import { Rider } from '../lib/types';
+import { useShowNotification } from '../utils/utils';
 import Modal from './Modal';
 import RiderForm from './RiderForm';
 import RiderTable from './RidersTable';
@@ -25,6 +26,7 @@ const useRiders = (serverSideRiders: Rider[]): UseRiders => {
   const [riders, setRiders] = useState<Rider[]>(serverSideRiders);
   const [modalOpen, setModalOpen] = useState(false);
   const [selectedRider, setSelectedRider] = useState<Rider | null>(null);
+  const { showNotification } = useShowNotification();
 
   const reloadRiders = async () => {
     const res = await fetch('/api/riders');
@@ -43,34 +45,49 @@ const useRiders = (serverSideRiders: Rider[]): UseRiders => {
   };
 
   const addRider = async (rider: Rider) => {
-    await fetch('/api/riders', {
+    const res = await fetch('/api/riders', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
       },
       body: JSON.stringify(rider),
     });
-    reloadRiders();
-    setModalOpen(false);
+    if (res.ok) {
+      showNotification('Successfully added!', 'Success');
+      setModalOpen(false);
+      reloadRiders();
+    } else {
+      showNotification('Something went wrong!', 'Error');
+    }
   };
 
   const editRider = async (id: string, rider: Rider) => {
-    await fetch(`/api/riders/${id}`, {
+    const res = await fetch(`/api/riders/${id}`, {
       method: 'PUT',
       headers: {
         'Content-Type': 'application/json',
       },
       body: JSON.stringify(rider),
     });
-    reloadRiders();
-    setModalOpen(false);
+    if (res.ok) {
+      showNotification('Successfully updated!', 'Success');
+      setModalOpen(false);
+      reloadRiders();
+    } else {
+      showNotification('Something went wrong!', 'Error');
+    }
   };
 
   const deleteRider = async (id: string) => {
-    await fetch(`/api/riders/${id}`, {
+    const res = await fetch(`/api/riders/${id}`, {
       method: 'DELETE',
     });
-    reloadRiders();
+    if (res.ok) {
+      showNotification('Successfully deleted!', 'Success');
+      reloadRiders();
+    } else {
+      showNotification('Rider is already used in a result!', 'Error');
+    }
   };
 
   return {

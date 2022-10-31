@@ -1,8 +1,7 @@
-import { FC, useContext, useState } from 'react';
+import { FC, useContext } from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { ModalsContext } from '../context/modalsContext';
-import { REGEX_EMAIL, REGEX_PASSWORD } from '../utils/utils';
-import Alert from './Alert';
+import { REGEX_EMAIL, REGEX_PASSWORD, useShowNotification } from '../utils/utils';
 
 const INPUT_VALID_CLASSES =
   'block w-full appearance-none rounded-md border border-gray-300 px-3 py-2 placeholder-gray-400 shadow-sm focus:border-gray-500 focus:outline-none focus:ring-gray-500 sm:text-sm';
@@ -17,7 +16,7 @@ interface FormInput {
 }
 
 const SignUp: FC = () => {
-  const [alert, setAlert] = useState('');
+  const { showNotification } = useShowNotification();
 
   const {
     register,
@@ -39,10 +38,10 @@ const SignUp: FC = () => {
     });
     if (res.ok) {
       setSignUpModalOpen(false);
-      setLoginModalOpen(true);
+      showNotification('Sign up successful', 'Success');
     } else {
       const data = await res.json();
-      setAlert(data.message || 'Something went wrong');
+      showNotification(data.message || 'Something went wrong!', 'Error');
     }
   };
   return (
@@ -51,7 +50,6 @@ const SignUp: FC = () => {
 
       <div className="mt-8 sm:mx-auto sm:w-full sm:max-w-md">
         <form className="space-y-6" onSubmit={handleSubmit(onSubmit)}>
-          {alert && <Alert text={alert} />}
           <div>
             <label htmlFor="email" className="block text-sm font-medium text-gray-700">
               Email address

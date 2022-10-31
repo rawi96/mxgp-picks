@@ -58,7 +58,7 @@ const Admin: FC<Props> = ({ serverSideRiders, serverSideRaces }) => {
             <h2 className="font-semibold text-gray-700 text-2xl mb-10">Races</h2>
           </div>
 
-          <RacesCrud serverSideRaces={serverSideRaces} />
+          <RacesCrud serverSideRaces={serverSideRaces} serverSideRiders={serverSideRiders} />
           <div className="flex justify-center">
             <h2 className="font-semibold text-gray-700 text-2xl mt-20 mb-10">Riders</h2>
           </div>
@@ -79,6 +79,22 @@ export const getServerSideProps: GetServerSideProps = async () => {
     },
   });
   const serverSideRaces = await prisma.race.findMany({
+    include: {
+      raceResult: {
+        include: {
+          result: {
+            include: {
+              first: true,
+              second: true,
+              third: true,
+              forth: true,
+              fifth: true,
+              wildcard: true,
+            },
+          },
+        },
+      },
+    },
     orderBy: {
       date: 'asc',
     },

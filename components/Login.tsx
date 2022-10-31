@@ -1,8 +1,8 @@
 import { signIn } from 'next-auth/react';
-import { FC, useContext, useState } from 'react';
+import { FC, useContext } from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { ModalsContext } from '../context/modalsContext';
-import Alert from './Alert';
+import { useShowNotification } from '../utils/utils';
 
 const INPUT_VALID_CLASSES =
   'block w-full appearance-none rounded-md border border-gray-300 px-3 py-2 placeholder-gray-400 shadow-sm focus:border-gray-500 focus:outline-none focus:ring-gray-500 sm:text-sm';
@@ -15,8 +15,8 @@ interface FormInput {
 }
 
 const Login: FC = () => {
-  const [alert, setAlert] = useState('');
   const { setLoginModalOpen, setSignUpModalOpen } = useContext(ModalsContext);
+  const { showNotification } = useShowNotification();
 
   const {
     register,
@@ -33,8 +33,9 @@ const Login: FC = () => {
     });
     if (res && res.ok) {
       setLoginModalOpen(false);
+      showNotification('Login successful', 'Success');
     } else {
-      setAlert('Wrong email or password!');
+      showNotification('Email or password incorrect!', 'Error');
     }
   };
   return (
@@ -43,7 +44,6 @@ const Login: FC = () => {
 
       <div className="mt-8 sm:mx-auto sm:w-full sm:max-w-md">
         <form className="space-y-6" onSubmit={handleSubmit(onSubmit)}>
-          {alert && <Alert text={alert} />}
           <div>
             <label htmlFor="email" className="block text-sm font-medium text-gray-700">
               Email address

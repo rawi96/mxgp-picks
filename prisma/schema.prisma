@@ -49,30 +49,30 @@ model Race {
   date              DateTime             
   factor            Int          
   wildcardPos       Int  
-  raceResult        RaceResult?   
+  raceResult        RaceResult? 
   picks             Pick[]
 }
 model RaceResult {
   id                String         @id @default(uuid())
-  race              Race           @relation(fields: [raceId], references: [id])
+  race              Race           @relation(fields: [raceId], references: [id], onDelete: Cascade, onUpdate: Cascade)
   raceId            String         @unique
-  result            Result         @relation(fields: [resultId], references: [id])
+  result            Result         @relation(fields: [resultId], references: [id], onDelete: Cascade, onUpdate: Cascade)
   resultId          String         @unique
 }
 model Result {
   id              String             @id @default(uuid())
-  first           Rider              @relation("first", fields: [firstId], references: [id])
-  firstId         String             @unique
-  second          Rider              @relation("second", fields: [secondId], references: [id])
-  secondId        String             @unique
-  third           Rider              @relation("third", fields: [thirdId], references: [id])
-  thirdId         String             @unique
-  forth           Rider              @relation("forth", fields: [forthId], references: [id])
-  forthId         String             @unique
-  fifth           Rider              @relation("fifth", fields: [fifthId], references: [id])
-  fifthId         String             @unique
-  wildcard        Rider              @relation("wildcard", fields: [wildcardId], references: [id])
-  wildcardId      String             @unique
+  first           Rider              @relation("first", fields: [firstId], references: [id], onDelete: SetNull, onUpdate: Cascade)
+  firstId         String             
+  second          Rider              @relation("second", fields: [secondId], references: [id], onDelete: SetNull, onUpdate: Cascade)
+  secondId        String             
+  third           Rider              @relation("third", fields: [thirdId], references: [id], onDelete: SetNull, onUpdate: Cascade)
+  thirdId         String             
+  forth           Rider              @relation("forth", fields: [forthId], references: [id], onDelete: SetNull, onUpdate: Cascade)
+  forthId         String             
+  fifth           Rider              @relation("fifth", fields: [fifthId], references: [id], onDelete: SetNull, onUpdate: Cascade)
+  fifthId         String             
+  wildcard        Rider              @relation("wildcard", fields: [wildcardId], references: [id], onDelete: SetNull, onUpdate: Cascade)
+  wildcardId      String             
   raceResult      RaceResult?
   pick            Pick?
 }

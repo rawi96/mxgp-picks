@@ -1,12 +1,14 @@
 import { PlusIcon } from '@heroicons/react/24/outline';
 import { FC, useState } from 'react';
-import { Race } from '../lib/types';
+import { Race, Rider } from '../lib/types';
+import { useShowNotification } from '../utils/utils';
 import Modal from './Modal';
 import RaceForm from './RaceForm';
 import RacesCarousel from './RacesCarousel';
 
 type Props = {
   serverSideRaces: Race[];
+  serverSideRiders: Rider[];
 };
 
 type UseRaces = {
@@ -25,6 +27,7 @@ const useRaces = (serverSideRaces: Race[]): UseRaces => {
   const [races, setRaces] = useState<Race[]>(serverSideRaces);
   const [modalOpen, setModalOpen] = useState(false);
   const [selectedRace, setSelectedRace] = useState<Race | null>(null);
+  const { showNotification } = useShowNotification();
 
   const reloadRaces = async () => {
     const res = await fetch('/api/races');
@@ -43,34 +46,52 @@ const useRaces = (serverSideRaces: Race[]): UseRaces => {
   };
 
   const addRace = async (race: Race) => {
-    await fetch('/api/races', {
+    const res = await fetch('/api/races', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
       },
       body: JSON.stringify(race),
     });
-    reloadRaces();
-    setModalOpen(false);
+    if (res.ok) {
+      setModalOpen(false);
+      showNotification('Successfully added!', 'Success');
+      reloadRaces();
+    } else {
+      showNotification('Something went wrong', 'Error');
+    }
   };
 
   const editRace = async (id: string, race: Race) => {
-    await fetch(`/api/races/${id}`, {
+    const res = await fetch(`/api/races/${id}`, {
       method: 'PUT',
       headers: {
         'Content-Type': 'application/json',
       },
       body: JSON.stringify(race),
     });
-    reloadRaces();
-    setModalOpen(false);
+    if (res.ok) {
+      reloadRaces();
+      setModalOpen(false);
+      showNotification('Successfully updated!', 'Success');
+      reloadRaces();
+    } else {
+      showNotification('Something went wrong', 'Error');
+    }
   };
 
   const deleteRace = async (id: string) => {
-    await fetch(`/api/races/${id}`, {
+    const res = await fetch(`/api/races/${id}`, {
       method: 'DELETE',
     });
-    reloadRaces();
+    if (res.ok) {
+      reloadRaces();
+      setModalOpen(false);
+      showNotification('Successfully deleted!', 'Success');
+      reloadRaces();
+    } else {
+      showNotification('Something went wrong!', 'Error');
+    }
   };
 
   return {
@@ -86,14 +107,14 @@ const useRaces = (serverSideRaces: Race[]): UseRaces => {
   };
 };
 
-const RacesCrud: FC<Props> = ({ serverSideRaces }) => {
+const RacesCrud: FC<Props> = ({ serverSideRaces, serverSideRiders }) => {
   const { races, addRace, editRace, deleteRace, modalOpen, setModalOpen, selectedRace, onEditClick, onAddClick } =
     useRaces(serverSideRaces);
 
   return (
     <>
       <Modal open={modalOpen} setOpen={setModalOpen}>
-        <RaceForm prefilledRace={selectedRace} addRace={addRace} editRace={editRace} />
+        <RaceForm prefilledRace={selectedRace} addRace={addRace} editRace={editRace} serverSideRiders={serverSideRiders} />
       </Modal>
       <RacesCarousel type="admin" races={races} onEdit={onEditClick} onDelete={deleteRace} />
       <div className="flex justify-center mt-10">

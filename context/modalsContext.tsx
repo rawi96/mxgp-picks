@@ -5,6 +5,12 @@ type ModalsContextType = {
   signUpModalOpen: boolean;
   setLoginModalOpen: Dispatch<SetStateAction<boolean>>;
   setSignUpModalOpen: Dispatch<SetStateAction<boolean>>;
+  notificationModalOpen: boolean;
+  setNotificationModalOpen: Dispatch<SetStateAction<boolean>>;
+  notificationModalMessage: string;
+  setNotificationModalMessage: Dispatch<SetStateAction<string>>;
+  notificationType: 'Success' | 'Error';
+  setNotificationType: Dispatch<SetStateAction<'Success' | 'Error'>>;
 };
 
 const modalsContextDefaultValues: ModalsContextType = {
@@ -12,6 +18,12 @@ const modalsContextDefaultValues: ModalsContextType = {
   signUpModalOpen: false,
   setLoginModalOpen: () => null,
   setSignUpModalOpen: () => null,
+  notificationModalOpen: false,
+  setNotificationModalOpen: () => null,
+  notificationModalMessage: '',
+  setNotificationModalMessage: () => null,
+  notificationType: 'Success',
+  setNotificationType: () => null,
 };
 
 export const ModalsContext = createContext<ModalsContextType>(modalsContextDefaultValues);
@@ -23,11 +35,20 @@ type Props = {
 export function ModalsContextProvider({ children }: Props) {
   const [loginModalOpen, setLoginModalOpen] = useState(false);
   const [signUpModalOpen, setSignUpModalOpen] = useState(false);
+  const [notificationModalOpen, setNotificationModalOpen] = useState(false);
+  const [notificationModalMessage, setNotificationModalMessage] = useState('');
+  const [notificationType, setNotificationType] = useState<'Success' | 'Error'>('Success');
   const value = {
     loginModalOpen,
     signUpModalOpen,
     setLoginModalOpen,
     setSignUpModalOpen,
+    notificationModalOpen,
+    setNotificationModalOpen,
+    notificationModalMessage,
+    setNotificationModalMessage,
+    notificationType,
+    setNotificationType,
   };
 
   return <ModalsContext.Provider value={value}>{children}</ModalsContext.Provider>;

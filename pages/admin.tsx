@@ -67,7 +67,6 @@ const Admin: FC<Props> = ({ serverSideRiders, serverSideRaces }) => {
       ) : (
         <></>
       )}
-      ;
     </>
   );
 };

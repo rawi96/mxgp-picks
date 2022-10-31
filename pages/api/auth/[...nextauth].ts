@@ -3,6 +3,7 @@ import NextAuth from 'next-auth';
 import CredentialsProvider from 'next-auth/providers/credentials';
 import { comparePasswords } from '../../../lib/bcrypt';
 import prisma from '../../../lib/prisma';
+import UserRepo from '../../../lib/repos/userRepo';
 
 const authHandler: NextApiHandler = (req, res) => NextAuth(req, res, options);
 export default authHandler;
@@ -19,10 +20,9 @@ const options = {
         if (!credentials) {
           return null;
         }
+        const userRepo = new UserRepo(prisma);
         try {
-          const user = await prisma.user.findUnique({
-            where: { email: credentials.email },
-          });
+          const user = await userRepo.getByEmail(credentials.email);
           if (user && (await comparePasswords(credentials.password, user.password))) {
             return { id: user.id, email: user.email, username: user.username, isAdmin: user.isAdmin };
           } else {
@@ -37,9 +37,8 @@ const options = {
   secret: process.env.SECRET,
   callbacks: {
     async session({ session }: { session: any }) {
-      const user = await prisma.user.findUnique({
-        where: { email: session.user.email },
-      });
+      const userRepo = new UserRepo(prisma);
+      const user = await userRepo.getByEmail(session.user.email);
       session = {
         ...session,
         user: {

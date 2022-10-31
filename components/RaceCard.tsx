@@ -83,6 +83,15 @@ const RaceCard: FC<Props> = ({ race, index, onEdit, onDelete, type }) => {
                       </td>
                       <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">TODO</td>
                     </tr>
+                    <tr>
+                      <td className="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-gray-900 sm:pl-6">
+                        Wildcard ({race.wildcardPos})
+                      </td>
+                      <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
+                        {race.raceResult?.result.wildcard.firstname} {race.raceResult?.result.wildcard.lastname}
+                      </td>
+                      <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">TODO</td>
+                    </tr>
                   </tbody>
                 </table>
               </div>

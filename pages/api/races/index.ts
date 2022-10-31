@@ -2,6 +2,7 @@ import type { NextApiRequest, NextApiResponse } from 'next';
 import { getSession } from 'next-auth/react';
 import { v4 as uuidv4 } from 'uuid';
 import prisma from '../../../lib/prisma';
+import RaceRepo from '../../../lib/repos/raceRepo';
 import { Race } from '../../../lib/types';
 
 const handler = async (req: NextApiRequest, res: NextApiResponse) => {
@@ -41,75 +42,17 @@ const addRace = async (req: NextApiRequest, res: NextApiResponse) => {
     raceResult,
   };
 
+  const raceRepo = new RaceRepo(prisma);
+
   try {
     let createdRace;
+
     if (newRace.raceResult?.id && newRace.raceResult?.result && newRace.raceResult?.result.id) {
-      createdRace = await prisma.race.create({
-        data: {
-          ...newRace,
-          raceResult: {
-            create: {
-              id: newRace.raceResult?.id,
-              result: {
-                create: {
-                  id: newRace.raceResult?.result.id,
-                  first: {
-                    connect: {
-                      id: newRace.raceResult?.result.first.id,
-                    },
-                  },
-                  second: {
-                    connect: {
-                      id: newRace.raceResult?.result.second.id,
-                    },
-                  },
-                  third: {
-                    connect: {
-                      id: newRace.raceResult?.result.third.id,
-                    },
-                  },
-                  forth: {
-                    connect: {
-                      id: newRace.raceResult?.result.forth.id,
-                    },
-                  },
-                  fifth: {
-                    connect: {
-                      id: newRace.raceResult?.result.fifth.id,
-                    },
-                  },
-                  wildcard: {
-                    connect: {
-                      id: newRace.raceResult?.result.wildcard.id,
-                    },
-                  },
-                },
-              },
-            },
-          },
-        },
-        include: {
-          raceResult: {
-            include: {
-              result: {
-                include: {
-                  first: true,
-                  second: true,
-                  third: true,
-                  forth: true,
-                  fifth: true,
-                  wildcard: true,
-                },
-              },
-            },
-          },
-        },
-      });
+      createdRace = raceRepo.createNested(newRace);
     } else {
-      createdRace = await prisma.race.create({
-        data: newRace,
-      });
+      createdRace = raceRepo.create(newRace);
     }
+
     return res.status(200).json(createdRace);
   } catch (error) {
     console.error(error);
@@ -118,28 +61,10 @@ const addRace = async (req: NextApiRequest, res: NextApiResponse) => {
 };
 
 const getRaces = async (req: NextApiRequest, res: NextApiResponse) => {
+  const raceRepo = new RaceRepo(prisma);
+
   try {
-    const races = await prisma.race.findMany({
-      include: {
-        raceResult: {
-          include: {
-            result: {
-              include: {
-                first: true,
-                second: true,
-                third: true,
-                forth: true,
-                fifth: true,
-                wildcard: true,
-              },
-            },
-          },
-        },
-      },
-      orderBy: {
-        date: 'asc',
-      },
-    });
+    const races = await raceRepo.getAll();
     return res.status(200).json(races);
   } catch (error) {
     console.error(error);

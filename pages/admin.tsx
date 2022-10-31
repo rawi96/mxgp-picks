@@ -6,6 +6,8 @@ import Layout from '../components/Layout';
 import RacesCrud from '../components/RacesCrud';
 import RidersCrud from '../components/RidersCrud';
 import prisma from '../lib/prisma';
+import RaceRepo from '../lib/repos/raceRepo';
+import RiderRepo from '../lib/repos/riderRepo';
 import { Race, Rider } from '../lib/types';
 
 /*
@@ -42,7 +44,7 @@ const useAdminRoute = () => {
     if (session.status !== 'loading' && !session.data?.user?.isAdmin) {
       router.push('/');
     }
-  }, [session]);
+  }, [session, router]);
 
   return session;
 };
@@ -72,32 +74,8 @@ const Admin: FC<Props> = ({ serverSideRiders, serverSideRaces }) => {
 };
 
 export const getServerSideProps: GetServerSideProps = async () => {
-  const serverSideRiders = await prisma.rider.findMany({
-    orderBy: {
-      numberplate: 'asc',
-    },
-  });
-  const serverSideRaces = await prisma.race.findMany({
-    include: {
-      raceResult: {
-        include: {
-          result: {
-            include: {
-              first: true,
-              second: true,
-              third: true,
-              forth: true,
-              fifth: true,
-              wildcard: true,
-            },
-          },
-        },
-      },
-    },
-    orderBy: {
-      date: 'asc',
-    },
-  });
+  const serverSideRiders = await new RiderRepo(prisma).getAll();
+  const serverSideRaces = await new RaceRepo(prisma).getAll();
 
   return {
     props: { serverSideRiders, serverSideRaces: JSON.parse(JSON.stringify(serverSideRaces)) },

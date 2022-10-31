@@ -1,6 +1,8 @@
 import type { NextApiRequest, NextApiResponse } from 'next';
 import { getSession } from 'next-auth/react';
 import prisma from '../../../lib/prisma';
+import RiderRepo from '../../../lib/repos/riderRepo';
+import { Rider } from '../../../lib/types';
 
 const handler = async (req: NextApiRequest, res: NextApiResponse) => {
   const session = await getSession({ req });
@@ -31,17 +33,17 @@ const updateRider = async (req: NextApiRequest, res: NextApiResponse) => {
     return res.status(400).json({ message: 'Missing fields' });
   }
 
+  const newRider: Rider = {
+    id,
+    firstname,
+    lastname,
+    numberplate: Number(numberplate),
+  };
+
+  const riderRepo = new RiderRepo(prisma);
+
   try {
-    const updatedRider = await prisma.rider.update({
-      where: {
-        id,
-      },
-      data: {
-        firstname,
-        lastname,
-        numberplate: Number(numberplate),
-      },
-    });
+    const updatedRider = await riderRepo.update(id, newRider);
     return res.status(200).json(updatedRider);
   } catch (error) {
     console.error(error);
@@ -56,12 +58,10 @@ const deleteRider = async (req: NextApiRequest, res: NextApiResponse) => {
     return res.status(400).json({ message: 'Missing fields' });
   }
 
+  const riderRepo = new RiderRepo(prisma);
+
   try {
-    const deletedRider = await prisma.rider.delete({
-      where: {
-        id,
-      },
-    });
+    const deletedRider = await riderRepo.delete(id);
     return res.status(200).json(deletedRider);
   } catch (error) {
     console.error(error);

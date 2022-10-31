@@ -39,16 +39,6 @@ const RaceForm: FC<Props> = ({ addRace, editRace, prefilledRace, serverSideRider
   const [selectedFifth, setSelectedFifth] = useState<Rider | null>(prefilledRace?.raceResult?.result.fifth || null);
   const [selectedWildcard, setSelectedWildcard] = useState<Rider | null>(prefilledRace?.raceResult?.result.wildcard || null);
 
-  const allRidersExceptSelected = serverSideRiders.filter(
-    (rider) =>
-      rider.id !== selectedFirst?.id &&
-      rider.id !== selectedSecond?.id &&
-      rider.id !== selectedThird?.id &&
-      rider.id !== selectedForth?.id &&
-      rider.id !== selectedFifth?.id &&
-      rider.id !== selectedWildcard?.id
-  );
-
   const onSubmit: SubmitHandler<FormInput> = async (data) => {
     let race: Race = {
       id: prefilledRace?.id || uuidv4(),
@@ -166,40 +156,19 @@ const RaceForm: FC<Props> = ({ addRace, editRace, prefilledRace, serverSideRider
             </div>
           </div>
           <RiderSelector
-            label="1st"
-            riders={allRidersExceptSelected}
-            selectedRider={selectedFirst}
-            setSelectedRider={setSelectedFirst}
-          />
-          <RiderSelector
-            label="2nd"
-            riders={allRidersExceptSelected}
-            selectedRider={selectedSecond}
-            setSelectedRider={setSelectedSecond}
-          />
-          <RiderSelector
-            label="3rd"
-            riders={allRidersExceptSelected}
-            selectedRider={selectedThird}
-            setSelectedRider={setSelectedThird}
-          />
-          <RiderSelector
-            label="4th"
-            riders={allRidersExceptSelected}
-            selectedRider={selectedForth}
-            setSelectedRider={setSelectedForth}
-          />
-          <RiderSelector
-            label="5th"
-            riders={allRidersExceptSelected}
-            selectedRider={selectedFifth}
-            setSelectedRider={setSelectedFifth}
-          />
-          <RiderSelector
-            label="Wildcard"
-            riders={allRidersExceptSelected}
-            selectedRider={selectedWildcard}
-            setSelectedRider={setSelectedWildcard}
+            serverSideRiders={serverSideRiders}
+            selectedFirst={selectedFirst}
+            selectedSecond={selectedSecond}
+            selectedThird={selectedThird}
+            selectedForth={selectedForth}
+            selectedFifth={selectedFifth}
+            selectedWildcard={selectedWildcard}
+            setSelectedFirst={setSelectedFirst}
+            setSelectedSecond={setSelectedSecond}
+            setSelectedThird={setSelectedThird}
+            setSelectedForth={setSelectedForth}
+            setSelectedFifth={setSelectedFifth}
+            setSelectedWildcard={setSelectedWildcard}
           />
           <div>
             <button

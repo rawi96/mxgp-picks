@@ -4,6 +4,7 @@ import { FC } from 'react';
 import Layout from '../components/Layout';
 import UsersTable from '../components/UsersTable';
 import prisma from '../lib/prisma';
+import UserRepo from '../lib/repos/userRepo';
 import { User } from '../lib/types';
 
 type Props = {
@@ -49,20 +50,11 @@ const Ranking: FC<Props> = ({ serverSideUsers }) => {
 };
 
 export const getStaticProps: GetStaticProps = async () => {
-  const serverSideUsers = await prisma.user.findMany({
-    orderBy: {
-      score: 'asc',
-    },
-  });
-
-  const serverSideUsersWithPosition = serverSideUsers.map((user, index) => ({
-    ...user,
-    position: index + 1,
-  }));
+  const serverSideUsers = await new UserRepo(prisma).getAllWithPosition();
 
   return {
     props: {
-      serverSideUsers: serverSideUsersWithPosition,
+      serverSideUsers,
     },
     revalidate: 10,
   };

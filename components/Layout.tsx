@@ -144,7 +144,7 @@ const Layout: FC<Props> = ({ children }) => {
                                 <span className="sr-only">Open user menu</span>
                                 <span className="inline-flex h-10 w-10 items-center justify-center rounded-full bg-red-600">
                                   <span className="text-sm font-medium leading-none text-white">
-                                    {session.data.user.username.substring(0, 2).toUpperCase()}
+                                    {session.data.user.username && session.data.user.username.substring(0, 2).toUpperCase()}
                                   </span>
                                 </span>
                               </Menu.Button>

@@ -2,6 +2,7 @@ import type { NextApiRequest, NextApiResponse } from 'next';
 import { v4 as uuidv4 } from 'uuid';
 import { hashPassword } from '../../lib/bcrypt';
 import prisma from '../../lib/prisma';
+import UserRepo from '../../lib/repos/userRepo';
 import { User } from '../../lib/types';
 import { REGEX_EMAIL, REGEX_PASSWORD } from '../../utils/utils';
 
@@ -26,24 +27,18 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
     return res.status(400).json({ message: 'Invalid password' });
   }
 
-  const emailExists = await prisma.user.findUnique({
-    where: {
-      email,
-    },
-  });
+  const userRepo = new UserRepo(prisma);
+
+  const emailExists = await userRepo.getByEmail(email);
 
   if (emailExists) {
-    return res.status(400).json({ message: 'Email already exists' });
+    return res.status(400).json({ message: 'Email already exists!' });
   }
 
-  const usernameExists = await prisma.user.findUnique({
-    where: {
-      username,
-    },
-  });
+  const usernameExists = await userRepo.getByUsername(username);
 
   if (usernameExists) {
-    return res.status(400).json({ message: 'Username already exists' });
+    return res.status(400).json({ message: 'Username already exists!' });
   }
 
   try {
@@ -56,9 +51,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
       score: 0,
     };
 
-    const createdUser = await prisma.user.create({
-      data: newUser,
-    });
+    const createdUser = await userRepo.create(newUser);
     return res.status(200).json(createdUser);
   } catch (error) {
     console.error(error);

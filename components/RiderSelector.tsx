@@ -1,104 +1,87 @@
-import { Combobox } from '@headlessui/react';
-import { CheckIcon, ChevronDownIcon } from '@heroicons/react/20/solid';
-import { Dispatch, FC, SetStateAction, useState } from 'react';
+import { Dispatch, FC, SetStateAction } from 'react';
 import { Rider } from '../lib/types';
-import { classNames } from '../utils/utils';
+import RiderCombobox from './RiderCombobox';
 
 type Props = {
-  riders: Rider[];
-  selectedRider: Rider | null;
-  setSelectedRider: Dispatch<SetStateAction<null | Rider>>;
-  label: string;
+  serverSideRiders: Rider[];
+  selectedFirst: Rider | null;
+  selectedSecond: Rider | null;
+  selectedThird: Rider | null;
+  selectedForth: Rider | null;
+  selectedFifth: Rider | null;
+  selectedWildcard: Rider | null;
+  setSelectedFirst: Dispatch<SetStateAction<Rider | null>>;
+  setSelectedSecond: Dispatch<SetStateAction<Rider | null>>;
+  setSelectedThird: Dispatch<SetStateAction<Rider | null>>;
+  setSelectedForth: Dispatch<SetStateAction<Rider | null>>;
+  setSelectedFifth: Dispatch<SetStateAction<Rider | null>>;
+  setSelectedWildcard: Dispatch<SetStateAction<Rider | null>>;
 };
 
-const RiderSelector: FC<Props> = ({ riders, selectedRider, setSelectedRider, label }) => {
-  const [query, setQuery] = useState('');
-
-  const filteredRider =
-    query === ''
-      ? riders
-      : riders.filter((rider) => {
-          const lowerQuery = query.toLowerCase();
-          return (
-            rider.firstname.toLowerCase().includes(lowerQuery) ||
-            rider.lastname.toLowerCase().includes(lowerQuery) ||
-            rider.numberplate.toString().includes(lowerQuery)
-          );
-        });
+const RiderSelector: FC<Props> = ({
+  serverSideRiders,
+  selectedFirst,
+  selectedSecond,
+  selectedThird,
+  selectedForth,
+  selectedFifth,
+  selectedWildcard,
+  setSelectedFirst,
+  setSelectedSecond,
+  setSelectedThird,
+  setSelectedForth,
+  setSelectedFifth,
+  setSelectedWildcard,
+}) => {
+  const allRidersExceptSelected = serverSideRiders.filter(
+    (rider) =>
+      rider.id !== selectedFirst?.id &&
+      rider.id !== selectedSecond?.id &&
+      rider.id !== selectedThird?.id &&
+      rider.id !== selectedForth?.id &&
+      rider.id !== selectedFifth?.id &&
+      rider.id !== selectedWildcard?.id
+  );
 
   return (
-    <Combobox as="div" value={selectedRider} onChange={setSelectedRider}>
-      <div className="flex justify-between">
-        <Combobox.Label className="block text-sm font-medium text-gray-700">{label}</Combobox.Label>
-        {selectedRider && (
-          <div
-            tabIndex={0}
-            onClick={() => setSelectedRider(null)}
-            onKeyDown={(e) => {
-              if (e.key === 'Enter') {
-                setSelectedRider(null);
-              }
-            }}
-            className="mr-1 block text-sm font-medium rounded text-red-600 cursor-pointer hover:text-red-900 focus:outline-none focus:ring-2 focus:ring-gray-500"
-          >
-            Clear
-          </div>
-        )}
-      </div>
-      <div className="relative mt-1">
-        <Combobox.Input
-          className="w-full rounded-md border border-gray-300 bg-white py-2 pl-3 pr-10 shadow-sm focus:border-gray-500 focus:outline-none focus:ring-1 focus:ring-gray-500 sm:text-sm"
-          onChange={(event) => setQuery(event.target.value)}
-          displayValue={(rider: Rider) => rider && `${rider?.numberplate} ${rider?.firstname} ${rider?.lastname}`}
-        />
-        <Combobox.Button className="absolute inset-y-0 right-0 flex items-center rounded-r-md px-2">
-          <ChevronDownIcon
-            tabIndex={0}
-            className="h-5 w-5 text-gray-400 rounded focus:outline-none focus:ring-2 focus:ring-gray-500"
-            aria-hidden="true"
-          />
-        </Combobox.Button>
-
-        {filteredRider.length > 0 && (
-          <Combobox.Options className="absolute z-10 mt-1 max-h-60 w-full overflow-auto rounded-md bg-white py-1 text-base shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm">
-            {filteredRider.map((rider) => (
-              <Combobox.Option
-                key={rider.id}
-                value={rider}
-                className={({ active }) =>
-                  classNames(
-                    'relative cursor-default select-none py-2 pl-8 pr-4',
-                    active ? 'bg-gray-600 text-white' : 'text-gray-900'
-                  )
-                }
-              >
-                {({ active, selected }) => (
-                  <>
-                    <span className={classNames('block truncate', selected ? 'font-semibold' : 'font-normal')}>
-                      <div className="flex">
-                        <div className="w-16">{rider?.numberplate}</div>
-                        <div>{`${rider?.firstname} ${rider?.lastname}`}</div>
-                      </div>
-                    </span>
-
-                    {selected && (
-                      <span
-                        className={classNames(
-                          'absolute inset-y-0 left-0 flex items-center pl-1.5',
-                          active ? 'text-white' : 'text-gray-600'
-                        )}
-                      >
-                        <CheckIcon className="h-5 w-5" aria-hidden="true" />
-                      </span>
-                    )}
-                  </>
-                )}
-              </Combobox.Option>
-            ))}
-          </Combobox.Options>
-        )}
-      </div>
-    </Combobox>
+    <>
+      <RiderCombobox
+        label="1st"
+        riders={allRidersExceptSelected}
+        selectedRider={selectedFirst}
+        setSelectedRider={setSelectedFirst}
+      />
+      <RiderCombobox
+        label="2nd"
+        riders={allRidersExceptSelected}
+        selectedRider={selectedSecond}
+        setSelectedRider={setSelectedSecond}
+      />
+      <RiderCombobox
+        label="3rd"
+        riders={allRidersExceptSelected}
+        selectedRider={selectedThird}
+        setSelectedRider={setSelectedThird}
+      />
+      <RiderCombobox
+        label="4th"
+        riders={allRidersExceptSelected}
+        selectedRider={selectedForth}
+        setSelectedRider={setSelectedForth}
+      />
+      <RiderCombobox
+        label="5th"
+        riders={allRidersExceptSelected}
+        selectedRider={selectedFifth}
+        setSelectedRider={setSelectedFifth}
+      />
+      <RiderCombobox
+        label="Wildcard"
+        riders={allRidersExceptSelected}
+        selectedRider={selectedWildcard}
+        setSelectedRider={setSelectedWildcard}
+      />
+    </>
   );
 };
 

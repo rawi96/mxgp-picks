@@ -44,7 +44,7 @@ const useAdminRoute = () => {
     if (session.status !== 'loading' && !session.data?.user?.isAdmin) {
       router.push('/');
     }
-  }, [session]);
+  }, [session, router]);
 
   return session;
 };

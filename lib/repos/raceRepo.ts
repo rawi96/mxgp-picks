@@ -4,28 +4,80 @@ import { Race } from '../types';
 export default class RaceRepo {
   private prisma: PrismaClient;
 
+  private includeNested = {
+    include: {
+      raceResult: {
+        include: {
+          result: {
+            include: {
+              first: true,
+              second: true,
+              third: true,
+              forth: true,
+              fifth: true,
+              wildcard: true,
+            },
+          },
+        },
+      },
+    },
+  };
+
+  private getNestedData = (entity: Race) => {
+    return {
+      data: {
+        ...entity,
+        raceResult: {
+          create: {
+            id: entity.raceResult?.id,
+            result: {
+              create: {
+                id: entity.raceResult?.result.id,
+                first: {
+                  connect: {
+                    id: entity.raceResult?.result.first.id,
+                  },
+                },
+                second: {
+                  connect: {
+                    id: entity.raceResult?.result.second.id,
+                  },
+                },
+                third: {
+                  connect: {
+                    id: entity.raceResult?.result.third.id,
+                  },
+                },
+                forth: {
+                  connect: {
+                    id: entity.raceResult?.result.forth.id,
+                  },
+                },
+                fifth: {
+                  connect: {
+                    id: entity.raceResult?.result.fifth.id,
+                  },
+                },
+                wildcard: {
+                  connect: {
+                    id: entity.raceResult?.result.wildcard.id,
+                  },
+                },
+              },
+            },
+          },
+        },
+      },
+    };
+  };
+
   constructor(prisma: PrismaClient) {
     this.prisma = prisma;
   }
 
   public async getAll(): Promise<Race[]> {
     return await prisma.race.findMany({
-      include: {
-        raceResult: {
-          include: {
-            result: {
-              include: {
-                first: true,
-                second: true,
-                third: true,
-                forth: true,
-                fifth: true,
-                wildcard: true,
-              },
-            },
-          },
-        },
-      },
+      ...this.includeNested,
       orderBy: {
         date: 'asc',
       },
@@ -48,65 +100,8 @@ export default class RaceRepo {
 
   public async createNested(entity: Race): Promise<Race> {
     return await prisma.race.create({
-      data: {
-        ...entity,
-        raceResult: {
-          create: {
-            id: entity.raceResult?.id,
-            result: {
-              create: {
-                id: entity.raceResult?.result.id,
-                first: {
-                  connect: {
-                    id: entity.raceResult?.result.first.id,
-                  },
-                },
-                second: {
-                  connect: {
-                    id: entity.raceResult?.result.second.id,
-                  },
-                },
-                third: {
-                  connect: {
-                    id: entity.raceResult?.result.third.id,
-                  },
-                },
-                forth: {
-                  connect: {
-                    id: entity.raceResult?.result.forth.id,
-                  },
-                },
-                fifth: {
-                  connect: {
-                    id: entity.raceResult?.result.fifth.id,
-                  },
-                },
-                wildcard: {
-                  connect: {
-                    id: entity.raceResult?.result.wildcard.id,
-                  },
-                },
-              },
-            },
-          },
-        },
-      },
-      include: {
-        raceResult: {
-          include: {
-            result: {
-              include: {
-                first: true,
-                second: true,
-                third: true,
-                forth: true,
-                fifth: true,
-                wildcard: true,
-              },
-            },
-          },
-        },
-      },
+      ...this.getNestedData(entity),
+      ...this.includeNested,
     });
   }
 
@@ -124,65 +119,8 @@ export default class RaceRepo {
       where: {
         id,
       },
-      data: {
-        ...entity,
-        raceResult: {
-          create: {
-            id: entity.raceResult?.id,
-            result: {
-              create: {
-                id: entity.raceResult?.result.id,
-                first: {
-                  connect: {
-                    id: entity.raceResult?.result.first.id,
-                  },
-                },
-                second: {
-                  connect: {
-                    id: entity.raceResult?.result.second.id,
-                  },
-                },
-                third: {
-                  connect: {
-                    id: entity.raceResult?.result.third.id,
-                  },
-                },
-                forth: {
-                  connect: {
-                    id: entity.raceResult?.result.forth.id,
-                  },
-                },
-                fifth: {
-                  connect: {
-                    id: entity.raceResult?.result.fifth.id,
-                  },
-                },
-                wildcard: {
-                  connect: {
-                    id: entity.raceResult?.result.wildcard.id,
-                  },
-                },
-              },
-            },
-          },
-        },
-      },
-      include: {
-        raceResult: {
-          include: {
-            result: {
-              include: {
-                first: true,
-                second: true,
-                third: true,
-                forth: true,
-                fifth: true,
-                wildcard: true,
-              },
-            },
-          },
-        },
-      },
+      ...this.getNestedData(entity),
+      ...this.includeNested,
     });
   }
 

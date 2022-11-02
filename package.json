@@ -17,7 +17,7 @@
   },
   "dependencies": {
     "@headlessui/react": "1.7.3",
-    "@heroicons/react": "2.0.12",
+    "@heroicons/react": "2.0.13",
     "@next-auth/prisma-adapter": "1.0.1",
     "@prisma/client": "3.9.1",
     "bcrypt": "5.1.0",

@@ -22,6 +22,7 @@ export type Race = {
   factor: number;
   wildcardPos: number;
   raceResult?: RaceResult;
+  pick?: Pick;
 };
 
 export type Result = {
@@ -37,4 +38,12 @@ export type Result = {
 export type RaceResult = {
   id: string;
   result: Result;
+};
+
+export type Pick = {
+  id: string;
+  userId?: string;
+  raceId?: string;
+  resultId?: string;
+  result?: Result;
 };

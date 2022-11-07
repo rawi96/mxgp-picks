@@ -2,6 +2,7 @@ import type { NextApiRequest, NextApiResponse } from 'next';
 import { getSession } from 'next-auth/react';
 import { v4 as uuidv4 } from 'uuid';
 import prisma from '../../../lib/prisma';
+import PickRepo from '../../../lib/repos/pickRepo';
 import RaceRepo from '../../../lib/repos/raceRepo';
 import { Race } from '../../../lib/types';
 
@@ -62,6 +63,24 @@ const addRace = async (req: NextApiRequest, res: NextApiResponse) => {
 
 const getRaces = async (req: NextApiRequest, res: NextApiResponse) => {
   const raceRepo = new RaceRepo(prisma);
+
+  const session = await getSession({ req });
+
+  if (session?.user.id) {
+    const pickRepo = new PickRepo(prisma);
+    try {
+      const picks = await pickRepo.getByUserId(session.user.id);
+      const races = await raceRepo.getAll();
+      const racesWithPicks = races.map((race) => {
+        const pickForRace = picks.find((pick) => race.id === pick.raceId);
+        return { ...race, pick: pickForRace };
+      });
+      return res.status(200).json(racesWithPicks);
+    } catch (error) {
+      console.error(error);
+      return res.status(500).json({ message: 'Internal server error' });
+    }
+  }
 
   try {
     const races = await raceRepo.getAll();

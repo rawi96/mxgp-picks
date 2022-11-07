@@ -5,8 +5,10 @@ import RaceCard from './RaceCard';
 
 type Props = {
   races: Race[];
-  onEdit: (race: Race) => void;
-  onDelete: (id: string) => void;
+  onEdit?: (race: Race) => void;
+  onDelete?: (id: string) => void;
+  onPick?: (race: Race) => void;
+  onEditPick?: (race: Race) => void;
   type: 'admin' | 'home';
 };
 
@@ -44,13 +46,24 @@ const RightArrow = () => (
   </span>
 );
 
-const RacesCarousel: FC<Props> = ({ races, onEdit, onDelete, type }) => {
+const RacesCarousel: FC<Props> = ({ races, onEdit, onDelete, onPick, onEditPick, type }) => {
   return (
     <div className="flex justify-center">
       {races.length > 0 ? (
         <Carousel slide={false} leftControl={<LeftArrow />} rightControl={<RightArrow />}>
           {races.map((race, index) => {
-            return <RaceCard index={index} key={race.id} race={race} onEdit={onEdit} onDelete={onDelete} type={type} />;
+            return (
+              <RaceCard
+                index={index}
+                key={race.id}
+                race={race}
+                onEdit={onEdit}
+                onDelete={onDelete}
+                onPick={onPick}
+                onEditPick={onEditPick}
+                type={type}
+              />
+            );
           })}
         </Carousel>
       ) : (

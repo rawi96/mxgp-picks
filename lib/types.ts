@@ -22,19 +22,34 @@ export type Race = {
   factor: number;
   wildcardPos: number;
   raceResult?: RaceResult;
+  pick?: Pick;
 };
 
 export type Result = {
   id: string;
   first: Rider;
+  firstId?: string;
   second: Rider;
+  secondId?: string;
   third: Rider;
-  forth: Rider;
+  thirdId?: string;
+  fourth: Rider;
+  fourthId?: string;
   fifth: Rider;
+  fifthId?: string;
   wildcard: Rider;
+  wildcardId?: string;
 };
 
 export type RaceResult = {
   id: string;
   result: Result;
+};
+
+export type Pick = {
+  id: string;
+  userId?: string;
+  raceId?: string;
+  resultId?: string;
+  result?: Result;
 };

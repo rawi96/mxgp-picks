@@ -7,13 +7,13 @@ type Props = {
   selectedFirst: Rider | null;
   selectedSecond: Rider | null;
   selectedThird: Rider | null;
-  selectedForth: Rider | null;
+  selectedFourth: Rider | null;
   selectedFifth: Rider | null;
   selectedWildcard: Rider | null;
   setSelectedFirst: Dispatch<SetStateAction<Rider | null>>;
   setSelectedSecond: Dispatch<SetStateAction<Rider | null>>;
   setSelectedThird: Dispatch<SetStateAction<Rider | null>>;
-  setSelectedForth: Dispatch<SetStateAction<Rider | null>>;
+  setSelectedFourth: Dispatch<SetStateAction<Rider | null>>;
   setSelectedFifth: Dispatch<SetStateAction<Rider | null>>;
   setSelectedWildcard: Dispatch<SetStateAction<Rider | null>>;
 };
@@ -23,13 +23,13 @@ const RiderSelector: FC<Props> = ({
   selectedFirst,
   selectedSecond,
   selectedThird,
-  selectedForth,
+  selectedFourth,
   selectedFifth,
   selectedWildcard,
   setSelectedFirst,
   setSelectedSecond,
   setSelectedThird,
-  setSelectedForth,
+  setSelectedFourth,
   setSelectedFifth,
   setSelectedWildcard,
 }) => {
@@ -38,7 +38,7 @@ const RiderSelector: FC<Props> = ({
       rider.id !== selectedFirst?.id &&
       rider.id !== selectedSecond?.id &&
       rider.id !== selectedThird?.id &&
-      rider.id !== selectedForth?.id &&
+      rider.id !== selectedFourth?.id &&
       rider.id !== selectedFifth?.id &&
       rider.id !== selectedWildcard?.id
   );
@@ -66,8 +66,8 @@ const RiderSelector: FC<Props> = ({
       <RiderCombobox
         label="4th"
         riders={allRidersExceptSelected}
-        selectedRider={selectedForth}
-        setSelectedRider={setSelectedForth}
+        selectedRider={selectedFourth}
+        setSelectedRider={setSelectedFourth}
       />
       <RiderCombobox
         label="5th"

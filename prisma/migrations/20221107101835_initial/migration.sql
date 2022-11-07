@@ -56,7 +56,7 @@ CREATE TABLE "Result" (
     "firstId" TEXT NOT NULL,
     "secondId" TEXT NOT NULL,
     "thirdId" TEXT NOT NULL,
-    "forthId" TEXT NOT NULL,
+    "fourthId" TEXT NOT NULL,
     "fifthId" TEXT NOT NULL,
     "wildcardId" TEXT NOT NULL,
 
@@ -70,9 +70,6 @@ CREATE UNIQUE INDEX "User_email_key" ON "User"("email");
 CREATE UNIQUE INDEX "User_username_key" ON "User"("username");
 
 -- CreateIndex
-CREATE UNIQUE INDEX "Pick_raceId_key" ON "Pick"("raceId");
-
--- CreateIndex
 CREATE UNIQUE INDEX "Pick_resultId_key" ON "Pick"("resultId");
 
 -- CreateIndex
@@ -82,13 +79,13 @@ CREATE UNIQUE INDEX "RaceResult_raceId_key" ON "RaceResult"("raceId");
 CREATE UNIQUE INDEX "RaceResult_resultId_key" ON "RaceResult"("resultId");
 
 -- AddForeignKey
-ALTER TABLE "Pick" ADD CONSTRAINT "Pick_userId_fkey" FOREIGN KEY ("userId") REFERENCES "User"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
+ALTER TABLE "Pick" ADD CONSTRAINT "Pick_userId_fkey" FOREIGN KEY ("userId") REFERENCES "User"("id") ON DELETE CASCADE ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE "Pick" ADD CONSTRAINT "Pick_raceId_fkey" FOREIGN KEY ("raceId") REFERENCES "Race"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
+ALTER TABLE "Pick" ADD CONSTRAINT "Pick_raceId_fkey" FOREIGN KEY ("raceId") REFERENCES "Race"("id") ON DELETE CASCADE ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE "Pick" ADD CONSTRAINT "Pick_resultId_fkey" FOREIGN KEY ("resultId") REFERENCES "Result"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
+ALTER TABLE "Pick" ADD CONSTRAINT "Pick_resultId_fkey" FOREIGN KEY ("resultId") REFERENCES "Result"("id") ON DELETE CASCADE ON UPDATE CASCADE;
 
 -- AddForeignKey
 ALTER TABLE "RaceResult" ADD CONSTRAINT "RaceResult_raceId_fkey" FOREIGN KEY ("raceId") REFERENCES "Race"("id") ON DELETE CASCADE ON UPDATE CASCADE;
@@ -106,7 +103,7 @@ ALTER TABLE "Result" ADD CONSTRAINT "Result_secondId_fkey" FOREIGN KEY ("secondI
 ALTER TABLE "Result" ADD CONSTRAINT "Result_thirdId_fkey" FOREIGN KEY ("thirdId") REFERENCES "Rider"("id") ON DELETE SET NULL ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE "Result" ADD CONSTRAINT "Result_forthId_fkey" FOREIGN KEY ("forthId") REFERENCES "Rider"("id") ON DELETE SET NULL ON UPDATE CASCADE;
+ALTER TABLE "Result" ADD CONSTRAINT "Result_fourthId_fkey" FOREIGN KEY ("fourthId") REFERENCES "Rider"("id") ON DELETE SET NULL ON UPDATE CASCADE;
 
 -- AddForeignKey
 ALTER TABLE "Result" ADD CONSTRAINT "Result_fifthId_fkey" FOREIGN KEY ("fifthId") REFERENCES "Rider"("id") ON DELETE SET NULL ON UPDATE CASCADE;

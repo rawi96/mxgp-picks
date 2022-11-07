@@ -13,7 +13,7 @@ export default class RaceRepo {
               first: true,
               second: true,
               third: true,
-              forth: true,
+              fourth: true,
               fifth: true,
               wildcard: true,
             },
@@ -48,9 +48,9 @@ export default class RaceRepo {
                     id: entity.raceResult?.result.third.id,
                   },
                 },
-                forth: {
+                fourth: {
                   connect: {
-                    id: entity.raceResult?.result.forth.id,
+                    id: entity.raceResult?.result.fourth.id,
                   },
                 },
                 fifth: {
@@ -84,8 +84,9 @@ export default class RaceRepo {
     });
   }
 
-  public async getById(id: string): Promise<Race | null> {
+  public async getById(id: string): Promise<any | null> {
     return await this.prisma.race.findUnique({
+      ...this.includeNested,
       where: {
         id,
       },
@@ -110,17 +111,13 @@ export default class RaceRepo {
       where: {
         id,
       },
-      data: entity,
-    });
-  }
-
-  public async updateNested(id: string, entity: Race): Promise<any> {
-    return await this.prisma.race.update({
-      where: {
-        id,
+      data: {
+        id: entity.id,
+        title: entity.title,
+        date: entity.date,
+        factor: entity.factor,
+        wildcardPos: entity.wildcardPos,
       },
-      ...this.getNestedData(entity),
-      ...this.includeNested,
     });
   }
 

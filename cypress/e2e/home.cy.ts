@@ -2,7 +2,7 @@ import { LAYOUT_SELECTOR } from '../selectors';
 
 describe('/home opens properly', () => {
   beforeEach(() => {
-    cy.visit('http://localhost:3000');
+    cy.visit(`${Cypress.env('baseUrl')}`);
   });
 
   it('displays layout', () => {

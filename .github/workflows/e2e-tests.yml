@@ -1,8 +1,6 @@
-name: E2E Tests
-
+name: 'Run Cypress tests'
 on: [deployment_status]
 jobs:
-  name: Run Cypress E2E Tests
   e2e:
     if: github.event.deployment_status.state == 'success'
     runs-on: ubuntu-latest

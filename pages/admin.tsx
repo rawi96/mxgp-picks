@@ -5,6 +5,7 @@ import { FC, useEffect } from 'react';
 import Layout from '../components/Layout';
 import RacesCrud from '../components/RacesCrud';
 import RidersCrud from '../components/RidersCrud';
+import TriggerScoreCalculation from '../components/TriggerScoreCalculation';
 import prisma from '../lib/prisma';
 import RaceRepo from '../lib/repos/raceRepo';
 import RiderRepo from '../lib/repos/riderRepo';
@@ -65,6 +66,10 @@ const Admin: FC<Props> = ({ serverSideRiders, serverSideRaces }) => {
             <h2 className="font-semibold text-gray-700 text-2xl mt-20 mb-10">Riders</h2>
           </div>
           <RidersCrud serverSideRiders={serverSideRiders} />
+          <div className="flex justify-center">
+            <h2 className="font-semibold text-gray-700 text-2xl mt-20 mb-10">Score calculation</h2>
+          </div>
+          <TriggerScoreCalculation />
         </Layout>
       ) : (
         <></>

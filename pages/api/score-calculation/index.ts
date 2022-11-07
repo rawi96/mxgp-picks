@@ -37,23 +37,25 @@ const calculateScore = async (req: NextApiRequest, res: NextApiResponse) => {
       const userPicks = picks.filter((pick) => pick.userId === user.id);
       userPicks.forEach((pick) => {
         const pickedRace = races.find((race) => race.id === pick.raceId);
-        if (pickedRace.raceResult.result.first.id === pick.result?.first.id) {
-          score += 25;
-        }
-        if (pickedRace.raceResult.result.second.id === pick.result?.second.id) {
-          score += 22;
-        }
-        if (pickedRace.raceResult.result.third.id === pick.result?.third.id) {
-          score += 20;
-        }
-        if (pickedRace.raceResult.result.fourth.id === pick.result?.fourth.id) {
-          score += 18;
-        }
-        if (pickedRace.raceResult.result.fifth.id === pick.result?.fifth.id) {
-          score += 16;
-        }
-        if (pickedRace.raceResult.result.wildcard.id === pick.result?.wildcard.id) {
-          score += 25;
+        if (pickedRace.raceResult.result && pick.result) {
+          if (pickedRace.raceResult.result.first.id === pick.result?.first.id) {
+            score += 25;
+          }
+          if (pickedRace.raceResult.result.second.id === pick.result?.second.id) {
+            score += 22;
+          }
+          if (pickedRace.raceResult.result.third.id === pick.result?.third.id) {
+            score += 20;
+          }
+          if (pickedRace.raceResult.result.fourth.id === pick.result?.fourth.id) {
+            score += 18;
+          }
+          if (pickedRace.raceResult.result.fifth.id === pick.result?.fifth.id) {
+            score += 16;
+          }
+          if (pickedRace.raceResult.result.wildcard.id === pick.result?.wildcard.id) {
+            score += 25;
+          }
         }
       });
       await userRepo.update(user.id, { ...user, score });

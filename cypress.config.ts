@@ -6,6 +6,9 @@ export default defineConfig({
       // implement node event listeners here
     },
   },
+  env: {
+    baseUrl: 'http://localhost:3000/',
+  },
 
   component: {
     devServer: {

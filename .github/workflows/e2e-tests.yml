@@ -1,4 +1,4 @@
-name: 'Run Cypress tests'
+name: 'Run Cypress E2E tests'
 on: [deployment_status]
 jobs:
   e2e:
@@ -11,6 +11,7 @@ jobs:
         uses: cypress-io/github-action@v4
         env:
           CYPRESS_BASE_URL: ${{ github.event.deployment_status.target_url }}
+          baseUrl: ${{ github.event.deployment_status.target_url }}
           CYPRESS_RETRIES: 1
       - uses: actions/upload-artifact@v2
         if: failure()

@@ -1,5 +1,5 @@
 import { GetServerSideProps } from 'next';
-import { getSession, useSession } from 'next-auth/react';
+import { getSession } from 'next-auth/react';
 import { FC } from 'react';
 import Layout from '../components/Layout';
 import PersonalRanking from '../components/PersonalRanking';

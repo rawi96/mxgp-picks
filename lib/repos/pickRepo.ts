@@ -53,7 +53,7 @@ export default class PickRepo {
   }
 
   public async create(pick: Pick): Promise<Pick | null> {
-    if (!pick.result) {
+    if (!pick.result || !pick.raceId || !pick.userId || !pick.resultId) {
       return null;
     }
 

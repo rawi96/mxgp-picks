@@ -32,6 +32,7 @@ const Index: FC<Props> = ({ serverSideRaces, serverSideRiders, serverSideUsers }
 export const getServerSideProps: GetServerSideProps = async (context) => {
   const session = await getSession(context);
   const userId = session?.user.id;
+  console.log('getserversideprops', session);
 
   const serverSideRiders = await new RiderRepo(prisma).getAll();
   const serverSideRaces = await new RaceRepo(prisma).getAll();

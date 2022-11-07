@@ -30,17 +30,22 @@ const usePick = (serverSideRaces: Race[]): UsePicks => {
   const { showNotification } = useShowNotification();
 
   const reloadRaces = async () => {
-    const res = await fetch('/api/races');
+    const res = await fetch('/api/races', {
+      method: 'GET',
+      credentials: 'same-origin',
+    });
     const data = await res.json();
     setRaces(data);
   };
 
   const addPick = async (pick: Pick) => {
+    //add cookies to fetch
     const res = await fetch('/api/picks', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
       },
+      credentials: 'same-origin',
       body: JSON.stringify(pick),
     });
     if (res.ok) {

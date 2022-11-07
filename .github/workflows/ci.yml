@@ -10,7 +10,7 @@ on:
 
 jobs:
   run-linters:
-    name: Run linters
+    name: Run Linters
     runs-on: ubuntu-latest
 
     steps:
@@ -32,6 +32,7 @@ jobs:
           prettier: true
 
   cypress-run:
+    name: Cypress Component Tests
     runs-on: ubuntu-20.04
     steps:
       - name: Checkout

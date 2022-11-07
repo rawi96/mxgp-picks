@@ -6,6 +6,6 @@ describe('/home opens properly', () => {
   });
 
   it('displays layout', () => {
-    cy.get(LAYOUT_SELECTOR).should('exist');
+    cy.get(LAYOUT_SELECTOR).should('not.exist');
   });
 });

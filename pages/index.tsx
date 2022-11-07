@@ -1,5 +1,5 @@
 import { GetServerSideProps } from 'next';
-import { getSession } from 'next-auth/react';
+import { getSession, useSession } from 'next-auth/react';
 import { FC } from 'react';
 import Layout from '../components/Layout';
 import PersonalRanking from '../components/PersonalRanking';
@@ -18,6 +18,8 @@ type Props = {
 };
 
 const Index: FC<Props> = ({ serverSideRaces, serverSideRiders, serverSideUsers }) => {
+  const session = useSession();
+  console.log(session);
   return (
     <Layout>
       <div className="flex justify-center">
@@ -31,15 +33,21 @@ const Index: FC<Props> = ({ serverSideRaces, serverSideRiders, serverSideUsers }
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
   const session = await getSession(context);
-  const userId = session?.user.id;
-  console.log('getserversideprops', session);
+  const userRepo = new UserRepo(prisma);
+  const email = session?.user.email;
+  let loggedInUserId;
+  if (email) {
+    const user = await userRepo.getByEmail(email);
+    loggedInUserId = user?.id;
+  }
+  console.log('logged in user id', loggedInUserId);
 
   const serverSideRiders = await new RiderRepo(prisma).getAll();
   const serverSideRaces = await new RaceRepo(prisma).getAll();
   const serverSideUsers = await new UserRepo(prisma).getAllWithPosition();
   let serverSidePicks: Pick[] | [] = [];
-  if (userId) {
-    serverSidePicks = await new PickRepo(prisma).getByUserId(userId);
+  if (loggedInUserId) {
+    serverSidePicks = await new PickRepo(prisma).getByUserId(loggedInUserId);
   }
 
   const racesWithPicks = serverSideRaces.map((race) => {

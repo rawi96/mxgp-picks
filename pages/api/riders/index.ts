@@ -23,8 +23,6 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
 const addRider = async (req: NextApiRequest, res: NextApiResponse) => {
   const session = await getSession({ req });
 
-  console.log(session, session);
-
   if (!session?.user.isAdmin) {
     return res.status(401).json({ message: 'Unauthorized' });
   }

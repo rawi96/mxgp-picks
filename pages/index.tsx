@@ -18,8 +18,6 @@ type Props = {
 };
 
 const Index: FC<Props> = ({ serverSideRaces, serverSideRiders, serverSideUsers }) => {
-  const session = useSession();
-  console.log(session);
   return (
     <Layout>
       <div className="flex justify-center">
@@ -40,8 +38,6 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
     const user = await userRepo.getByEmail(email);
     loggedInUserId = user?.id;
   }
-  console.log('logged in user id', loggedInUserId);
-
   const serverSideRiders = await new RiderRepo(prisma).getAll();
   const serverSideRaces = await new RaceRepo(prisma).getAll();
   const serverSideUsers = await new UserRepo(prisma).getAllWithPosition();

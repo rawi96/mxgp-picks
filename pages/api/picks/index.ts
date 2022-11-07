@@ -7,7 +7,6 @@ import UserRepo from '../../../lib/repos/userRepo';
 import { Pick } from '../../../lib/types';
 
 const handler = async (req: NextApiRequest, res: NextApiResponse) => {
-  console.log('req', req);
   const { method } = req;
   let userId;
   const session = await getSession({ req });
@@ -20,9 +19,6 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
   if (!userId) {
     return res.status(401).json({ message: 'Unauthorized' });
   }
-
-  console.log('userId', userId);
-  console.log('sessionuserid', session?.user.id);
 
   if (method === 'GET') {
     return await getPicks(userId, req, res);

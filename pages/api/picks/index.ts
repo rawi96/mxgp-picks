@@ -53,6 +53,8 @@ const addPick = async (req: NextApiRequest, res: NextApiResponse) => {
     resultId: result.id,
   };
 
+  console.log('PICK', newPick);
+
   const pickRepo = new PickRepo(prisma);
 
   try {

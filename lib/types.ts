@@ -28,11 +28,17 @@ export type Race = {
 export type Result = {
   id: string;
   first: Rider;
+  firstId?: string;
   second: Rider;
+  secondId?: string;
   third: Rider;
-  forth: Rider;
+  thirdId?: string;
+  fourth: Rider;
+  fourthId?: string;
   fifth: Rider;
+  fifthId?: string;
   wildcard: Rider;
+  wildcardId?: string;
 };
 
 export type RaceResult = {

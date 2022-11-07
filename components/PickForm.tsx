@@ -16,7 +16,7 @@ const PickForm: FC<Props> = ({ addPick, editPick, prefilledPick, serverSideRider
   const [selectedFirst, setSelectedFirst] = useState<Rider | null>(prefilledPick?.result?.first || null);
   const [selectedSecond, setSelectedSecond] = useState<Rider | null>(prefilledPick?.result?.second || null);
   const [selectedThird, setSelectedThird] = useState<Rider | null>(prefilledPick?.result?.third || null);
-  const [selectedForth, setSelectedForth] = useState<Rider | null>(prefilledPick?.result?.forth || null);
+  const [selectedFourth, setSelectedFourth] = useState<Rider | null>(prefilledPick?.result?.fourth || null);
   const [selectedFifth, setSelectedFifth] = useState<Rider | null>(prefilledPick?.result?.fifth || null);
   const [selectedWildcard, setSelectedWildcard] = useState<Rider | null>(prefilledPick?.result?.wildcard || null);
 
@@ -29,7 +29,7 @@ const PickForm: FC<Props> = ({ addPick, editPick, prefilledPick, serverSideRider
       !selectedFirst ||
       !selectedSecond ||
       !selectedThird ||
-      !selectedForth ||
+      !selectedFourth ||
       !selectedFifth ||
       !selectedWildcard ||
       !race ||
@@ -46,7 +46,7 @@ const PickForm: FC<Props> = ({ addPick, editPick, prefilledPick, serverSideRider
         first: selectedFirst,
         second: selectedSecond,
         third: selectedThird,
-        forth: selectedForth,
+        fourth: selectedFourth,
         fifth: selectedFifth,
         wildcard: selectedWildcard,
       },
@@ -70,13 +70,13 @@ const PickForm: FC<Props> = ({ addPick, editPick, prefilledPick, serverSideRider
             selectedFirst={selectedFirst}
             selectedSecond={selectedSecond}
             selectedThird={selectedThird}
-            selectedForth={selectedForth}
+            selectedFourth={selectedFourth}
             selectedFifth={selectedFifth}
             selectedWildcard={selectedWildcard}
             setSelectedFirst={setSelectedFirst}
             setSelectedSecond={setSelectedSecond}
             setSelectedThird={setSelectedThird}
-            setSelectedForth={setSelectedForth}
+            setSelectedFourth={setSelectedFourth}
             setSelectedFifth={setSelectedFifth}
             setSelectedWildcard={setSelectedWildcard}
           />

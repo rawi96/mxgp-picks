@@ -23,11 +23,11 @@ model User {
 
 model Pick {
   id                 String             @id @default(uuid())
-  user               User               @relation(fields: [userId], references: [id])
+  user               User               @relation(fields: [userId], references: [id], onDelete: Cascade, onUpdate: Cascade)
   userId             String
-  race               Race               @relation(fields: [raceId], references: [id])
-  raceId             String             @unique
-  result             Result             @relation(fields: [resultId], references: [id])
+  race               Race               @relation(fields: [raceId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  raceId             String             
+  result             Result             @relation(fields: [resultId], references: [id], onDelete: Cascade, onUpdate: Cascade)
   resultId           String             @unique
 }
 
@@ -39,7 +39,7 @@ model Rider {
   firsts             Result[]          @relation("first")
   seconds            Result[]          @relation("second")
   thirds             Result[]          @relation("third")
-  forths             Result[]          @relation("forth")
+  fourth             Result[]          @relation("fourth")
   fifths             Result[]          @relation("fifth")
   wildcards          Result[]          @relation("wildcard")
 }
@@ -67,8 +67,8 @@ model Result {
   secondId        String             
   third           Rider              @relation("third", fields: [thirdId], references: [id], onDelete: SetNull, onUpdate: Cascade)
   thirdId         String             
-  forth           Rider              @relation("forth", fields: [forthId], references: [id], onDelete: SetNull, onUpdate: Cascade)
-  forthId         String             
+  fourth           Rider              @relation("fourth", fields: [fourthId], references: [id], onDelete: SetNull, onUpdate: Cascade)
+  fourthId         String             
   fifth           Rider              @relation("fifth", fields: [fifthId], references: [id], onDelete: SetNull, onUpdate: Cascade)
   fifthId         String             
   wildcard        Rider              @relation("wildcard", fields: [wildcardId], references: [id], onDelete: SetNull, onUpdate: Cascade)

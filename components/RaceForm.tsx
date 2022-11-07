@@ -35,7 +35,7 @@ const RaceForm: FC<Props> = ({ addRace, editRace, prefilledRace, serverSideRider
   const [selectedFirst, setSelectedFirst] = useState<Rider | null>(prefilledRace?.raceResult?.result.first || null);
   const [selectedSecond, setSelectedSecond] = useState<Rider | null>(prefilledRace?.raceResult?.result.second || null);
   const [selectedThird, setSelectedThird] = useState<Rider | null>(prefilledRace?.raceResult?.result.third || null);
-  const [selectedForth, setSelectedForth] = useState<Rider | null>(prefilledRace?.raceResult?.result.forth || null);
+  const [selectedFourth, setSelectedFourth] = useState<Rider | null>(prefilledRace?.raceResult?.result.fourth || null);
   const [selectedFifth, setSelectedFifth] = useState<Rider | null>(prefilledRace?.raceResult?.result.fifth || null);
   const [selectedWildcard, setSelectedWildcard] = useState<Rider | null>(prefilledRace?.raceResult?.result.wildcard || null);
 
@@ -47,7 +47,7 @@ const RaceForm: FC<Props> = ({ addRace, editRace, prefilledRace, serverSideRider
       factor: Number(data.factor),
       wildcardPos: Number(data.wildcardPos),
     };
-    if (selectedFirst && selectedSecond && selectedThird && selectedForth && selectedFifth && selectedWildcard) {
+    if (selectedFirst && selectedSecond && selectedThird && selectedFourth && selectedFifth && selectedWildcard) {
       race = {
         ...race,
         raceResult: {
@@ -57,7 +57,7 @@ const RaceForm: FC<Props> = ({ addRace, editRace, prefilledRace, serverSideRider
             first: selectedFirst,
             second: selectedSecond,
             third: selectedThird,
-            forth: selectedForth,
+            fourth: selectedFourth,
             fifth: selectedFifth,
             wildcard: selectedWildcard,
           },
@@ -160,13 +160,13 @@ const RaceForm: FC<Props> = ({ addRace, editRace, prefilledRace, serverSideRider
             selectedFirst={selectedFirst}
             selectedSecond={selectedSecond}
             selectedThird={selectedThird}
-            selectedForth={selectedForth}
+            selectedFourth={selectedFourth}
             selectedFifth={selectedFifth}
             selectedWildcard={selectedWildcard}
             setSelectedFirst={setSelectedFirst}
             setSelectedSecond={setSelectedSecond}
             setSelectedThird={setSelectedThird}
-            setSelectedForth={setSelectedForth}
+            setSelectedFourth={setSelectedFourth}
             setSelectedFifth={setSelectedFifth}
             setSelectedWildcard={setSelectedWildcard}
           />

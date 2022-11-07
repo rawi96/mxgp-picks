@@ -1,6 +1,10 @@
 import type { NextApiRequest, NextApiResponse } from 'next';
 import { getSession } from 'next-auth/react';
 import prisma from '../../../lib/prisma';
+import PickRepo from '../../../lib/repos/pickRepo';
+import RaceRepo from '../../../lib/repos/raceRepo';
+import RaceResultRepo from '../../../lib/repos/raceResultRepo';
+import ResultRepo from '../../../lib/repos/resultRepo';
 import { Race } from '../../../lib/types';
 
 const handler = async (req: NextApiRequest, res: NextApiResponse) => {
@@ -41,85 +45,22 @@ const updateRace = async (req: NextApiRequest, res: NextApiResponse) => {
     raceResult,
   };
 
+  const raceRepo = new RaceRepo(prisma);
+  const resultRepo = new ResultRepo(prisma);
+  const raceResultRepo = new RaceResultRepo(prisma);
+
   try {
     let updatedRace;
     if (newRace.raceResult?.id && newRace.raceResult?.result && newRace.raceResult?.result.id) {
-      updatedRace = await prisma.race.update({
-        where: {
-          id,
-        },
-        data: {
-          ...newRace,
-          raceResult: {
-            create: {
-              id: newRace.raceResult?.id,
-              result: {
-                create: {
-                  id: newRace.raceResult?.result.id,
-                  first: {
-                    connect: {
-                      id: newRace.raceResult?.result.first.id,
-                    },
-                  },
-                  second: {
-                    connect: {
-                      id: newRace.raceResult?.result.second.id,
-                    },
-                  },
-                  third: {
-                    connect: {
-                      id: newRace.raceResult?.result.third.id,
-                    },
-                  },
-                  forth: {
-                    connect: {
-                      id: newRace.raceResult?.result.forth.id,
-                    },
-                  },
-                  fifth: {
-                    connect: {
-                      id: newRace.raceResult?.result.fifth.id,
-                    },
-                  },
-                  wildcard: {
-                    connect: {
-                      id: newRace.raceResult?.result.wildcard.id,
-                    },
-                  },
-                },
-              },
-            },
-          },
-        },
-        include: {
-          raceResult: {
-            include: {
-              result: {
-                include: {
-                  first: true,
-                  second: true,
-                  third: true,
-                  forth: true,
-                  fifth: true,
-                  wildcard: true,
-                },
-              },
-            },
-          },
-        },
-      });
+      const resultToCreateOrUpdate = newRace.raceResult.result;
+      await resultRepo.createOrUpdate(resultToCreateOrUpdate);
+
+      const raceResultToCreateOrUpdate = newRace.raceResult;
+      await raceResultRepo.createOrUpdate(raceResultToCreateOrUpdate, newRace.id);
+
+      updatedRace = await raceRepo.update(id, newRace);
     } else {
-      updatedRace = await prisma.race.update({
-        where: {
-          id,
-        },
-        data: {
-          title,
-          date: new Date(date),
-          factor: Number(factor),
-          wildcardPos: Number(wildcardPos),
-        },
-      });
+      updatedRace = await raceRepo.update(id, newRace);
     }
     return res.status(200).json(updatedRace);
   } catch (error) {
@@ -135,12 +76,28 @@ const deleteRace = async (req: NextApiRequest, res: NextApiResponse) => {
     return res.status(400).json({ message: 'Missing fields' });
   }
 
+  const raceRepo = new RaceRepo(prisma);
+  const picksRepo = new PickRepo(prisma);
+  const resultRepo = new ResultRepo(prisma);
+
   try {
-    const deletedRace = await prisma.race.delete({
-      where: {
-        id,
-      },
-    });
+    const raceToDelete = await raceRepo.getById(id);
+    const resultIdToDelete = raceToDelete?.raceResult?.result?.id;
+
+    if (resultIdToDelete) {
+      await resultRepo.delete(resultIdToDelete);
+    }
+
+    const picksToDelete = await picksRepo.getByRaceId(id);
+    const pickIdsToDelete = picksToDelete.map((pick) => pick.id);
+
+    const resultIdsToDelete: string[] = picksToDelete
+      .map((pick) => pick.result?.id)
+      .filter((id) => id !== undefined) as string[];
+
+    await picksRepo.deleteMany(pickIdsToDelete);
+    await resultRepo.deleteMany(resultIdsToDelete);
+    const deletedRace = await raceRepo.delete(id);
     return res.status(200).json(deletedRace);
   } catch (error) {
     console.error(error);

@@ -1,4 +1,6 @@
-import { Dispatch, FC, SetStateAction, useState } from 'react';
+import { useSession } from 'next-auth/react';
+import { Dispatch, FC, SetStateAction, useContext, useState } from 'react';
+import { ModalsContext } from '../context/modalsContext';
 import { Pick, Race, Rider } from '../lib/types';
 import { useShowNotification } from '../utils/utils';
 import Modal from './Modal';
@@ -72,6 +74,8 @@ const usePick = (serverSideRaces: Race[]): UsePicks => {
 
 const PicksCrud: FC<Props> = ({ serverSideRaces, serverSideRiders }) => {
   const { races, addPick, editPick, modalOpen, setModalOpen, selectedRace, setSelectedRace } = usePick(serverSideRaces);
+  const session = useSession();
+  const { setLoginModalOpen } = useContext(ModalsContext);
 
   return (
     <>
@@ -89,11 +93,19 @@ const PicksCrud: FC<Props> = ({ serverSideRaces, serverSideRiders }) => {
         races={races}
         onPick={(race) => {
           setSelectedRace(race);
-          setModalOpen(true);
+          if (session.data?.user.id) {
+            setModalOpen(true);
+          } else {
+            setLoginModalOpen(true);
+          }
         }}
         onEditPick={(race) => {
           setSelectedRace(race);
-          setModalOpen(true);
+          if (session.data?.user.id) {
+            setModalOpen(true);
+          } else {
+            setLoginModalOpen(true);
+          }
         }}
       />
     </>

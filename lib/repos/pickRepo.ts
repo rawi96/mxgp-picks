@@ -15,7 +15,7 @@ export default class PickRepo {
           first: true,
           second: true,
           third: true,
-          forth: true,
+          fourth: true,
           fifth: true,
           wildcard: true,
         },
@@ -33,6 +33,25 @@ export default class PickRepo {
     });
   }
 
+  public async getByRaceId(raceId: string): Promise<Pick[]> {
+    return await this.prisma.pick.findMany({
+      where: {
+        raceId,
+      },
+      ...this.includeNested,
+    });
+  }
+
+  public async deleteMany(ids: string[]): Promise<any> {
+    return await this.prisma.pick.deleteMany({
+      where: {
+        id: {
+          in: ids,
+        },
+      },
+    });
+  }
+
   public async create(pick: Pick): Promise<Pick | null> {
     if (!pick.result) {
       return null;
@@ -44,7 +63,7 @@ export default class PickRepo {
         firstId: pick.result.first.id,
         secondId: pick.result.second.id,
         thirdId: pick.result.third.id,
-        forthId: pick.result.forth.id,
+        fourthId: pick.result.fourth.id,
         fifthId: pick.result.fifth.id,
         wildcardId: pick.result.wildcard.id,
       },
@@ -74,7 +93,7 @@ export default class PickRepo {
         firstId: pick.result.first.id,
         secondId: pick.result.second.id,
         thirdId: pick.result.third.id,
-        forthId: pick.result.forth.id,
+        fourthId: pick.result.fourth.id,
         fifthId: pick.result.fifth.id,
         wildcardId: pick.result.wildcard.id,
       },

@@ -11,7 +11,7 @@ export default class UserRepo {
   public async getAll(): Promise<User[]> {
     return await this.prisma.user.findMany({
       orderBy: {
-        score: 'asc',
+        score: 'desc',
       },
     });
   }

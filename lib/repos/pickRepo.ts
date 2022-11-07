@@ -24,6 +24,12 @@ export default class PickRepo {
     },
   };
 
+  public async getAll(): Promise<Pick[]> {
+    return await this.prisma.pick.findMany({
+      ...this.includeNested,
+    });
+  }
+
   public async getByUserId(userId: string): Promise<Pick[]> {
     return await this.prisma.pick.findMany({
       where: {

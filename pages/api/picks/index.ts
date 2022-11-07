@@ -35,9 +35,13 @@ const getPicks = async (req: NextApiRequest, res: NextApiResponse) => {
 const addPick = async (req: NextApiRequest, res: NextApiResponse) => {
   const session = await getSession({ req });
 
+  console.log(session, session);
+
   if (!session?.user.id) {
     return res.status(401).json({ message: 'Unauthorized' });
   }
+
+  console.log('userID', session.user.id);
 
   const { raceId, result } = req.body;
 

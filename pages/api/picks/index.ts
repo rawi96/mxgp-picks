@@ -3,46 +3,46 @@ import { getSession } from 'next-auth/react';
 import { v4 as uuidv4 } from 'uuid';
 import prisma from '../../../lib/prisma';
 import PickRepo from '../../../lib/repos/pickRepo';
+import UserRepo from '../../../lib/repos/userRepo';
 import { Pick } from '../../../lib/types';
 
 const handler = async (req: NextApiRequest, res: NextApiResponse) => {
+  console.log('req', req);
   const { method } = req;
+  let userId;
+  const session = await getSession({ req });
+  const email = session?.user.email;
+  if (email) {
+    const userRepo = new UserRepo(prisma);
+    const user = await userRepo.getByEmail(email);
+    userId = user?.id;
+  }
+  if (!userId) {
+    return res.status(401).json({ message: 'Unauthorized' });
+  }
+
+  console.log('userId', userId);
+  console.log('sessionuserid', session?.user.id);
 
   if (method === 'GET') {
-    return await getPicks(req, res);
+    return await getPicks(userId, req, res);
   }
 
   if (method === 'POST') {
-    return await addPick(req, res);
+    return await addPick(userId, req, res);
   }
 
   res.setHeader('Allow', ['GET', 'POST']);
   return res.status(405).end(`Method ${method} Not Allowed`);
 };
 
-const getPicks = async (req: NextApiRequest, res: NextApiResponse) => {
-  const session = await getSession({ req });
-
-  if (!session?.user.id) {
-    return res.status(401).json({ message: 'Unauthorized' });
-  }
-
+const getPicks = async (userId: string, req: NextApiRequest, res: NextApiResponse) => {
   const pickRepo = new PickRepo(prisma);
-  const picks = await pickRepo.getByUserId(session.user.id);
+  const picks = await pickRepo.getByUserId(userId);
   return res.status(200).json(picks);
 };
 
-const addPick = async (req: NextApiRequest, res: NextApiResponse) => {
-  const session = await getSession({ req });
-
-  console.log(session, session);
-
-  if (!session?.user.id) {
-    return res.status(401).json({ message: 'Unauthorized' });
-  }
-
-  console.log('userID', session.user.id);
-
+const addPick = async (userId: string, req: NextApiRequest, res: NextApiResponse) => {
   const { raceId, result } = req.body;
 
   if (!raceId || !result) {
@@ -52,12 +52,10 @@ const addPick = async (req: NextApiRequest, res: NextApiResponse) => {
   const newPick: Pick = {
     id: uuidv4(),
     raceId,
-    userId: session.user.id,
+    userId: userId,
     result,
     resultId: result.id,
   };
-
-  console.log('PICK', newPick);
 
   const pickRepo = new PickRepo(prisma);
 

@@ -37,7 +37,7 @@ const calculateScore = async (req: NextApiRequest, res: NextApiResponse) => {
       const userPicks = picks.filter((pick) => pick.userId === user.id);
       userPicks.forEach((pick) => {
         const pickedRace = races.find((race) => race.id === pick.raceId);
-        if (pickedRace.raceResult.result && pick.result) {
+        if (pickedRace.raceResult && pickedRace.raceResult.result && pick.result) {
           if (pickedRace.raceResult.result.first.id === pick.result?.first.id) {
             score += 25;
           }

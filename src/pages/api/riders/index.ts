@@ -1,9 +1,9 @@
 import type { NextApiRequest, NextApiResponse } from 'next';
 import { getSession } from 'next-auth/react';
 import { v4 as uuidv4 } from 'uuid';
-import prisma from '../../../lib/prisma';
 import RiderRepo from '../../../lib/repos/riderRepo';
 import { Rider } from '../../../lib/types';
+import prisma from '../../../lib/utils/prisma';
 
 const handler = async (req: NextApiRequest, res: NextApiResponse) => {
   const { method } = req;

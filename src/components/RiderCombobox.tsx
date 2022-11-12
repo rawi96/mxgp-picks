@@ -2,7 +2,7 @@ import { Combobox } from '@headlessui/react';
 import { CheckIcon, ChevronDownIcon } from '@heroicons/react/20/solid';
 import { Dispatch, FC, SetStateAction, useState } from 'react';
 import { Rider } from '../lib/types';
-import { classNames } from '../utils/utils';
+import { classNames } from '../lib/utils/utils';
 
 type Props = {
   riders: Rider[];

@@ -1,7 +1,7 @@
 import { FC, useContext } from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { ModalsContext } from '../context/modalsContext';
-import { REGEX_EMAIL, REGEX_PASSWORD, useShowNotification } from '../utils/utils';
+import { REGEX_EMAIL, REGEX_PASSWORD, useShowNotification } from '../lib/utils/utils';
 
 const INPUT_VALID_CLASSES =
   'block w-full appearance-none rounded-md border border-gray-300 px-3 py-2 placeholder-gray-400 shadow-sm focus:border-gray-500 focus:outline-none focus:ring-gray-500 sm:text-sm';

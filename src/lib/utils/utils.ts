@@ -1,5 +1,5 @@
 import { useContext } from 'react';
-import { ModalsContext } from '../context/modalsContext';
+import { ModalsContext } from '../../context/modalsContext';
 
 export const REGEX_EMAIL = /^\w+([-+.']\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*$/;
 

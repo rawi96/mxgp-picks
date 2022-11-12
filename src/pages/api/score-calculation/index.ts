@@ -1,9 +1,9 @@
 import type { NextApiRequest, NextApiResponse } from 'next';
 import { getSession } from 'next-auth/react';
-import prisma from '../../../lib/prisma';
 import PickRepo from '../../../lib/repos/pickRepo';
 import RaceRepo from '../../../lib/repos/raceRepo';
 import UserRepo from '../../../lib/repos/userRepo';
+import prisma from '../../../lib/utils/prisma';
 
 const handler = async (req: NextApiRequest, res: NextApiResponse) => {
   const session = await getSession({ req });

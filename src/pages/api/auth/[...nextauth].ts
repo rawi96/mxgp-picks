@@ -1,9 +1,9 @@
 import { NextApiHandler } from 'next';
 import NextAuth from 'next-auth';
 import CredentialsProvider from 'next-auth/providers/credentials';
-import { comparePasswords } from '../../../lib/bcrypt';
-import prisma from '../../../lib/prisma';
+import prisma from '../../../lib/utils/prisma';
 import UserRepo from '../../../lib/repos/userRepo';
+import { comparePasswords } from '../../../lib/utils/bcrypt';
 
 const authHandler: NextApiHandler = (req, res) => NextAuth(req, res, options);
 export default authHandler;

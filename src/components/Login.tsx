@@ -2,7 +2,7 @@ import { signIn } from 'next-auth/react';
 import { FC, useContext } from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { ModalsContext } from '../context/modalsContext';
-import { useShowNotification } from '../utils/utils';
+import { useShowNotification } from '../lib/utils/utils';
 
 const INPUT_VALID_CLASSES =
   'block w-full appearance-none rounded-md border border-gray-300 px-3 py-2 placeholder-gray-400 shadow-sm focus:border-gray-500 focus:outline-none focus:ring-gray-500 sm:text-sm';

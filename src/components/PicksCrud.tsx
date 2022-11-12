@@ -2,7 +2,7 @@ import { useSession } from 'next-auth/react';
 import { Dispatch, FC, SetStateAction, useContext, useState } from 'react';
 import { ModalsContext } from '../context/modalsContext';
 import { Pick, Race, Rider } from '../lib/types';
-import { useShowNotification } from '../utils/utils';
+import { useShowNotification } from '../lib/utils/utils';
 import Modal from './Modal';
 import PickForm from './PickForm';
 import RacesCarousel from './RacesCarousel';

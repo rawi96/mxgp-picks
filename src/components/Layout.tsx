@@ -6,7 +6,7 @@ import Link from 'next/link';
 import { useRouter } from 'next/router';
 import { FC, Fragment, ReactNode, useContext } from 'react';
 import { ModalsContext } from '../context/modalsContext';
-import { classNames } from '../utils/utils';
+import { classNames } from '../lib/utils/utils';
 import Footer from './Footer';
 
 export const navigation = [

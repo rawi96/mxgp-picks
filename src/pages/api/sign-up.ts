@@ -1,10 +1,10 @@
 import type { NextApiRequest, NextApiResponse } from 'next';
 import { v4 as uuidv4 } from 'uuid';
-import { hashPassword } from '../../lib/bcrypt';
 import prisma from '../../lib/prisma';
 import UserRepo from '../../lib/repos/userRepo';
 import { User } from '../../lib/types';
-import { REGEX_EMAIL, REGEX_PASSWORD } from '../../utils/utils';
+import { hashPassword } from '../../lib/utils/bcrypt';
+import { REGEX_EMAIL, REGEX_PASSWORD } from '../../lib/utils/utils';
 
 const handler = async (req: NextApiRequest, res: NextApiResponse) => {
   const { email, username, password } = req.body;

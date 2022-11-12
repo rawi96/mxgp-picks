@@ -4,7 +4,7 @@ import { FC } from 'react';
 import Layout from '../components/Layout';
 import PersonalRanking from '../components/PersonalRanking';
 import PicksCrud from '../components/PicksCrud';
-import prisma from '../lib/prisma';
+import prisma from '../lib/utils/prisma';
 import PickRepo from '../lib/repos/pickRepo';
 import RaceRepo from '../lib/repos/raceRepo';
 import RiderRepo from '../lib/repos/riderRepo';

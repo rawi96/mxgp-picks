@@ -2,7 +2,7 @@ import { FC, useState } from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { v4 as uuidv4 } from 'uuid';
 import { Race, Rider } from '../lib/types';
-import { dateToStringForNativeInput, REGEX_DATE } from '../utils/utils';
+import { dateToStringForNativeInput, REGEX_DATE } from '../lib/utils/utils';
 import RiderSelector from './RiderSelector';
 
 const INPUT_VALID_CLASSES =

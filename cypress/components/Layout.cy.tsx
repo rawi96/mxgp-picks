@@ -1,7 +1,7 @@
 import { Session } from 'next-auth';
 import { SessionProvider } from 'next-auth/react';
-import { LAYOUT_SELECTOR } from '../../cypress/selectors';
-import Layout from './Layout';
+import { LAYOUT_SELECTOR } from '../selectors';
+import Layout from '../../src/components/Layout';
 
 const SESSION: Session = {
   user: {

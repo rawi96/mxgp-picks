@@ -58,9 +58,7 @@ export default class UserService {
   }
 
   public async authorize(email: string, password: string): Promise<User | null> {
-    console.log(email, password);
     const user = await this.userRepo.getByEmail(email);
-    console.log(user);
     if (user && (await comparePasswords(password, user.password))) {
       return user;
     } else {
@@ -68,7 +66,7 @@ export default class UserService {
     }
   }
 
-  public async createCustomSession(session: any): Promise<User | null> {
+  public async createCustomSession(session: any) {
     const user = await this.userRepo.getByEmail(session.user.email);
     return {
       ...session,

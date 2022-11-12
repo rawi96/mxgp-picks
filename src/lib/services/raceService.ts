@@ -40,6 +40,7 @@ export default class RaceService {
 
   public async addRace(req: NextApiRequest, res: NextApiResponse): Promise<void | NextApiResponse<any>> {
     const session = await getSession({ req });
+    console.log('session', session);
 
     if (!(await isAdmin(session?.user.email, this.userRepo))) {
       return res.status(401).json({ message: 'Unauthorized' });

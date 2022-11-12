@@ -50,6 +50,7 @@ const useRiders = (riders: Rider[]): UseRiders => {
       headers: {
         'Content-Type': 'application/json',
       },
+      credentials: 'same-origin',
       body: JSON.stringify(rider),
     });
     if (res.ok) {

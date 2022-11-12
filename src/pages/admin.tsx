@@ -24,7 +24,6 @@ const useAdminRoute = () => {
 const Admin: FC = () => {
   const session = useAdminRoute();
   const { races } = useRaces();
-  console.log(races);
   const { riders } = useRiders();
   return (
     <>

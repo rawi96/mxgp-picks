@@ -34,6 +34,7 @@ const SignUp: FC = () => {
         Accept: 'application/json',
         'Content-Type': 'application/json',
       },
+      credentials: 'same-origin',
       body: JSON.stringify(data),
     });
     if (res.ok) {

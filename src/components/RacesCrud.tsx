@@ -51,6 +51,7 @@ const useRaces = (races: Race[]): UseRaces => {
       headers: {
         'Content-Type': 'application/json',
       },
+      credentials: 'same-origin',
       body: JSON.stringify(race),
     });
     if (res.ok) {

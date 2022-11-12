@@ -5,6 +5,7 @@ const TriggerScoreCalculation: FC = () => {
   const triggerScoreCalculation = () => {
     fetch('/api/score-calculation', {
       method: 'POST',
+      credentials: 'same-origin',
     });
   };
 

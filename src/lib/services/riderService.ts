@@ -2,23 +2,19 @@ import { NextApiRequest, NextApiResponse } from 'next';
 import { getSession } from 'next-auth/react';
 import { v4 as uuidv4 } from 'uuid';
 import RiderRepo from '../repos/riderRepo';
-import UserRepo from '../repos/userRepo';
 import { Rider } from '../types/types';
-import { isAdmin } from '../utils/isAdmin';
 
 export default class RiderService {
   private riderRepo: RiderRepo;
-  private userRepo: UserRepo;
 
-  constructor(riderRepo: RiderRepo, userRepo: UserRepo) {
+  constructor(riderRepo: RiderRepo) {
     this.riderRepo = riderRepo;
-    this.userRepo = userRepo;
   }
 
   public async addRider(req: NextApiRequest, res: NextApiResponse): Promise<void | NextApiResponse<any>> {
     const session = await getSession({ req });
 
-    if (!(await isAdmin(session?.user.email, this.userRepo))) {
+    if (!session?.user.isAdmin) {
       return res.status(401).json({ message: 'Unauthorized' });
     }
 
@@ -48,7 +44,7 @@ export default class RiderService {
   public async updateRider(req: NextApiRequest, res: NextApiResponse): Promise<void | NextApiResponse<any>> {
     const session = await getSession({ req });
 
-    if (!(await isAdmin(session?.user.email, this.userRepo))) {
+    if (!session?.user.isAdmin) {
       return res.status(401).json({ message: 'Unauthorized' });
     }
 
@@ -73,7 +69,7 @@ export default class RiderService {
   public async deleteRider(req: NextApiRequest, res: NextApiResponse): Promise<void | NextApiResponse<any>> {
     const session = await getSession({ req });
 
-    if (!(await isAdmin(session?.user.email, this.userRepo))) {
+    if (!session?.user.isAdmin) {
       return res.status(401).json({ message: 'Unauthorized' });
     }
 

@@ -2,29 +2,19 @@ import { NextApiRequest, NextApiResponse } from 'next';
 import { getSession } from 'next-auth/react';
 import { v4 as uuidv4 } from 'uuid';
 import PickRepo from '../repos/pickRepo';
-import UserRepo from '../repos/userRepo';
 import { Pick } from '../types/types';
 
 export default class PickService {
   private pickRepo: PickRepo;
-  private userRepo: UserRepo;
 
-  constructor(pickRepo: PickRepo, userRepo: UserRepo) {
+  constructor(pickRepo: PickRepo) {
     this.pickRepo = pickRepo;
-    this.userRepo = userRepo;
   }
 
   public async addPick(req: NextApiRequest, res: NextApiResponse): Promise<void | NextApiResponse<any>> {
     const session = await getSession({ req });
-    const email = session?.user.email;
 
-    if (!email) {
-      return res.status(401).json({ message: 'Unauthorized' });
-    }
-
-    const user = await this.userRepo.getByEmail(email);
-
-    if (!user) {
+    if (!session?.user) {
       return res.status(401).json({ message: 'Unauthorized' });
     }
 
@@ -37,7 +27,7 @@ export default class PickService {
     const newPick: Pick = {
       id: uuidv4(),
       raceId,
-      userId: user.id,
+      userId: session.user.id,
       result,
       resultId: result.id,
     };
@@ -49,33 +39,19 @@ export default class PickService {
 
   public async getPicks(req: NextApiRequest, res: NextApiResponse): Promise<void | NextApiResponse<any>> {
     const session = await getSession({ req });
-    const email = session?.user.email;
 
-    if (!email) {
+    if (!session?.user) {
       return res.status(401).json({ message: 'Unauthorized' });
     }
 
-    const user = await this.userRepo.getByEmail(email);
-
-    if (!user) {
-      return res.status(401).json({ message: 'Unauthorized' });
-    }
-
-    const picks = await this.pickRepo.getByUserId(user.id);
+    const picks = await this.pickRepo.getByUserId(session.user.id);
     return res.status(200).json(picks);
   }
 
   public async updatePick(req: NextApiRequest, res: NextApiResponse): Promise<void | NextApiResponse<any>> {
     const session = await getSession({ req });
-    const email = session?.user.email;
 
-    if (!email) {
-      return res.status(401).json({ message: 'Unauthorized' });
-    }
-
-    const user = await this.userRepo.getByEmail(email);
-
-    if (!user) {
+    if (!session?.user) {
       return res.status(401).json({ message: 'Unauthorized' });
     }
 
@@ -89,7 +65,7 @@ export default class PickService {
     const newPick: Pick = {
       id,
       raceId,
-      userId: user.id,
+      userId: session.user.id,
       result,
       resultId: result.id,
     };

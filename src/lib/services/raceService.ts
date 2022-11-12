@@ -5,27 +5,17 @@ import PickRepo from '../repos/pickRepo';
 import RaceRepo from '../repos/raceRepo';
 import RaceResultRepo from '../repos/raceResultRepo';
 import ResultRepo from '../repos/resultRepo';
-import UserRepo from '../repos/userRepo';
 import { Race } from '../types/types';
-import { isAdmin } from '../utils/isAdmin';
 
 export default class RaceService {
   private raceRepo: RaceRepo;
   private pickRepo: PickRepo;
-  private userRepo: UserRepo;
   private raceResultRepo: RaceResultRepo;
   private resultRepo: ResultRepo;
 
-  constructor(
-    raceRepo: RaceRepo,
-    pickRepo: PickRepo,
-    userRepo: UserRepo,
-    raceResultRepo: RaceResultRepo,
-    resultRepo: ResultRepo
-  ) {
+  constructor(raceRepo: RaceRepo, pickRepo: PickRepo, raceResultRepo: RaceResultRepo, resultRepo: ResultRepo) {
     this.raceRepo = raceRepo;
     this.pickRepo = pickRepo;
-    this.userRepo = userRepo;
     this.raceResultRepo = raceResultRepo;
     this.resultRepo = resultRepo;
   }
@@ -40,9 +30,8 @@ export default class RaceService {
 
   public async addRace(req: NextApiRequest, res: NextApiResponse): Promise<void | NextApiResponse<any>> {
     const session = await getSession({ req });
-    console.log('session', session);
 
-    if (!(await isAdmin(session?.user.email, this.userRepo))) {
+    if (!session?.user.isAdmin) {
       return res.status(401).json({ message: 'Unauthorized' });
     }
 
@@ -87,7 +76,7 @@ export default class RaceService {
   public async updateRace(req: NextApiRequest, res: NextApiResponse): Promise<void | NextApiResponse<any>> {
     const session = await getSession({ req });
 
-    if (!(await isAdmin(session?.user.email, this.userRepo))) {
+    if (!session?.user.isAdmin) {
       return res.status(401).json({ message: 'Unauthorized' });
     }
 
@@ -121,7 +110,7 @@ export default class RaceService {
   public async deleteRace(req: NextApiRequest, res: NextApiResponse): Promise<void | NextApiResponse<any>> {
     const session = await getSession({ req });
 
-    if (!(await isAdmin(session?.user.email, this.userRepo))) {
+    if (!session?.user.isAdmin) {
       return res.status(401).json({ message: 'Unauthorized' });
     }
 

@@ -21,6 +21,7 @@ export default class UserRepo {
     return users.map((user, index) => ({
       ...user,
       position: index + 1,
+      password: '',
       email: '',
     }));
   }

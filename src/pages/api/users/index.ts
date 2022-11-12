@@ -1,23 +1,22 @@
 import type { NextApiRequest, NextApiResponse } from 'next';
 import UserRepo from '../../../lib/repos/userRepo';
+import UserService from '../../../lib/services/userService';
 import prisma from '../../../lib/utils/prisma';
 
 const handler = async (req: NextApiRequest, res: NextApiResponse) => {
   const { method } = req;
 
-  if (method === 'GET') {
-    return await getUsers(req, res);
-  }
+  const userService = new UserService(new UserRepo(prisma));
 
-  res.setHeader('Allow', ['GET']);
-  return res.status(405).end(`Method ${method} Not Allowed`);
-};
-
-const getUsers = async (req: NextApiRequest, res: NextApiResponse) => {
-  const userRepo = new UserRepo(prisma);
   try {
-    const users = await userRepo.getAllWithPosition();
-    return res.status(200).json(users);
+    switch (method) {
+      case 'GET':
+        return await userService.getUsers(req, res);
+      case 'POST':
+        return await userService.addUser(req, res);
+      default:
+        return res.status(405).json({ message: 'Method not allowed' });
+    }
   } catch (error) {
     console.error(error);
     return res.status(500).json({ message: 'Internal server error' });

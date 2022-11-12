@@ -1,9 +1,9 @@
 import { NextApiHandler } from 'next';
 import NextAuth from 'next-auth';
 import CredentialsProvider from 'next-auth/providers/credentials';
-import prisma from '../../../lib/utils/prisma';
 import UserRepo from '../../../lib/repos/userRepo';
-import { comparePasswords } from '../../../lib/utils/bcrypt';
+import UserService from '../../../lib/services/userService';
+import prisma from '../../../lib/utils/prisma';
 
 const authHandler: NextApiHandler = (req, res) => NextAuth(req, res, options);
 export default authHandler;
@@ -20,15 +20,11 @@ const options = {
         if (!credentials) {
           return null;
         }
-        const userRepo = new UserRepo(prisma);
+        const userService = new UserService(new UserRepo(prisma));
         try {
-          const user = await userRepo.getByEmail(credentials.email);
-          if (user && (await comparePasswords(credentials.password, user.password))) {
-            return { id: user.id, email: user.email, username: user.username, isAdmin: user.isAdmin };
-          } else {
-            return null;
-          }
+          return await userService.authorize(credentials.email, credentials.password);
         } catch (error) {
+          console.error(error);
           return null;
         }
       },
@@ -37,19 +33,8 @@ const options = {
   secret: process.env.SECRET,
   callbacks: {
     async session({ session }: { session: any }) {
-      const userRepo = new UserRepo(prisma);
-      const user = await userRepo.getByEmail(session.user.email);
-      session = {
-        ...session,
-        user: {
-          ...session.user,
-          id: user?.id,
-          username: user?.username,
-          isAdmin: user?.isAdmin,
-        },
-      };
-
-      return session;
+      const userService = new UserService(new UserRepo(prisma));
+      return await userService.createCustomSession(session);
     },
   },
 };

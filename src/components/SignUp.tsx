@@ -28,7 +28,7 @@ const SignUp: FC = () => {
   const { setSignUpModalOpen, setLoginModalOpen } = useContext(ModalsContext);
 
   const onSubmit: SubmitHandler<FormInput> = async (data) => {
-    const res = await fetch(`api/sign-up`, {
+    const res = await fetch(`api/users`, {
       method: 'POST',
       headers: {
         Accept: 'application/json',

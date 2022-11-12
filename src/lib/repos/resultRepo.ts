@@ -1,5 +1,5 @@
 import { PrismaClient } from '@prisma/client';
-import { Result } from '../types';
+import { Result } from '../types/types';
 
 export default class ResultRepo {
   private prisma: PrismaClient;

@@ -1,7 +1,7 @@
 import type { NextApiRequest, NextApiResponse } from 'next';
 import { v4 as uuidv4 } from 'uuid';
 import UserRepo from '../../lib/repos/userRepo';
-import { User } from '../../lib/types';
+import { User } from '../../lib/types/types';
 import { hashPassword } from '../../lib/utils/bcrypt';
 import prisma from '../../lib/utils/prisma';
 import { REGEX_EMAIL, REGEX_PASSWORD } from '../../lib/utils/utils';

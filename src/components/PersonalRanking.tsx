@@ -1,6 +1,6 @@
 import { useSession } from 'next-auth/react';
 import { FC } from 'react';
-import { User } from '../lib/types';
+import { User } from '../lib/types/types';
 import UsersTable from './UsersTable';
 
 type Props = {

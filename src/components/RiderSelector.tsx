@@ -1,5 +1,5 @@
 import { Dispatch, FC, SetStateAction } from 'react';
-import { Rider } from '../lib/types';
+import { Rider } from '../lib/types/types';
 import RiderCombobox from './RiderCombobox';
 
 type Props = {

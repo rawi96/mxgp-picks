@@ -5,7 +5,7 @@ import Layout from '../components/Layout';
 import UsersTable from '../components/UsersTable';
 import prisma from '../lib//utils/prisma';
 import UserRepo from '../lib/repos/userRepo';
-import { User } from '../lib/types';
+import { User } from '../lib/types/types';
 
 type Props = {
   serverSideUsers: User[];

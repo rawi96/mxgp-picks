@@ -1,5 +1,5 @@
 import { FC } from 'react';
-import { Rider } from '../lib/types';
+import { Rider } from '../lib/types/types';
 
 type Props = {
   riders: Rider[];

@@ -1,7 +1,7 @@
 import { FC } from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { v4 as uuidv4 } from 'uuid';
-import { Rider } from '../lib/types';
+import { Rider } from '../lib/types/types';
 
 const INPUT_VALID_CLASSES =
   'block w-full appearance-none rounded-md border border-gray-300 px-3 py-2 placeholder-gray-400 shadow-sm focus:border-gray-500 focus:outline-none focus:ring-gray-500 sm:text-sm';

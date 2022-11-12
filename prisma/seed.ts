@@ -1,6 +1,6 @@
 import { PrismaClient } from '@prisma/client';
 import { v4 as uuidv4 } from 'uuid';
-import { User } from '../src/lib/types';
+import { User } from '../src/lib/types/types';
 import { hashPassword } from '../src/lib/utils/bcrypt';
 
 const prisma = new PrismaClient();

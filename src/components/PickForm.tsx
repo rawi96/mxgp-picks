@@ -1,7 +1,7 @@
 import { useSession } from 'next-auth/react';
 import { FC, FormEvent, useState } from 'react';
 import { v4 as uuidv4 } from 'uuid';
-import { Pick, Race, Rider } from '../lib/types';
+import { Pick, Race, Rider } from '../lib/types/types';
 import RiderSelector from './RiderSelector';
 
 type Props = {

@@ -1,6 +1,6 @@
 import { Carousel } from 'flowbite-react';
 import { FC } from 'react';
-import { Race } from '../lib/types';
+import { Race } from '../lib/types/types';
 import RaceCard from './RaceCard';
 
 type Props = {

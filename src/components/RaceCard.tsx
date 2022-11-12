@@ -1,7 +1,7 @@
 import { PencilIcon, TrashIcon } from '@heroicons/react/24/outline';
 import Image from 'next/image';
 import { FC } from 'react';
-import { Race } from '../lib/types';
+import { Race } from '../lib/types/types';
 import { dateToString } from '../lib/utils/utils';
 
 type Props = {

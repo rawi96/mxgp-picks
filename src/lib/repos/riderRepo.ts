@@ -1,5 +1,5 @@
 import { PrismaClient } from '@prisma/client';
-import { Rider } from '../types';
+import { Rider } from '../types/types';
 
 export default class RiderRepo {
   private prisma: PrismaClient;

@@ -2,7 +2,7 @@ import type { NextApiRequest, NextApiResponse } from 'next';
 import { getSession } from 'next-auth/react';
 import PickRepo from '../../../lib/repos/pickRepo';
 import UserRepo from '../../../lib/repos/userRepo';
-import { Pick } from '../../../lib/types';
+import { Pick } from '../../../lib/types/types';
 import prisma from '../../../lib/utils/prisma';
 
 const handler = async (req: NextApiRequest, res: NextApiResponse) => {

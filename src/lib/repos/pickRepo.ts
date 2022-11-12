@@ -1,5 +1,5 @@
 import { PrismaClient } from '@prisma/client';
-import { Pick } from '../types';
+import { Pick } from '../types/types';
 
 export default class PickRepo {
   private prisma: PrismaClient;

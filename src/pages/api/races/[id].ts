@@ -4,7 +4,7 @@ import PickRepo from '../../../lib/repos/pickRepo';
 import RaceRepo from '../../../lib/repos/raceRepo';
 import RaceResultRepo from '../../../lib/repos/raceResultRepo';
 import ResultRepo from '../../../lib/repos/resultRepo';
-import { Race } from '../../../lib/types';
+import { Race } from '../../../lib/types/types';
 import prisma from '../../../lib/utils/prisma';
 
 const handler = async (req: NextApiRequest, res: NextApiResponse) => {

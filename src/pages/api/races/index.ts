@@ -3,7 +3,7 @@ import { getSession } from 'next-auth/react';
 import { v4 as uuidv4 } from 'uuid';
 import PickRepo from '../../../lib/repos/pickRepo';
 import RaceRepo from '../../../lib/repos/raceRepo';
-import { Race } from '../../../lib/types';
+import { Race } from '../../../lib/types/types';
 import prisma from '../../../lib/utils/prisma';
 
 const handler = async (req: NextApiRequest, res: NextApiResponse) => {

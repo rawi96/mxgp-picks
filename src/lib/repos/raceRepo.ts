@@ -1,5 +1,5 @@
 import { PrismaClient } from '@prisma/client';
-import { Race } from '../types';
+import { Race } from '../types/types';
 
 export default class RaceRepo {
   private prisma: PrismaClient;

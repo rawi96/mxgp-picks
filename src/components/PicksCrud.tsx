@@ -8,8 +8,8 @@ import PickForm from './PickForm';
 import RacesCarousel from './RacesCarousel';
 
 type Props = {
-  serverSideRaces: Race[];
-  serverSideRiders: Rider[];
+  races: Race[];
+  riders: Rider[];
 };
 
 type UsePicks = {
@@ -19,11 +19,11 @@ type UsePicks = {
   setModalOpen: (open: boolean) => void;
   selectedRace: Race | null;
   setSelectedRace: Dispatch<SetStateAction<Race | null>>;
-  races: Race[];
+  racesState: Race[];
 };
 
-const usePick = (serverSideRaces: Race[]): UsePicks => {
-  const [races, setRaces] = useState<Race[]>(serverSideRaces);
+const usePick = (races: Race[]): UsePicks => {
+  const [racesState, setRacesState] = useState<Race[]>(races);
 
   const [modalOpen, setModalOpen] = useState(false);
   const [selectedRace, setSelectedRace] = useState<Race | null>(null);
@@ -35,11 +35,10 @@ const usePick = (serverSideRaces: Race[]): UsePicks => {
       credentials: 'same-origin',
     });
     const data = await res.json();
-    setRaces(data);
+    setRacesState(data);
   };
 
   const addPick = async (pick: Pick) => {
-    //add cookies to fetch
     const res = await fetch('/api/picks', {
       method: 'POST',
       headers: {
@@ -74,11 +73,11 @@ const usePick = (serverSideRaces: Race[]): UsePicks => {
     }
   };
 
-  return { races, addPick, editPick, modalOpen, setModalOpen, selectedRace, setSelectedRace };
+  return { racesState, addPick, editPick, modalOpen, setModalOpen, selectedRace, setSelectedRace };
 };
 
-const PicksCrud: FC<Props> = ({ serverSideRaces, serverSideRiders }) => {
-  const { races, addPick, editPick, modalOpen, setModalOpen, selectedRace, setSelectedRace } = usePick(serverSideRaces);
+const PicksCrud: FC<Props> = ({ races, riders }) => {
+  const { racesState, addPick, editPick, modalOpen, setModalOpen, selectedRace, setSelectedRace } = usePick(races);
   const session = useSession();
   const { setLoginModalOpen } = useContext(ModalsContext);
 
@@ -89,13 +88,13 @@ const PicksCrud: FC<Props> = ({ serverSideRaces, serverSideRiders }) => {
           prefilledPick={selectedRace?.pick || null}
           addPick={addPick}
           editPick={editPick}
-          serverSideRiders={serverSideRiders}
+          riders={riders}
           race={selectedRace}
         />
       </Modal>
       <RacesCarousel
         type="home"
-        races={races}
+        races={racesState}
         onPick={(race) => {
           setSelectedRace(race);
           if (session.data?.user.id) {

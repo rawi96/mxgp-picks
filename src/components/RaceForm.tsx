@@ -22,10 +22,10 @@ type Props = {
   addRace: (race: Race) => void;
   editRace: (id: string, race: Race) => void;
   prefilledRace: Race | null;
-  serverSideRiders: Rider[];
+  riders: Rider[];
 };
 
-const RaceForm: FC<Props> = ({ addRace, editRace, prefilledRace, serverSideRiders }) => {
+const RaceForm: FC<Props> = ({ addRace, editRace, prefilledRace, riders }) => {
   const {
     register,
     handleSubmit,
@@ -156,7 +156,7 @@ const RaceForm: FC<Props> = ({ addRace, editRace, prefilledRace, serverSideRider
             </div>
           </div>
           <RiderSelector
-            serverSideRiders={serverSideRiders}
+            riders={riders}
             selectedFirst={selectedFirst}
             selectedSecond={selectedSecond}
             selectedThird={selectedThird}

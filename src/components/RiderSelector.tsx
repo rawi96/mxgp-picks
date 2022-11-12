@@ -3,7 +3,7 @@ import { Rider } from '../lib/types/types';
 import RiderCombobox from './RiderCombobox';
 
 type Props = {
-  serverSideRiders: Rider[];
+  riders: Rider[];
   selectedFirst: Rider | null;
   selectedSecond: Rider | null;
   selectedThird: Rider | null;
@@ -19,7 +19,7 @@ type Props = {
 };
 
 const RiderSelector: FC<Props> = ({
-  serverSideRiders,
+  riders,
   selectedFirst,
   selectedSecond,
   selectedThird,
@@ -33,7 +33,7 @@ const RiderSelector: FC<Props> = ({
   setSelectedFifth,
   setSelectedWildcard,
 }) => {
-  const allRidersExceptSelected = serverSideRiders.filter(
+  const allRidersExceptSelected = riders.filter(
     (rider) =>
       rider.id !== selectedFirst?.id &&
       rider.id !== selectedSecond?.id &&

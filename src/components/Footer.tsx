@@ -5,7 +5,7 @@ import { FC } from 'react';
 
 import { adminNavigation, navigation } from './Layout';
 
-const Footer: FC = () => {
+export const Footer: FC = () => {
   const session = useSession();
   const sessionNavigation = session?.data?.user?.isAdmin ? adminNavigation : navigation;
 

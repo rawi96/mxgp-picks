@@ -7,12 +7,12 @@ import RaceForm from './RaceForm';
 import RacesCarousel from './RacesCarousel';
 
 type Props = {
-  serverSideRaces: Race[];
-  serverSideRiders: Rider[];
+  races: Race[];
+  riders: Rider[];
 };
 
 type UseRaces = {
-  races: Race[];
+  racesState: Race[];
   onEditClick: (race: Race) => void;
   onAddClick: () => void;
   addRace: (race: Race) => void;
@@ -23,8 +23,8 @@ type UseRaces = {
   selectedRace: Race | null;
 };
 
-const useRaces = (serverSideRaces: Race[]): UseRaces => {
-  const [races, setRaces] = useState<Race[]>(serverSideRaces);
+const useRaces = (races: Race[]): UseRaces => {
+  const [racesState, setRacesState] = useState<Race[]>(races);
   const [modalOpen, setModalOpen] = useState(false);
   const [selectedRace, setSelectedRace] = useState<Race | null>(null);
   const { showNotification } = useShowNotification();
@@ -32,7 +32,7 @@ const useRaces = (serverSideRaces: Race[]): UseRaces => {
   const reloadRaces = async () => {
     const res = await fetch('/api/races');
     const data = await res.json();
-    setRaces(data);
+    setRacesState(data);
   };
 
   const onAddClick = () => {
@@ -95,7 +95,7 @@ const useRaces = (serverSideRaces: Race[]): UseRaces => {
   };
 
   return {
-    races,
+    racesState,
     onAddClick,
     onEditClick,
     addRace,
@@ -107,16 +107,16 @@ const useRaces = (serverSideRaces: Race[]): UseRaces => {
   };
 };
 
-const RacesCrud: FC<Props> = ({ serverSideRaces, serverSideRiders }) => {
-  const { races, addRace, editRace, deleteRace, modalOpen, setModalOpen, selectedRace, onEditClick, onAddClick } =
-    useRaces(serverSideRaces);
+const RacesCrud: FC<Props> = ({ races, riders }) => {
+  const { racesState, addRace, editRace, deleteRace, modalOpen, setModalOpen, selectedRace, onEditClick, onAddClick } =
+    useRaces(races);
 
   return (
     <>
       <Modal open={modalOpen} setOpen={setModalOpen}>
-        <RaceForm prefilledRace={selectedRace} addRace={addRace} editRace={editRace} serverSideRiders={serverSideRiders} />
+        <RaceForm prefilledRace={selectedRace} addRace={addRace} editRace={editRace} riders={riders} />
       </Modal>
-      <RacesCarousel type="admin" races={races} onEdit={onEditClick} onDelete={deleteRace} />
+      <RacesCarousel type="admin" races={racesState} onEdit={onEditClick} onDelete={deleteRace} />
       <div className="flex justify-center mt-10">
         <button
           onClick={onAddClick}

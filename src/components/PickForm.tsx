@@ -8,11 +8,11 @@ type Props = {
   addPick: (pick: Pick) => void;
   editPick: (pick: Pick) => void;
   prefilledPick: Pick | null;
-  serverSideRiders: Rider[];
+  riders: Rider[];
   race: Race | null;
 };
 
-const PickForm: FC<Props> = ({ addPick, editPick, prefilledPick, serverSideRiders, race }) => {
+const PickForm: FC<Props> = ({ addPick, editPick, prefilledPick, riders, race }) => {
   const [selectedFirst, setSelectedFirst] = useState<Rider | null>(prefilledPick?.result?.first || null);
   const [selectedSecond, setSelectedSecond] = useState<Rider | null>(prefilledPick?.result?.second || null);
   const [selectedThird, setSelectedThird] = useState<Rider | null>(prefilledPick?.result?.third || null);
@@ -66,7 +66,7 @@ const PickForm: FC<Props> = ({ addPick, editPick, prefilledPick, serverSideRider
       <div className="mt-8 sm:mx-auto sm:w-full sm:max-w-md">
         <form className="space-y-6" onSubmit={(e) => onSubmit(e)}>
           <RiderSelector
-            serverSideRiders={serverSideRiders}
+            riders={riders}
             selectedFirst={selectedFirst}
             selectedSecond={selectedSecond}
             selectedThird={selectedThird}

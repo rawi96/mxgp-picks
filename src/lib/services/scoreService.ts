@@ -3,7 +3,6 @@ import { getSession } from 'next-auth/react';
 import PickRepo from '../repos/pickRepo';
 import RaceRepo from '../repos/raceRepo';
 import UserRepo from '../repos/userRepo';
-import { isAdmin } from '../utils/isAdmin';
 
 export default class ScoreService {
   private raceRepo: RaceRepo;
@@ -19,7 +18,7 @@ export default class ScoreService {
   public async calculateScore(req: NextApiRequest, res: NextApiResponse): Promise<void | NextApiResponse<any>> {
     const session = await getSession({ req });
 
-    if (!(await isAdmin(session?.user.email, this.userRepo))) {
+    if (!session?.user.isAdmin) {
       return res.status(401).json({ message: 'Unauthorized' });
     }
 

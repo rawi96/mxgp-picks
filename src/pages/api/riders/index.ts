@@ -2,6 +2,7 @@ import type { NextApiRequest, NextApiResponse } from 'next';
 import RiderRepo from '../../../lib/repos/riderRepo';
 import UserRepo from '../../../lib/repos/userRepo';
 import RiderService from '../../../lib/services/riderService';
+import prisma from '../../../lib/utils/prisma';
 
 const handler = async (req: NextApiRequest, res: NextApiResponse) => {
   const { method } = req;

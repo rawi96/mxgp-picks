@@ -2,10 +2,11 @@ import { Session } from 'next-auth';
 import { SessionProvider } from 'next-auth/react';
 import { AppProps } from 'next/app';
 import Head from 'next/head';
+import { SWRConfig } from 'swr';
+import '../../styles/globals.css';
 import Notification from '../components/Notification';
 import SessionModals from '../components/SessionModals';
 import { ModalsContextProvider } from '../context/modalsContext';
-import '../styles/globals.css';
 
 export default function MyApp({
   Component,
@@ -30,11 +31,17 @@ export default function MyApp({
         <meta name="theme-color" content="#ffffff" />
       </Head>
       <SessionProvider session={pageProps.session}>
-        <ModalsContextProvider>
-          <SessionModals />
-          <Notification />
-          <Component {...pageProps} />
-        </ModalsContextProvider>
+        <SWRConfig
+          value={{
+            fetcher: (resource, init) => fetch(resource, init).then((res) => res.json()),
+          }}
+        >
+          <ModalsContextProvider>
+            <SessionModals />
+            <Notification />
+            <Component {...pageProps} />
+          </ModalsContextProvider>
+        </SWRConfig>
       </SessionProvider>
     </>
   );

@@ -1,6 +1,6 @@
 import { Session } from 'next-auth';
 import { SessionProvider } from 'next-auth/react';
-import { LAYOUT_SELECTOR } from '../cypress/selectors';
+import { LAYOUT_SELECTOR } from '../../cypress/selectors';
 import Layout from './Layout';
 
 const SESSION: Session = {

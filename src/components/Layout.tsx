@@ -51,10 +51,16 @@ const Layout: FC<Props> = ({ children }) => {
         {session.data?.user ? (
           <>
             <div className="flex items-center px-5">
-              <div className="flex-shrink-0"></div>
-              <div className="ml-3">
-                <div className="text-base font-medium leading-none text-white">{session.data.user.username}</div>
-                <div className="text-sm font-medium leading-none text-gray-400">{session.data.user.email}</div>
+              <div className="flex-shrink-0">
+                <span className="inline-flex h-10 w-10 items-center justify-center rounded-full bg-red-600">
+                  <span className="text-sm font-medium leading-none text-white">
+                    {session.data.user.username && session.data.user.username.substring(0, 2).toUpperCase()}
+                  </span>
+                </span>
+              </div>
+              <div>
+                <div className="text-base font-medium leading-none text-white ml-3">{session.data.user.username}</div>
+                <div className="text-sm font-medium leading-none text-gray-400 ml-3 mt-1">{session.data.user.email}</div>
               </div>
             </div>
             <div className="mt-3 space-y-1 px-2">
@@ -232,8 +238,8 @@ const Layout: FC<Props> = ({ children }) => {
       </div>
 
       <main className="-mt-32">
-        <div className="mx-auto max-w-7xl px-4 pb-12 sm:px-6 lg:px-8">
-          <div className="rounded-lg bg-gray-50 px-8 py-8 shadow">{children}</div>
+        <div className="lg:mx-auto lg:max-w-7xl pb-12 lg:px-8">
+          <div className="lg:rounded-lg bg-gray-50 px-8 py-8 shadow">{children}</div>
           <Footer />
         </div>
       </main>

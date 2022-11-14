@@ -1,5 +1,6 @@
 import { useSession } from 'next-auth/react';
 import { Dispatch, FC, SetStateAction, useContext, useState } from 'react';
+import { KeyedMutator } from 'swr';
 import { ModalsContext } from '../context/modalsContext';
 import { Pick, Race, Rider } from '../lib/types/types';
 import { useShowNotification } from '../lib/utils/utils';
@@ -10,6 +11,7 @@ import RacesCarousel from './RacesCarousel';
 type Props = {
   races: Race[];
   riders: Rider[];
+  mutateRaces: KeyedMutator<any>;
 };
 
 type UsePicks = {
@@ -19,23 +21,15 @@ type UsePicks = {
   setModalOpen: (open: boolean) => void;
   selectedRace: Race | null;
   setSelectedRace: Dispatch<SetStateAction<Race | null>>;
-  racesState: Race[];
 };
 
-const usePick = (races: Race[]): UsePicks => {
-  const [racesState, setRacesState] = useState<Race[]>(races);
-
+const usePick = (mutateRaces: KeyedMutator<any>): UsePicks => {
   const [modalOpen, setModalOpen] = useState(false);
   const [selectedRace, setSelectedRace] = useState<Race | null>(null);
   const { showNotification } = useShowNotification();
 
   const reloadRaces = async () => {
-    const res = await fetch('/api/races', {
-      method: 'GET',
-      credentials: 'same-origin',
-    });
-    const data = await res.json();
-    setRacesState(data);
+    await mutateRaces();
   };
 
   const addPick = async (pick: Pick) => {
@@ -73,11 +67,11 @@ const usePick = (races: Race[]): UsePicks => {
     }
   };
 
-  return { racesState, addPick, editPick, modalOpen, setModalOpen, selectedRace, setSelectedRace };
+  return { addPick, editPick, modalOpen, setModalOpen, selectedRace, setSelectedRace };
 };
 
-const PicksCrud: FC<Props> = ({ races, riders }) => {
-  const { racesState, addPick, editPick, modalOpen, setModalOpen, selectedRace, setSelectedRace } = usePick(races);
+const PicksCrud: FC<Props> = ({ races, riders, mutateRaces }) => {
+  const { addPick, editPick, modalOpen, setModalOpen, selectedRace, setSelectedRace } = usePick(mutateRaces);
   const session = useSession();
   const { setLoginModalOpen } = useContext(ModalsContext);
 
@@ -94,7 +88,7 @@ const PicksCrud: FC<Props> = ({ races, riders }) => {
       </Modal>
       <RacesCarousel
         type="home"
-        races={racesState}
+        races={races}
         onPick={(race) => {
           setSelectedRace(race);
           if (session.data?.user.id) {

@@ -23,8 +23,8 @@ const useAdminRoute = () => {
 
 const Admin: FC = () => {
   const session = useAdminRoute();
-  const { races } = useRaces();
-  const { riders } = useRiders();
+  const { races, mutateRaces } = useRaces();
+  const { riders, mutateRiders } = useRiders();
   return (
     <>
       {session.data?.user?.isAdmin ? (
@@ -35,13 +35,13 @@ const Admin: FC = () => {
 
           {races && riders && (
             <>
-              <RacesCrud races={races} riders={riders} />
+              <RacesCrud races={races} riders={riders} mutateRaces={mutateRaces} />
               <div className="flex justify-center">
                 <h2 className="font-semibold text-gray-700 text-2xl mt-20 mb-10">Riders</h2>
               </div>
             </>
           )}
-          {riders && <RidersCrud riders={riders} />}
+          {riders && <RidersCrud riders={riders} mutateRiders={mutateRiders} />}
           <div className="flex justify-center">
             <h2 className="font-semibold text-gray-700 text-2xl mt-20 mb-10">Score calculation</h2>
           </div>

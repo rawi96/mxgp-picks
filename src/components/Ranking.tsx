@@ -1,21 +1,23 @@
-import { GetStaticProps } from 'next';
 import { useSession } from 'next-auth/react';
+import { useRouter } from 'next/router';
 import { FC } from 'react';
-import Layout from '../components/Layout';
-import UsersTable from '../components/UsersTable';
-import prisma from '../lib//utils/prisma';
-import UserRepo from '../lib/repos/userRepo';
-import { User } from '../lib/types/types';
+import { Race, User } from '../lib/types/types';
+import Layout from './Layout';
+import UsersTable from './UsersTable';
 
 type Props = {
   serverSideUsers: User[];
+  serverSideRaces: Race[];
 };
 
-const Ranking: FC<Props> = ({ serverSideUsers }) => {
+const Ranking: FC<Props> = ({ serverSideUsers, serverSideRaces }) => {
   const session = useSession();
 
   const loggedInUserId = session.data?.user.id;
   const indexOfLoggedInUser = serverSideUsers.findIndex((user) => user.id === loggedInUserId);
+
+  const router = useRouter();
+  const { raceId } = router.query;
 
   return (
     <Layout>
@@ -32,32 +34,32 @@ const Ranking: FC<Props> = ({ serverSideUsers }) => {
               Filter
             </label>
             <select
-              id="filter"
+              onChange={(e) => {
+                const url = new URL(window.location.href);
+                url.pathname = 'ranking/' + e.target.value;
+                router.push(url.toString());
+              }}
               name="filter"
               className="mt-1 block w-full rounded-md border-gray-300 py-2 pl-3 pr-10 text-base focus:border-gray-500 focus:outline-none focus:ring-gray-500 sm:text-sm"
-              defaultValue="Overall"
+              defaultValue={raceId ?? ''}
             >
-              <option>Overall</option>
-              <option>MXGP Germany</option>
-              <option>MXGP Switzerland</option>
+              <option value="">Overall</option>
+              {serverSideRaces.map((race) => (
+                <option key={race.id} value={race.id}>
+                  {race.title}
+                </option>
+              ))}
             </select>
           </div>
         </div>
       </div>
-      <UsersTable users={serverSideUsers} indexToMakeLoggedInUserVisible={indexOfLoggedInUser} />
+      <UsersTable
+        users={serverSideUsers}
+        indexToMakeLoggedInUserVisible={indexOfLoggedInUser}
+        filterRaceId={raceId ? raceId.toString() : undefined}
+      />
     </Layout>
   );
-};
-
-export const getStaticProps: GetStaticProps = async () => {
-  const serverSideUsers = await new UserRepo(prisma).getAllWithPosition();
-
-  return {
-    props: {
-      serverSideUsers,
-    },
-    revalidate: 10,
-  };
 };
 
 export default Ranking;

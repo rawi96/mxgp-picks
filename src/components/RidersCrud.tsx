@@ -1,5 +1,6 @@
 import { PlusIcon } from '@heroicons/react/24/outline';
 import { FC, useState } from 'react';
+import { KeyedMutator } from 'swr';
 import { Rider } from '../lib/types/types';
 import { useShowNotification } from '../lib/utils/utils';
 import Modal from './Modal';
@@ -8,10 +9,10 @@ import RiderTable from './RidersTable';
 
 type Props = {
   riders: Rider[];
+  mutateRiders: KeyedMutator<any>;
 };
 
 type UseRiders = {
-  ridersState: Rider[];
   onEditClick: (rider: Rider) => void;
   onAddClick: () => void;
   addRider: (rider: Rider) => void;
@@ -22,16 +23,13 @@ type UseRiders = {
   selectedRider: Rider | null;
 };
 
-const useRiders = (riders: Rider[]): UseRiders => {
-  const [ridersState, setRidersState] = useState<Rider[]>(riders);
+const useRiders = (mutateRiders: KeyedMutator<any>): UseRiders => {
   const [modalOpen, setModalOpen] = useState(false);
   const [selectedRider, setSelectedRider] = useState<Rider | null>(null);
   const { showNotification } = useShowNotification();
 
   const reloadRiders = async () => {
-    const res = await fetch('/api/riders');
-    const data = await res.json();
-    setRidersState(data);
+    await mutateRiders();
   };
 
   const onAddClick = () => {
@@ -92,7 +90,6 @@ const useRiders = (riders: Rider[]): UseRiders => {
   };
 
   return {
-    ridersState,
     onAddClick,
     onEditClick,
     addRider,
@@ -104,16 +101,16 @@ const useRiders = (riders: Rider[]): UseRiders => {
   };
 };
 
-const RidersCrud: FC<Props> = ({ riders }) => {
-  const { ridersState, addRider, editRider, deleteRider, modalOpen, setModalOpen, selectedRider, onEditClick, onAddClick } =
-    useRiders(riders);
+const RidersCrud: FC<Props> = ({ riders, mutateRiders }) => {
+  const { addRider, editRider, deleteRider, modalOpen, setModalOpen, selectedRider, onEditClick, onAddClick } =
+    useRiders(mutateRiders);
 
   return (
     <>
       <Modal open={modalOpen} setOpen={setModalOpen}>
         <RiderForm prefilledRider={selectedRider} addRider={addRider} editRider={editRider} />
       </Modal>
-      <RiderTable riders={ridersState} onEdit={onEditClick} onDelete={deleteRider} />
+      <RiderTable riders={riders} onEdit={onEditClick} onDelete={deleteRider} />
       <div className="flex justify-center mt-10">
         <button
           onClick={onAddClick}

@@ -1,5 +1,6 @@
 import { PlusIcon } from '@heroicons/react/24/outline';
 import { FC, useState } from 'react';
+import { KeyedMutator } from 'swr';
 import { Race, Rider } from '../lib/types/types';
 import { useShowNotification } from '../lib/utils/utils';
 import Modal from './Modal';
@@ -9,10 +10,10 @@ import RacesCarousel from './RacesCarousel';
 type Props = {
   races: Race[];
   riders: Rider[];
+  mutateRaces: KeyedMutator<any>;
 };
 
 type UseRaces = {
-  racesState: Race[];
   onEditClick: (race: Race) => void;
   onAddClick: () => void;
   addRace: (race: Race) => void;
@@ -23,16 +24,13 @@ type UseRaces = {
   selectedRace: Race | null;
 };
 
-const useRaces = (races: Race[]): UseRaces => {
-  const [racesState, setRacesState] = useState<Race[]>(races);
+const useRaces = (mutateRaces: KeyedMutator<any>): UseRaces => {
   const [modalOpen, setModalOpen] = useState(false);
   const [selectedRace, setSelectedRace] = useState<Race | null>(null);
   const { showNotification } = useShowNotification();
 
   const reloadRaces = async () => {
-    const res = await fetch('/api/races');
-    const data = await res.json();
-    setRacesState(data);
+    await mutateRaces();
   };
 
   const onAddClick = () => {
@@ -96,7 +94,6 @@ const useRaces = (races: Race[]): UseRaces => {
   };
 
   return {
-    racesState,
     onAddClick,
     onEditClick,
     addRace,
@@ -108,16 +105,16 @@ const useRaces = (races: Race[]): UseRaces => {
   };
 };
 
-const RacesCrud: FC<Props> = ({ races, riders }) => {
-  const { racesState, addRace, editRace, deleteRace, modalOpen, setModalOpen, selectedRace, onEditClick, onAddClick } =
-    useRaces(races);
+const RacesCrud: FC<Props> = ({ races, riders, mutateRaces }) => {
+  const { addRace, editRace, deleteRace, modalOpen, setModalOpen, selectedRace, onEditClick, onAddClick } =
+    useRaces(mutateRaces);
 
   return (
     <>
       <Modal open={modalOpen} setOpen={setModalOpen}>
         <RaceForm prefilledRace={selectedRace} addRace={addRace} editRace={editRace} riders={riders} />
       </Modal>
-      <RacesCarousel type="admin" races={racesState} onEdit={onEditClick} onDelete={deleteRace} />
+      <RacesCarousel type="admin" races={races} onEdit={onEditClick} onDelete={deleteRace} />
       <div className="flex justify-center mt-10">
         <button
           onClick={onAddClick}

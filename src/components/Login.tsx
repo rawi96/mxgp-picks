@@ -33,7 +33,7 @@ const Login: FC = () => {
     });
     if (res && res.ok) {
       setLoginModalOpen(false);
-      showNotification('Login successful', 'Success');
+      window.location.reload();
     } else {
       showNotification('Email or password incorrect!', 'Error');
     }

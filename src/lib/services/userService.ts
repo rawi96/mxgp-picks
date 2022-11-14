@@ -1,5 +1,6 @@
 import { NextApiRequest, NextApiResponse } from 'next';
 import { v4 as uuidv4 } from 'uuid';
+import RaceRepo from '../repos/raceRepo';
 import { default as UserRepo } from '../repos/userRepo';
 import { User } from '../types/types';
 import { comparePasswords, hashPassword } from '../utils/bcrypt';
@@ -7,9 +8,11 @@ import { REGEX_EMAIL, REGEX_PASSWORD } from '../utils/utils';
 
 export default class UserService {
   private userRepo: UserRepo;
+  private raceRepo: RaceRepo;
 
-  constructor(userRepo: UserRepo) {
+  constructor(userRepo: UserRepo, raceRepo: RaceRepo) {
     this.userRepo = userRepo;
+    this.raceRepo = raceRepo;
   }
 
   public async addUser(req: NextApiRequest, res: NextApiResponse): Promise<void | NextApiResponse<any>> {
@@ -46,6 +49,7 @@ export default class UserService {
       password: await hashPassword(password),
       isAdmin: false,
       score: 0,
+      scorePerRace: null,
     };
 
     const createdUser = await this.userRepo.create(newUser);
@@ -77,5 +81,29 @@ export default class UserService {
         isAdmin: user?.isAdmin,
       },
     };
+  }
+
+  public async getAllWithPosition() {
+    return this.userRepo.getAllWithPosition();
+  }
+
+  public async getAllWithPositionPerRace(raceId: string): Promise<User[]> {
+    let users = await this.userRepo.getAll();
+
+    users = users.map((user) => {
+      const scorePerRace = JSON.parse(user.scorePerRace || '{}');
+      const userScoreForRace = scorePerRace[raceId] || 0;
+      return {
+        ...user,
+        score: userScoreForRace,
+      };
+    });
+
+    users = users.sort((a, b) => b.score - a.score);
+
+    return users.map((user, index) => ({
+      ...user,
+      position: index + 1,
+    }));
   }
 }

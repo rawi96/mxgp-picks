@@ -7,16 +7,15 @@ import { useRiders } from '../hooks/useRiders';
 import { useUsers } from '../hooks/useUsers';
 
 const Index: FC = () => {
-  const { races } = useRaces();
-  const { users } = useUsers();
+  const { races, mutateRaces } = useRaces();
   const { riders } = useRiders();
-  console.log(races);
+  const { users } = useUsers();
   return (
     <Layout>
       <div className="flex justify-center">
         <h2 className="font-semibold text-gray-700 text-2xl mb-10">Races</h2>
       </div>
-      {races && riders && <PicksCrud races={races} riders={riders} />}
+      {races && riders && <PicksCrud races={races} riders={riders} mutateRaces={mutateRaces} />}
       {users && <PersonalRanking users={users} />}
     </Layout>
   );

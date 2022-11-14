@@ -8,7 +8,7 @@ import RiderForm from './RiderForm';
 import RiderTable from './RidersTable';
 
 type Props = {
-  riders: Rider[];
+  riders?: Rider[];
   mutateRiders: KeyedMutator<any>;
 };
 

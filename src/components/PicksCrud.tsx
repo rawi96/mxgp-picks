@@ -9,9 +9,11 @@ import PickForm from './PickForm';
 import RacesCarousel from './RacesCarousel';
 
 type Props = {
-  races: Race[];
-  riders: Rider[];
+  races?: Race[];
+  riders?: Rider[];
   mutateRaces: KeyedMutator<any>;
+  isLoadingRiders?: boolean;
+  isLoadingRaces?: boolean;
 };
 
 type UsePicks = {
@@ -70,7 +72,7 @@ const usePick = (mutateRaces: KeyedMutator<any>): UsePicks => {
   return { addPick, editPick, modalOpen, setModalOpen, selectedRace, setSelectedRace };
 };
 
-const PicksCrud: FC<Props> = ({ races, riders, mutateRaces }) => {
+const PicksCrud: FC<Props> = ({ races, riders, mutateRaces, isLoadingRaces, isLoadingRiders }) => {
   const { addPick, editPick, modalOpen, setModalOpen, selectedRace, setSelectedRace } = usePick(mutateRaces);
   const session = useSession();
   const { setLoginModalOpen } = useContext(ModalsContext);
@@ -89,6 +91,8 @@ const PicksCrud: FC<Props> = ({ races, riders, mutateRaces }) => {
       <RacesCarousel
         type="home"
         races={races}
+        isLoadingRaces={isLoadingRaces}
+        isLoadingRiders={isLoadingRiders}
         onPick={(race) => {
           setSelectedRace(race);
           if (session.data?.user.id) {

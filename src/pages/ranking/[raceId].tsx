@@ -21,7 +21,7 @@ const FilteredRankingPage: FC<Props> = ({ serverSideUsers, serverSideRaces }) =>
 };
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
-  const userService = new UserService(new UserRepo(prisma), new RaceRepo(prisma));
+  const userService = new UserService(new UserRepo(prisma));
   const raceService = new RaceService(
     new RaceRepo(prisma),
     new PickRepo(prisma),

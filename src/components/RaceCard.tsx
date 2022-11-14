@@ -5,7 +5,7 @@ import { Race } from '../lib/types/types';
 import { dateToString } from '../lib/utils/utils';
 
 type Props = {
-  race: Race;
+  race?: Race;
   index: number;
   onEdit?: (race: Race) => void;
   onDelete?: (id: string) => void;
@@ -22,13 +22,17 @@ const RaceCard: FC<Props> = ({ race, index, onEdit, onDelete, onPick, onEditPick
           <Image
             className="rounded-t-lg brightness-50"
             src={`/images/races/${index % 13}.png`}
-            alt={race.title}
+            alt={race?.title}
             width={500}
             height={300}
           />
           <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 text-white text-center">
-            <p className="text-3xl font-bold">{race.title}</p>
-            <p className="mt-3 text-xl">{dateToString(race.date)}</p>
+            {race && (
+              <>
+                <p className="text-3xl font-bold">{race.title}</p>
+                <p className="mt-3 text-xl">{dateToString(race.date)}</p>
+              </>
+            )}
           </div>
         </div>
         <div className="p-5 overflow-auto">
@@ -38,16 +42,16 @@ const RaceCard: FC<Props> = ({ race, index, onEdit, onDelete, onPick, onEditPick
                 <th
                   scope="col"
                   className={`py-3.5 pl-4 pr-3 text-left text-sm font-semibold text-gray-900 sm:pl-6 ${
-                    race.raceResult ? 'w-1/4' : 'w-1/3'
+                    race?.raceResult ? 'w-1/4' : 'w-1/3'
                   }`}
                 >
                   Position
                 </th>
-                {race.raceResult && (
+                {race?.raceResult && (
                   <th
                     scope="col"
                     className={`py-3.5 pl-4 pr-3 text-left text-sm font-semibold text-gray-900 sm:pl-6 ${
-                      race.raceResult ? 'w-1/4' : 'w-1/3'
+                      race?.raceResult ? 'w-1/4' : 'w-1/3'
                     }`}
                   >
                     Result
@@ -56,7 +60,7 @@ const RaceCard: FC<Props> = ({ race, index, onEdit, onDelete, onPick, onEditPick
                 <th
                   scope="col"
                   className={`py-3.5 pl-4 pr-3 text-left text-sm font-semibold text-gray-900 sm:pl-6 ${
-                    race.raceResult ? 'w-1/4' : 'w-1/3'
+                    race?.raceResult ? 'w-1/4' : 'w-1/3'
                   }`}
                 >
                   Your Pick
@@ -64,99 +68,107 @@ const RaceCard: FC<Props> = ({ race, index, onEdit, onDelete, onPick, onEditPick
                 <th
                   scope="col"
                   className={`py-3.5 pl-4 pr-3 text-left text-sm font-semibold text-gray-900 sm:pl-6 ${
-                    race.raceResult ? 'w-1/4' : 'w-1/3'
+                    race?.raceResult ? 'w-1/4' : 'w-1/3'
                   }`}
                 >
-                  {race.raceResult ? 'Score' : 'Stats'}
+                  {race?.raceResult ? 'Score' : 'Stats'}
                 </th>
               </tr>
             </thead>
             <tbody className="divide-y divide-gray-200 bg-white">
               <tr>
                 <td className="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-gray-900 sm:pl-6">1</td>
-                {race.raceResult && (
+                {race?.raceResult && (
                   <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
-                    {race.raceResult?.result.first.firstname} {race.raceResult?.result.first.lastname}
+                    {race?.raceResult?.result.first.firstname} {race?.raceResult?.result.first.lastname}
                   </td>
                 )}
                 <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
-                  {race.pick?.result?.first.firstname} {race.pick?.result?.first.lastname}
+                  {race?.pick?.result?.first.firstname} {race?.pick?.result?.first.lastname}
                 </td>
                 <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
-                  {race.raceResult ? (race.raceResult.result.first.id === race.pick?.result?.first.id ? 25 : 0) : 'TODO'}
+                  {race?.raceResult ? (race?.raceResult.result.first.id === race?.pick?.result?.first.id ? 25 : 0) : 'TODO'}
                 </td>
               </tr>
               <tr>
                 <td className="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-gray-900 sm:pl-6">2</td>
-                {race.raceResult && (
+                {race?.raceResult && (
                   <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
-                    {race.raceResult?.result.second.firstname} {race.raceResult?.result.second.lastname}
+                    {race?.raceResult?.result.second.firstname} {race?.raceResult?.result.second.lastname}
                   </td>
                 )}
                 <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
-                  {race.pick?.result?.second.firstname} {race.pick?.result?.second.lastname}
+                  {race?.pick?.result?.second.firstname} {race?.pick?.result?.second.lastname}
                 </td>
                 <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
-                  {race.raceResult ? (race.raceResult.result.second.id === race.pick?.result?.second.id ? 22 : 0) : 'TODO'}
+                  {race?.raceResult
+                    ? race?.raceResult.result.second.id === race?.pick?.result?.second.id
+                      ? 22
+                      : 0
+                    : 'TODO'}
                 </td>
               </tr>
               <tr>
                 <td className="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-gray-900 sm:pl-6">3</td>
-                {race.raceResult && (
+                {race?.raceResult && (
                   <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
-                    {race.raceResult?.result.third.firstname} {race.raceResult?.result.third.lastname}
+                    {race?.raceResult?.result.third.firstname} {race?.raceResult?.result.third.lastname}
                   </td>
                 )}
                 <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
-                  {race.pick?.result?.third.firstname} {race.pick?.result?.third.lastname}
+                  {race?.pick?.result?.third.firstname} {race?.pick?.result?.third.lastname}
                 </td>
                 <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
-                  {race.raceResult ? (race.raceResult.result.third.id === race.pick?.result?.third.id ? 20 : 0) : 'TODO'}
+                  {race?.raceResult ? (race?.raceResult.result.third.id === race?.pick?.result?.third.id ? 20 : 0) : 'TODO'}
                 </td>
               </tr>
               <tr>
                 <td className="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-gray-900 sm:pl-6">4</td>
-                {race.raceResult && (
+                {race?.raceResult && (
                   <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
-                    {race.raceResult?.result.fourth.firstname} {race.raceResult?.result.fourth.lastname}
+                    {race?.raceResult?.result.fourth.firstname} {race?.raceResult?.result.fourth.lastname}
                   </td>
                 )}
                 <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
-                  {race.pick?.result?.fourth.firstname} {race.pick?.result?.fourth.lastname}
+                  {race?.pick?.result?.fourth.firstname} {race?.pick?.result?.fourth.lastname}
                 </td>
                 <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
-                  {race.raceResult ? (race.raceResult.result.fourth.id === race.pick?.result?.fourth.id ? 18 : 0) : 'TODO'}
+                  {race?.raceResult
+                    ? race?.raceResult.result.fourth.id === race?.pick?.result?.fourth.id
+                      ? 18
+                      : 0
+                    : 'TODO'}
                 </td>
               </tr>
               <tr>
                 <td className="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-gray-900 sm:pl-6">5</td>
-                {race.raceResult && (
+                {race?.raceResult && (
                   <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
-                    {race.raceResult?.result.fifth.firstname} {race.raceResult?.result.fifth.lastname}
+                    {race?.raceResult?.result.fifth.firstname} {race?.raceResult?.result.fifth.lastname}
                   </td>
                 )}
                 <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
-                  {race.pick?.result?.fifth.firstname} {race.pick?.result?.fifth.lastname}
+                  {race?.pick?.result?.fifth.firstname} {race?.pick?.result?.fifth.lastname}
                 </td>
                 <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
-                  {race.raceResult ? (race.raceResult.result.fifth.id === race.pick?.result?.fifth.id ? 16 : 0) : 'TODO'}
+                  {race?.raceResult ? (race?.raceResult.result.fifth.id === race?.pick?.result?.fifth.id ? 16 : 0) : 'TODO'}
                 </td>
               </tr>
               <tr>
                 <td className="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-gray-900 sm:pl-6">
-                  {race.wildcardPos}
+                  {race?.wildcardPos}
                 </td>
-                {race.raceResult && (
+                {race?.raceResult && (
                   <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
-                    {race.raceResult?.result.wildcard.firstname} {race.raceResult?.result.wildcard.lastname}
+                    {race?.raceResult?.result.wildcard.firstname} {race?.raceResult?.result.wildcard.lastname}
                   </td>
                 )}
                 <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
-                  {race.pick?.result?.wildcard.firstname} {race.pick?.result?.wildcard.lastname}
+                  {race?.pick?.result?.wildcard.firstname} {race?.pick?.result?.wildcard.lastname}
                 </td>
                 <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
-                  {race.raceResult
-                    ? race.raceResult.result.wildcard.id === race.pick?.result?.wildcard.id
+                  {race?.raceResult
+                    ? race?.raceResult.result.wildcard.id === race?.pick?.result?.wildcard.id
                       ? 25
                       : 0
                     : 'TODO'}
@@ -165,7 +177,7 @@ const RaceCard: FC<Props> = ({ race, index, onEdit, onDelete, onPick, onEditPick
             </tbody>
           </table>
           <div className="flex justify-center mt-10">
-            {type === 'admin' ? (
+            {type === 'admin' && race ? (
               <>
                 <button
                   onClick={() => onEdit && onEdit(race)}
@@ -176,7 +188,7 @@ const RaceCard: FC<Props> = ({ race, index, onEdit, onDelete, onPick, onEditPick
                   Edit
                 </button>
                 <button
-                  onClick={() => onDelete && onDelete(race.id)}
+                  onClick={() => onDelete && onDelete(race?.id)}
                   type="button"
                   className="inline-flex justify-center ml-2 w-full items-center rounded-md border border-transparent bg-red-600 px-3 py-2 text-sm font-medium leading-4 text-white shadow-sm hover:bg-red-900 focus:outline-none focus:ring-2 focus:ring-gray-500 focus:ring-offset-2"
                 >
@@ -186,7 +198,7 @@ const RaceCard: FC<Props> = ({ race, index, onEdit, onDelete, onPick, onEditPick
               </>
             ) : (
               <>
-                {!race.pick && !race.raceResult && (
+                {race && !race?.pick && !race?.raceResult && (
                   <button
                     onClick={() => onPick && onPick(race)}
                     type="button"
@@ -195,7 +207,7 @@ const RaceCard: FC<Props> = ({ race, index, onEdit, onDelete, onPick, onEditPick
                     Pick your top 5!
                   </button>
                 )}
-                {race.pick && !race.raceResult && (
+                {race?.pick && !race?.raceResult && (
                   <button
                     onClick={() => onEditPick && onEditPick(race)}
                     type="button"

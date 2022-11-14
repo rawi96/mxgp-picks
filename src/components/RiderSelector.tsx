@@ -3,7 +3,7 @@ import { Rider } from '../lib/types/types';
 import RiderCombobox from './RiderCombobox';
 
 type Props = {
-  riders: Rider[];
+  riders?: Rider[];
   selectedFirst: Rider | null;
   selectedSecond: Rider | null;
   selectedThird: Rider | null;
@@ -33,7 +33,7 @@ const RiderSelector: FC<Props> = ({
   setSelectedFifth,
   setSelectedWildcard,
 }) => {
-  const allRidersExceptSelected = riders.filter(
+  const allRidersExceptSelected = riders?.filter(
     (rider) =>
       rider.id !== selectedFirst?.id &&
       rider.id !== selectedSecond?.id &&

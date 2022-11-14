@@ -4,7 +4,7 @@ import { Rider } from '../lib/types/types';
 export const useRiders = (): {
   riders?: Rider[];
   mutateRiders: KeyedMutator<any>;
-  isLoading: boolean;
+  isLoadingRiders: boolean;
   isError: boolean;
 } => {
   const { data, error, mutate } = useSWR(`/api/riders`);
@@ -12,7 +12,7 @@ export const useRiders = (): {
   return {
     riders: data,
     mutateRiders: mutate,
-    isLoading: !error && !data,
+    isLoadingRiders: !error && !data,
     isError: error,
   };
 };

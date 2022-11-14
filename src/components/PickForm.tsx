@@ -8,7 +8,7 @@ type Props = {
   addPick: (pick: Pick) => void;
   editPick: (pick: Pick) => void;
   prefilledPick: Pick | null;
-  riders: Rider[];
+  riders?: Rider[];
   race: Race | null;
 };
 
@@ -33,7 +33,7 @@ const PickForm: FC<Props> = ({ addPick, editPick, prefilledPick, riders, race })
       !selectedFifth ||
       !selectedWildcard ||
       !race ||
-      !userId // login here
+      !userId
     ) {
       return;
     }

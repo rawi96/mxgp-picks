@@ -2,7 +2,7 @@ import { FC } from 'react';
 import { Rider } from '../lib/types/types';
 
 type Props = {
-  riders: Rider[];
+  riders?: Rider[];
   onEdit: (rider: Rider) => void;
   onDelete: (id: string) => void;
 };
@@ -31,7 +31,7 @@ const RiderTable: FC<Props> = ({ riders, onEdit, onDelete }) => {
                 </tr>
               </thead>
               <tbody className="divide-y divide-gray-200 bg-white">
-                {riders.map((rider) => (
+                {riders?.map((rider) => (
                   <tr key={rider.id}>
                     <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
                       <div className="text-gray-700">{rider.numberplate}</div>

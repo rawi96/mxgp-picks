@@ -4,7 +4,7 @@ import { Race } from '../lib/types/types';
 export const useRaces = (): {
   races?: Race[];
   mutateRaces: KeyedMutator<any>;
-  isLoading: boolean;
+  isLoadingRaces: boolean;
   isError: boolean;
 } => {
   const { data, error, mutate } = useSWR(`/api/races`);
@@ -12,7 +12,7 @@ export const useRaces = (): {
   return {
     races: data,
     mutateRaces: mutate,
-    isLoading: !error && !data,
+    isLoadingRaces: !error && !data,
     isError: error,
   };
 };

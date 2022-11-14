@@ -23,8 +23,8 @@ const useAdminRoute = () => {
 
 const Admin: FC = () => {
   const session = useAdminRoute();
-  const { races, mutateRaces } = useRaces();
-  const { riders, mutateRiders } = useRiders();
+  const { races, mutateRaces, isLoadingRaces } = useRaces();
+  const { riders, mutateRiders, isLoadingRiders } = useRiders();
   return (
     <>
       {session.data?.user?.isAdmin ? (
@@ -33,15 +33,18 @@ const Admin: FC = () => {
             <h2 className="font-semibold text-gray-700 text-2xl mb-10">Races</h2>
           </div>
 
-          {races && riders && (
-            <>
-              <RacesCrud races={races} riders={riders} mutateRaces={mutateRaces} />
-              <div className="flex justify-center">
-                <h2 className="font-semibold text-gray-700 text-2xl mt-20 mb-10">Riders</h2>
-              </div>
-            </>
-          )}
-          {riders && <RidersCrud riders={riders} mutateRiders={mutateRiders} />}
+          <RacesCrud
+            races={races}
+            riders={riders}
+            mutateRaces={mutateRaces}
+            isLoadingRaces={isLoadingRaces}
+            isLoadingRiders={isLoadingRiders}
+          />
+          <div className="flex justify-center">
+            <h2 className="font-semibold text-gray-700 text-2xl mt-20 mb-10">Riders</h2>
+          </div>
+
+          <RidersCrud riders={riders} mutateRiders={mutateRiders} />
           <div className="flex justify-center">
             <h2 className="font-semibold text-gray-700 text-2xl mt-20 mb-10">Score calculation</h2>
           </div>

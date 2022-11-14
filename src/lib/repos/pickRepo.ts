@@ -24,13 +24,13 @@ export default class PickRepo {
     },
   };
 
-  public async getAll(): Promise<Pick[]> {
+  public async getAll(): Promise<any[]> {
     return await this.prisma.pick.findMany({
       ...this.includeNested,
     });
   }
 
-  public async getByUserId(userId: string): Promise<Pick[]> {
+  public async getByUserId(userId: string): Promise<any[]> {
     return await this.prisma.pick.findMany({
       where: {
         userId,
@@ -39,7 +39,7 @@ export default class PickRepo {
     });
   }
 
-  public async getByRaceId(raceId: string): Promise<Pick[]> {
+  public async getByRaceId(raceId: string): Promise<any[]> {
     return await this.prisma.pick.findMany({
       where: {
         raceId,
@@ -58,7 +58,7 @@ export default class PickRepo {
     });
   }
 
-  public async create(pick: Pick): Promise<Pick | null> {
+  public async create(pick: Pick): Promise<any | null> {
     if (!pick.result || !pick.raceId || !pick.userId || !pick.resultId) {
       return null;
     }
@@ -86,7 +86,7 @@ export default class PickRepo {
     });
   }
 
-  public async update(pick: Pick): Promise<Pick | null> {
+  public async update(pick: Pick): Promise<any | null> {
     if (!pick.result) {
       return null;
     }

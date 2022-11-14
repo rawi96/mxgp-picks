@@ -5,7 +5,7 @@ import { Rider } from '../lib/types/types';
 import { classNames } from '../lib/utils/utils';
 
 type Props = {
-  riders: Rider[];
+  riders?: Rider[];
   selectedRider: Rider | null;
   setSelectedRider: Dispatch<SetStateAction<null | Rider>>;
   label: string;
@@ -17,7 +17,7 @@ const RiderCombobox: FC<Props> = ({ riders, selectedRider, setSelectedRider, lab
   const filteredRider =
     query === ''
       ? riders
-      : riders.filter((rider) => {
+      : riders?.filter((rider) => {
           const lowerQuery = query.toLowerCase();
           return (
             rider.firstname.toLowerCase().includes(lowerQuery) ||
@@ -59,9 +59,9 @@ const RiderCombobox: FC<Props> = ({ riders, selectedRider, setSelectedRider, lab
           />
         </Combobox.Button>
 
-        {filteredRider.length > 0 && (
+        {filteredRider && filteredRider.length > 0 && (
           <Combobox.Options className="absolute z-10 mt-1 max-h-60 w-full overflow-auto rounded-md bg-white py-1 text-base shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm">
-            {filteredRider.map((rider) => (
+            {filteredRider?.map((rider) => (
               <Combobox.Option
                 key={rider.id}
                 value={rider}

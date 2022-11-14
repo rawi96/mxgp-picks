@@ -3,14 +3,14 @@ import { User } from '../lib/types/types';
 
 export const useUsers = (): {
   users?: User[];
-  isLoading: boolean;
+  isLoadingUsers: boolean;
   isError: boolean;
 } => {
   const { data, error } = useSWR(`/api/users`);
 
   return {
     users: data,
-    isLoading: !error && !data,
+    isLoadingUsers: !error && !data,
     isError: error,
   };
 };

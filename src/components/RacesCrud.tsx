@@ -8,9 +8,11 @@ import RaceForm from './RaceForm';
 import RacesCarousel from './RacesCarousel';
 
 type Props = {
-  races: Race[];
-  riders: Rider[];
+  races?: Race[];
+  riders?: Rider[];
   mutateRaces: KeyedMutator<any>;
+  isLoadingRaces?: boolean;
+  isLoadingRiders?: boolean;
 };
 
 type UseRaces = {
@@ -105,7 +107,7 @@ const useRaces = (mutateRaces: KeyedMutator<any>): UseRaces => {
   };
 };
 
-const RacesCrud: FC<Props> = ({ races, riders, mutateRaces }) => {
+const RacesCrud: FC<Props> = ({ races, riders, mutateRaces, isLoadingRaces }) => {
   const { addRace, editRace, deleteRace, modalOpen, setModalOpen, selectedRace, onEditClick, onAddClick } =
     useRaces(mutateRaces);
 
@@ -114,7 +116,7 @@ const RacesCrud: FC<Props> = ({ races, riders, mutateRaces }) => {
       <Modal open={modalOpen} setOpen={setModalOpen}>
         <RaceForm prefilledRace={selectedRace} addRace={addRace} editRace={editRace} riders={riders} />
       </Modal>
-      <RacesCarousel type="admin" races={races} onEdit={onEditClick} onDelete={deleteRace} />
+      <RacesCarousel type="admin" races={races} onEdit={onEditClick} onDelete={deleteRace} isLoadingRaces={isLoadingRaces} />
       <div className="flex justify-center mt-10">
         <button
           onClick={onAddClick}

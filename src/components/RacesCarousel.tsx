@@ -4,12 +4,14 @@ import { Race } from '../lib/types/types';
 import RaceCard from './RaceCard';
 
 type Props = {
-  races: Race[];
+  races?: Race[];
   onEdit?: (race: Race) => void;
   onDelete?: (id: string) => void;
   onPick?: (race: Race) => void;
   onEditPick?: (race: Race) => void;
   type: 'admin' | 'home';
+  isLoadingRaces?: boolean;
+  isLoadingRiders?: boolean;
 };
 
 const LeftArrow = () => (
@@ -46,12 +48,21 @@ const RightArrow = () => (
   </span>
 );
 
-const RacesCarousel: FC<Props> = ({ races, onEdit, onDelete, onPick, onEditPick, type }) => {
+const RacesCarousel: FC<Props> = ({
+  races,
+  onEdit,
+  onDelete,
+  onPick,
+  onEditPick,
+  type,
+  isLoadingRaces,
+  isLoadingRiders,
+}) => {
   return (
     <div className="flex justify-center">
-      {races.length > 0 ? (
-        <Carousel slide={false} leftControl={<LeftArrow />} rightControl={<RightArrow />}>
-          {races.map((race, index) => {
+      <Carousel slide={false} leftControl={<LeftArrow />} rightControl={<RightArrow />}>
+        {!isLoadingRaces && !isLoadingRiders && races ? (
+          races.map((race, index) => {
             return (
               <RaceCard
                 index={index}
@@ -64,11 +75,11 @@ const RacesCarousel: FC<Props> = ({ races, onEdit, onDelete, onPick, onEditPick,
                 type={type}
               />
             );
-          })}
-        </Carousel>
-      ) : (
-        <p>No races scheduled!</p>
-      )}
+          })
+        ) : (
+          <RaceCard index={0} type={type} />
+        )}
+      </Carousel>
     </div>
   );
 };

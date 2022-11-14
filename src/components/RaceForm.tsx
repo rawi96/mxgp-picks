@@ -22,7 +22,7 @@ type Props = {
   addRace: (race: Race) => void;
   editRace: (id: string, race: Race) => void;
   prefilledRace: Race | null;
-  riders: Rider[];
+  riders?: Rider[];
 };
 
 const RaceForm: FC<Props> = ({ addRace, editRace, prefilledRace, riders }) => {

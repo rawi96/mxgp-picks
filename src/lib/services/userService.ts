@@ -1,6 +1,5 @@
 import { NextApiRequest, NextApiResponse } from 'next';
 import { v4 as uuidv4 } from 'uuid';
-import RaceRepo from '../repos/raceRepo';
 import { default as UserRepo } from '../repos/userRepo';
 import { User } from '../types/types';
 import { comparePasswords, hashPassword } from '../utils/bcrypt';
@@ -8,11 +7,9 @@ import { REGEX_EMAIL, REGEX_PASSWORD } from '../utils/utils';
 
 export default class UserService {
   private userRepo: UserRepo;
-  private raceRepo: RaceRepo;
 
-  constructor(userRepo: UserRepo, raceRepo: RaceRepo) {
+  constructor(userRepo: UserRepo) {
     this.userRepo = userRepo;
-    this.raceRepo = raceRepo;
   }
 
   public async addUser(req: NextApiRequest, res: NextApiResponse): Promise<void | NextApiResponse<any>> {

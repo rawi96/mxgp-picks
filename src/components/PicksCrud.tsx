@@ -12,7 +12,6 @@ type Props = {
   races?: Race[];
   riders?: Rider[];
   mutateRaces: KeyedMutator<any>;
-  isLoadingRiders?: boolean;
   isLoadingRaces?: boolean;
 };
 
@@ -23,11 +22,13 @@ type UsePicks = {
   setModalOpen: (open: boolean) => void;
   selectedRace: Race | null;
   setSelectedRace: Dispatch<SetStateAction<Race | null>>;
+  isLoading: boolean;
 };
 
 const usePick = (mutateRaces: KeyedMutator<any>): UsePicks => {
   const [modalOpen, setModalOpen] = useState(false);
   const [selectedRace, setSelectedRace] = useState<Race | null>(null);
+  const [isLoading, setIsLoading] = useState(false);
   const { showNotification } = useShowNotification();
 
   const reloadRaces = async () => {
@@ -35,6 +36,7 @@ const usePick = (mutateRaces: KeyedMutator<any>): UsePicks => {
   };
 
   const addPick = async (pick: Pick) => {
+    setIsLoading(true);
     const res = await fetch('/api/picks', {
       method: 'POST',
       headers: {
@@ -47,12 +49,15 @@ const usePick = (mutateRaces: KeyedMutator<any>): UsePicks => {
       reloadRaces();
       setModalOpen(false);
       showNotification('Successfully added!', 'Success');
+      setIsLoading(false);
     } else {
       showNotification('Something went wrong', 'Error');
+      setIsLoading(false);
     }
   };
 
   const editPick = async (pick: Pick) => {
+    setIsLoading(true);
     const res = await fetch(`/api/picks/${pick.id}`, {
       method: 'PUT',
       headers: {
@@ -64,16 +69,18 @@ const usePick = (mutateRaces: KeyedMutator<any>): UsePicks => {
       reloadRaces();
       setModalOpen(false);
       showNotification('Successfully edited!', 'Success');
+      setIsLoading(false);
     } else {
       showNotification('Something went wrong', 'Error');
+      setIsLoading(false);
     }
   };
 
-  return { addPick, editPick, modalOpen, setModalOpen, selectedRace, setSelectedRace };
+  return { addPick, editPick, modalOpen, setModalOpen, selectedRace, setSelectedRace, isLoading };
 };
 
-const PicksCrud: FC<Props> = ({ races, riders, mutateRaces, isLoadingRaces, isLoadingRiders }) => {
-  const { addPick, editPick, modalOpen, setModalOpen, selectedRace, setSelectedRace } = usePick(mutateRaces);
+const PicksCrud: FC<Props> = ({ races, riders, mutateRaces, isLoadingRaces }) => {
+  const { addPick, editPick, modalOpen, setModalOpen, selectedRace, setSelectedRace, isLoading } = usePick(mutateRaces);
   const session = useSession();
   const { setLoginModalOpen } = useContext(ModalsContext);
 
@@ -86,13 +93,14 @@ const PicksCrud: FC<Props> = ({ races, riders, mutateRaces, isLoadingRaces, isLo
           editPick={editPick}
           riders={riders}
           race={selectedRace}
+          isLoading={isLoading}
         />
       </Modal>
       <RacesCarousel
         type="home"
         races={races}
         isLoadingRaces={isLoadingRaces}
-        isLoadingRiders={isLoadingRiders}
+        isLoading={isLoading}
         onPick={(race) => {
           setSelectedRace(race);
           if (session.data?.user.id) {

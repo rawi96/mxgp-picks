@@ -11,7 +11,7 @@ type Props = {
   onEditPick?: (race: Race) => void;
   type: 'admin' | 'home';
   isLoadingRaces?: boolean;
-  isLoadingRiders?: boolean;
+  isLoading: boolean;
 };
 
 const LeftArrow = () => (
@@ -48,21 +48,12 @@ const RightArrow = () => (
   </span>
 );
 
-const RacesCarousel: FC<Props> = ({
-  races,
-  onEdit,
-  onDelete,
-  onPick,
-  onEditPick,
-  type,
-  isLoadingRaces,
-  isLoadingRiders,
-}) => {
+const RacesCarousel: FC<Props> = ({ races, onEdit, onDelete, onPick, onEditPick, type, isLoadingRaces, isLoading }) => {
   return (
     <div className="flex justify-center">
       <Carousel slide={false} leftControl={<LeftArrow />} rightControl={<RightArrow />}>
-        {!isLoadingRaces && !isLoadingRiders && races ? (
-          races.map((race, index) => {
+        {!isLoadingRaces ? (
+          races?.map((race, index) => {
             return (
               <RaceCard
                 index={index}
@@ -73,11 +64,12 @@ const RacesCarousel: FC<Props> = ({
                 onPick={onPick}
                 onEditPick={onEditPick}
                 type={type}
+                isLoading={isLoading}
               />
             );
           })
         ) : (
-          <RaceCard index={0} type={type} />
+          <RaceCard index={0} type={type} isLoading={isLoading} />
         )}
       </Carousel>
     </div>

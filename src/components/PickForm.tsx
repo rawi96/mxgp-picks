@@ -3,6 +3,7 @@ import { FC, FormEvent, useState } from 'react';
 import { v4 as uuidv4 } from 'uuid';
 import { Pick, Race, Rider } from '../lib/types/types';
 import RiderSelector from './RiderSelector';
+import Spinner from './Spinner';
 
 type Props = {
   addPick: (pick: Pick) => void;
@@ -10,9 +11,10 @@ type Props = {
   prefilledPick: Pick | null;
   riders?: Rider[];
   race: Race | null;
+  isLoading: boolean;
 };
 
-const PickForm: FC<Props> = ({ addPick, editPick, prefilledPick, riders, race }) => {
+const PickForm: FC<Props> = ({ addPick, editPick, prefilledPick, riders, race, isLoading }) => {
   const [selectedFirst, setSelectedFirst] = useState<Rider | null>(prefilledPick?.result?.first || null);
   const [selectedSecond, setSelectedSecond] = useState<Rider | null>(prefilledPick?.result?.second || null);
   const [selectedThird, setSelectedThird] = useState<Rider | null>(prefilledPick?.result?.third || null);
@@ -82,10 +84,18 @@ const PickForm: FC<Props> = ({ addPick, editPick, prefilledPick, riders, race })
           />
           <div>
             <button
+              disabled={isLoading}
               type="submit"
               className="flex w-full justify-center rounded-md border border-transparent bg-gray-700 py-2 px-4 text-sm font-medium text-white shadow-sm hover:bg-gray-800 focus:outline-none focus:ring-2 focus:ring-gray-500 focus:ring-offset-2"
             >
-              Save
+              {isLoading ? (
+                <>
+                  <Spinner />
+                  ...Loading
+                </>
+              ) : (
+                'Save'
+              )}
             </button>
           </div>
         </form>

@@ -12,7 +12,6 @@ type Props = {
   riders?: Rider[];
   mutateRaces: KeyedMutator<any>;
   isLoadingRaces?: boolean;
-  isLoadingRiders?: boolean;
 };
 
 type UseRaces = {
@@ -24,11 +23,13 @@ type UseRaces = {
   modalOpen: boolean;
   setModalOpen: (open: boolean) => void;
   selectedRace: Race | null;
+  isLoading: boolean;
 };
 
 const useRaces = (mutateRaces: KeyedMutator<any>): UseRaces => {
   const [modalOpen, setModalOpen] = useState(false);
   const [selectedRace, setSelectedRace] = useState<Race | null>(null);
+  const [isLoading, setIsLoading] = useState(false);
   const { showNotification } = useShowNotification();
 
   const reloadRaces = async () => {
@@ -46,6 +47,7 @@ const useRaces = (mutateRaces: KeyedMutator<any>): UseRaces => {
   };
 
   const addRace = async (race: Race) => {
+    setIsLoading(true);
     const res = await fetch('/api/races', {
       method: 'POST',
       headers: {
@@ -58,12 +60,15 @@ const useRaces = (mutateRaces: KeyedMutator<any>): UseRaces => {
       setModalOpen(false);
       showNotification('Successfully added!', 'Success');
       reloadRaces();
+      setIsLoading(false);
     } else {
       showNotification('Something went wrong', 'Error');
+      setIsLoading(false);
     }
   };
 
   const editRace = async (id: string, race: Race) => {
+    setIsLoading(true);
     const res = await fetch(`/api/races/${id}`, {
       method: 'PUT',
       headers: {
@@ -76,12 +81,16 @@ const useRaces = (mutateRaces: KeyedMutator<any>): UseRaces => {
       setModalOpen(false);
       showNotification('Successfully updated!', 'Success');
       reloadRaces();
+      setIsLoading(false);
     } else {
       showNotification('Something went wrong', 'Error');
+      setIsLoading(false);
     }
   };
 
   const deleteRace = async (id: string) => {
+    setIsLoading(true);
+
     const res = await fetch(`/api/races/${id}`, {
       method: 'DELETE',
     });
@@ -90,8 +99,10 @@ const useRaces = (mutateRaces: KeyedMutator<any>): UseRaces => {
       setModalOpen(false);
       showNotification('Successfully deleted!', 'Success');
       reloadRaces();
+      setIsLoading(false);
     } else {
       showNotification('Something went wrong!', 'Error');
+      setIsLoading(false);
     }
   };
 
@@ -104,19 +115,27 @@ const useRaces = (mutateRaces: KeyedMutator<any>): UseRaces => {
     modalOpen,
     setModalOpen,
     selectedRace,
+    isLoading,
   };
 };
 
 const RacesCrud: FC<Props> = ({ races, riders, mutateRaces, isLoadingRaces }) => {
-  const { addRace, editRace, deleteRace, modalOpen, setModalOpen, selectedRace, onEditClick, onAddClick } =
+  const { addRace, editRace, deleteRace, modalOpen, setModalOpen, selectedRace, onEditClick, onAddClick, isLoading } =
     useRaces(mutateRaces);
 
   return (
     <>
       <Modal open={modalOpen} setOpen={setModalOpen}>
-        <RaceForm prefilledRace={selectedRace} addRace={addRace} editRace={editRace} riders={riders} />
+        <RaceForm prefilledRace={selectedRace} addRace={addRace} editRace={editRace} riders={riders} isLoading={isLoading} />
       </Modal>
-      <RacesCarousel type="admin" races={races} onEdit={onEditClick} onDelete={deleteRace} isLoadingRaces={isLoadingRaces} />
+      <RacesCarousel
+        type="admin"
+        races={races}
+        onEdit={onEditClick}
+        onDelete={deleteRace}
+        isLoadingRaces={isLoadingRaces}
+        isLoading={isLoading}
+      />
       <div className="flex justify-center mt-10">
         <button
           onClick={onAddClick}

@@ -24,7 +24,7 @@ const useAdminRoute = () => {
 const Admin: FC = () => {
   const session = useAdminRoute();
   const { races, mutateRaces, isLoadingRaces } = useRaces();
-  const { riders, mutateRiders, isLoadingRiders } = useRiders();
+  const { riders, mutateRiders } = useRiders();
   return (
     <>
       {session.data?.user?.isAdmin ? (
@@ -33,13 +33,7 @@ const Admin: FC = () => {
             <h2 className="font-semibold text-gray-700 text-2xl mb-10">Races</h2>
           </div>
 
-          <RacesCrud
-            races={races}
-            riders={riders}
-            mutateRaces={mutateRaces}
-            isLoadingRaces={isLoadingRaces}
-            isLoadingRiders={isLoadingRiders}
-          />
+          <RacesCrud races={races} riders={riders} mutateRaces={mutateRaces} isLoadingRaces={isLoadingRaces} />
           <div className="flex justify-center">
             <h2 className="font-semibold text-gray-700 text-2xl mt-20 mb-10">Riders</h2>
           </div>

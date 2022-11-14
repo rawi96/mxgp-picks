@@ -46,6 +46,7 @@ export default class UserService {
       password: await hashPassword(password),
       isAdmin: false,
       score: 0,
+      scorePerRace: null,
     };
 
     const createdUser = await this.userRepo.create(newUser);
@@ -77,5 +78,29 @@ export default class UserService {
         isAdmin: user?.isAdmin,
       },
     };
+  }
+
+  public async getAllWithPosition() {
+    return this.userRepo.getAllWithPosition();
+  }
+
+  public async getAllWithPositionPerRace(raceId: string): Promise<User[]> {
+    let users = await this.userRepo.getAll();
+
+    users = users.map((user) => {
+      const scorePerRace = JSON.parse(user.scorePerRace || '{}');
+      const userScoreForRace = scorePerRace[raceId] || 0;
+      return {
+        ...user,
+        score: userScoreForRace,
+      };
+    });
+
+    users = users.sort((a, b) => b.score - a.score);
+
+    return users.map((user, index) => ({
+      ...user,
+      position: index + 1,
+    }));
   }
 }

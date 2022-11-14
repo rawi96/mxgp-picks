@@ -2,6 +2,7 @@ import { FC } from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { v4 as uuidv4 } from 'uuid';
 import { Rider } from '../lib/types/types';
+import Spinner from './Spinner';
 
 const INPUT_VALID_CLASSES =
   'block w-full appearance-none rounded-md border border-gray-300 px-3 py-2 placeholder-gray-400 shadow-sm focus:border-gray-500 focus:outline-none focus:ring-gray-500 sm:text-sm';
@@ -18,9 +19,10 @@ type Props = {
   addRider: (rider: Rider) => void;
   editRider: (id: string, rider: Rider) => void;
   prefilledRider: Rider | null;
+  isLoading: boolean;
 };
 
-const RiderForm: FC<Props> = ({ addRider, editRider, prefilledRider }) => {
+const RiderForm: FC<Props> = ({ addRider, editRider, prefilledRider, isLoading }) => {
   const {
     register,
     handleSubmit,
@@ -107,10 +109,18 @@ const RiderForm: FC<Props> = ({ addRider, editRider, prefilledRider }) => {
           </div>
           <div>
             <button
+              disabled={isLoading}
               type="submit"
               className="flex w-full justify-center rounded-md border border-transparent bg-gray-700 py-2 px-4 text-sm font-medium text-white shadow-sm hover:bg-gray-800 focus:outline-none focus:ring-2 focus:ring-gray-500 focus:ring-offset-2"
             >
-              Save
+              {isLoading ? (
+                <>
+                  <Spinner />
+                  ...Loading
+                </>
+              ) : (
+                'Save'
+              )}
             </button>
           </div>
         </form>

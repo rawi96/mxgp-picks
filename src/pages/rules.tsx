@@ -42,6 +42,7 @@ const Rules: FC = () => {
         <h2 className="font-semibold text-gray-700 text-2xl mb-10 mt-20">Example</h2>
       </div>
       <RaceCard
+        isLoading={false}
         index={0}
         race={{
           id: '',

@@ -4,6 +4,8 @@ import { v4 as uuidv4 } from 'uuid';
 import { Race, Rider } from '../lib/types/types';
 import { dateToStringForNativeInput, REGEX_DATE } from '../lib/utils/utils';
 import RiderSelector from './RiderSelector';
+import Spinner from './Spinner';
+import ToggleSwitch from './ToggleSwitch';
 
 const INPUT_VALID_CLASSES =
   'block w-full appearance-none rounded-md border border-gray-300 px-3 py-2 placeholder-gray-400 shadow-sm focus:border-gray-500 focus:outline-none focus:ring-gray-500 sm:text-sm';
@@ -15,17 +17,17 @@ interface FormInput {
   date: string;
   factor: string;
   wildcardPos: string;
-  pos1: string;
 }
 
 type Props = {
   addRace: (race: Race) => void;
   editRace: (id: string, race: Race) => void;
   prefilledRace: Race | null;
-  riders: Rider[];
+  riders?: Rider[];
+  isLoading: boolean;
 };
 
-const RaceForm: FC<Props> = ({ addRace, editRace, prefilledRace, riders }) => {
+const RaceForm: FC<Props> = ({ addRace, editRace, prefilledRace, riders, isLoading }) => {
   const {
     register,
     handleSubmit,
@@ -38,6 +40,8 @@ const RaceForm: FC<Props> = ({ addRace, editRace, prefilledRace, riders }) => {
   const [selectedFourth, setSelectedFourth] = useState<Rider | null>(prefilledRace?.raceResult?.result.fourth || null);
   const [selectedFifth, setSelectedFifth] = useState<Rider | null>(prefilledRace?.raceResult?.result.fifth || null);
   const [selectedWildcard, setSelectedWildcard] = useState<Rider | null>(prefilledRace?.raceResult?.result.wildcard || null);
+  const [isError, setIsError] = useState<boolean>(false);
+  const [toggleIsEnabled, setToggleIsEnabled] = useState<boolean>(prefilledRace?.raceResult?.result ? true : false);
 
   const onSubmit: SubmitHandler<FormInput> = async (data) => {
     let race: Race = {
@@ -47,7 +51,15 @@ const RaceForm: FC<Props> = ({ addRace, editRace, prefilledRace, riders }) => {
       factor: Number(data.factor),
       wildcardPos: Number(data.wildcardPos),
     };
-    if (selectedFirst && selectedSecond && selectedThird && selectedFourth && selectedFifth && selectedWildcard) {
+    if (
+      toggleIsEnabled &&
+      selectedFirst &&
+      selectedSecond &&
+      selectedThird &&
+      selectedFourth &&
+      selectedFifth &&
+      selectedWildcard
+    ) {
       race = {
         ...race,
         raceResult: {
@@ -63,6 +75,9 @@ const RaceForm: FC<Props> = ({ addRace, editRace, prefilledRace, riders }) => {
           },
         },
       };
+    } else if (toggleIsEnabled) {
+      setIsError(true);
+      return;
     }
 
     if (prefilledRace) {
@@ -155,27 +170,46 @@ const RaceForm: FC<Props> = ({ addRace, editRace, prefilledRace, riders }) => {
               )}
             </div>
           </div>
-          <RiderSelector
-            riders={riders}
-            selectedFirst={selectedFirst}
-            selectedSecond={selectedSecond}
-            selectedThird={selectedThird}
-            selectedFourth={selectedFourth}
-            selectedFifth={selectedFifth}
-            selectedWildcard={selectedWildcard}
-            setSelectedFirst={setSelectedFirst}
-            setSelectedSecond={setSelectedSecond}
-            setSelectedThird={setSelectedThird}
-            setSelectedFourth={setSelectedFourth}
-            setSelectedFifth={setSelectedFifth}
-            setSelectedWildcard={setSelectedWildcard}
-          />
+          <div>
+            <label htmlFor="addResult" className="block text-sm font-medium text-gray-700">
+              Add Result
+            </label>
+            <div className="mt-1">
+              <ToggleSwitch enabled={toggleIsEnabled} setEnabled={setToggleIsEnabled} />
+            </div>
+          </div>
+          {toggleIsEnabled && (
+            <RiderSelector
+              isError={isError}
+              riders={riders}
+              selectedFirst={selectedFirst}
+              selectedSecond={selectedSecond}
+              selectedThird={selectedThird}
+              selectedFourth={selectedFourth}
+              selectedFifth={selectedFifth}
+              selectedWildcard={selectedWildcard}
+              setSelectedFirst={setSelectedFirst}
+              setSelectedSecond={setSelectedSecond}
+              setSelectedThird={setSelectedThird}
+              setSelectedFourth={setSelectedFourth}
+              setSelectedFifth={setSelectedFifth}
+              setSelectedWildcard={setSelectedWildcard}
+            />
+          )}
           <div>
             <button
+              disabled={isLoading}
               type="submit"
               className="flex w-full justify-center rounded-md border border-transparent bg-gray-700 py-2 px-4 text-sm font-medium text-white shadow-sm hover:bg-gray-800 focus:outline-none focus:ring-2 focus:ring-gray-500 focus:ring-offset-2"
             >
-              Save
+              {isLoading ? (
+                <>
+                  <Spinner />
+                  ...Loading
+                </>
+              ) : (
+                'Save'
+              )}
             </button>
           </div>
         </form>

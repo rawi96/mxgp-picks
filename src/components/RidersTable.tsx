@@ -2,12 +2,13 @@ import { FC } from 'react';
 import { Rider } from '../lib/types/types';
 
 type Props = {
-  riders: Rider[];
+  riders?: Rider[];
   onEdit: (rider: Rider) => void;
   onDelete: (id: string) => void;
+  isLoading: boolean;
 };
 
-const RiderTable: FC<Props> = ({ riders, onEdit, onDelete }) => {
+const RiderTable: FC<Props> = ({ riders, onEdit, onDelete, isLoading }) => {
   return (
     <div className="flex flex-col">
       <div className="-my-2 -mx-4 overflow-x-auto sm:-mx-6 lg:-mx-8">
@@ -31,7 +32,7 @@ const RiderTable: FC<Props> = ({ riders, onEdit, onDelete }) => {
                 </tr>
               </thead>
               <tbody className="divide-y divide-gray-200 bg-white">
-                {riders.map((rider) => (
+                {riders?.map((rider) => (
                   <tr key={rider.id}>
                     <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
                       <div className="text-gray-700">{rider.numberplate}</div>
@@ -42,12 +43,18 @@ const RiderTable: FC<Props> = ({ riders, onEdit, onDelete }) => {
                       </div>
                     </td>
                     <td className="relative whitespace-nowrap py-4 pl-3 pr-4 text-right text-sm font-medium sm:pr-6">
-                      <div onClick={() => onEdit(rider)} className="text-gray-500 cursor-pointer hover:text-gray-700">
+                      <div
+                        onClick={() => !isLoading && onEdit(rider)}
+                        className={`text-gray-500 ${isLoading ? 'opacity-30' : 'hover:text-gray-700 cursor-pointer'}`}
+                      >
                         Edit
                       </div>
                     </td>
                     <td className="relative whitespace-nowrap py-4 pl-3 pr-4 text-right text-sm font-medium sm:pr-6">
-                      <div onClick={() => onDelete(rider.id)} className="text-red-600 cursor-pointer hover:text-red-900">
+                      <div
+                        onClick={() => !isLoading && onDelete(rider.id)}
+                        className={`text-red-600 ${isLoading ? 'opacity-30' : 'hover:text-red-900 cursor-pointer'}`}
+                      >
                         Delete
                       </div>
                     </td>

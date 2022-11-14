@@ -3,6 +3,7 @@ export type User = {
   email: string;
   username: string;
   score: number;
+  scorePerRace: string | null;
   password: string;
   isAdmin: boolean;
   position?: number;

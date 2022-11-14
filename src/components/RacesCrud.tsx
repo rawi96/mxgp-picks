@@ -1,5 +1,6 @@
 import { PlusIcon } from '@heroicons/react/24/outline';
 import { FC, useState } from 'react';
+import { KeyedMutator } from 'swr';
 import { Race, Rider } from '../lib/types/types';
 import { useShowNotification } from '../lib/utils/utils';
 import Modal from './Modal';
@@ -7,12 +8,13 @@ import RaceForm from './RaceForm';
 import RacesCarousel from './RacesCarousel';
 
 type Props = {
-  races: Race[];
-  riders: Rider[];
+  races?: Race[];
+  riders?: Rider[];
+  mutateRaces: KeyedMutator<any>;
+  isLoadingRaces?: boolean;
 };
 
 type UseRaces = {
-  racesState: Race[];
   onEditClick: (race: Race) => void;
   onAddClick: () => void;
   addRace: (race: Race) => void;
@@ -21,18 +23,17 @@ type UseRaces = {
   modalOpen: boolean;
   setModalOpen: (open: boolean) => void;
   selectedRace: Race | null;
+  isLoading: boolean;
 };
 
-const useRaces = (races: Race[]): UseRaces => {
-  const [racesState, setRacesState] = useState<Race[]>(races);
+const useRaces = (mutateRaces: KeyedMutator<any>): UseRaces => {
   const [modalOpen, setModalOpen] = useState(false);
   const [selectedRace, setSelectedRace] = useState<Race | null>(null);
+  const [isLoading, setIsLoading] = useState(false);
   const { showNotification } = useShowNotification();
 
   const reloadRaces = async () => {
-    const res = await fetch('/api/races');
-    const data = await res.json();
-    setRacesState(data);
+    await mutateRaces();
   };
 
   const onAddClick = () => {
@@ -46,6 +47,7 @@ const useRaces = (races: Race[]): UseRaces => {
   };
 
   const addRace = async (race: Race) => {
+    setIsLoading(true);
     const res = await fetch('/api/races', {
       method: 'POST',
       headers: {
@@ -58,12 +60,15 @@ const useRaces = (races: Race[]): UseRaces => {
       setModalOpen(false);
       showNotification('Successfully added!', 'Success');
       reloadRaces();
+      setIsLoading(false);
     } else {
       showNotification('Something went wrong', 'Error');
+      setIsLoading(false);
     }
   };
 
   const editRace = async (id: string, race: Race) => {
+    setIsLoading(true);
     const res = await fetch(`/api/races/${id}`, {
       method: 'PUT',
       headers: {
@@ -76,12 +81,16 @@ const useRaces = (races: Race[]): UseRaces => {
       setModalOpen(false);
       showNotification('Successfully updated!', 'Success');
       reloadRaces();
+      setIsLoading(false);
     } else {
       showNotification('Something went wrong', 'Error');
+      setIsLoading(false);
     }
   };
 
   const deleteRace = async (id: string) => {
+    setIsLoading(true);
+
     const res = await fetch(`/api/races/${id}`, {
       method: 'DELETE',
     });
@@ -90,13 +99,14 @@ const useRaces = (races: Race[]): UseRaces => {
       setModalOpen(false);
       showNotification('Successfully deleted!', 'Success');
       reloadRaces();
+      setIsLoading(false);
     } else {
       showNotification('Something went wrong!', 'Error');
+      setIsLoading(false);
     }
   };
 
   return {
-    racesState,
     onAddClick,
     onEditClick,
     addRace,
@@ -105,19 +115,27 @@ const useRaces = (races: Race[]): UseRaces => {
     modalOpen,
     setModalOpen,
     selectedRace,
+    isLoading,
   };
 };
 
-const RacesCrud: FC<Props> = ({ races, riders }) => {
-  const { racesState, addRace, editRace, deleteRace, modalOpen, setModalOpen, selectedRace, onEditClick, onAddClick } =
-    useRaces(races);
+const RacesCrud: FC<Props> = ({ races, riders, mutateRaces, isLoadingRaces }) => {
+  const { addRace, editRace, deleteRace, modalOpen, setModalOpen, selectedRace, onEditClick, onAddClick, isLoading } =
+    useRaces(mutateRaces);
 
   return (
     <>
       <Modal open={modalOpen} setOpen={setModalOpen}>
-        <RaceForm prefilledRace={selectedRace} addRace={addRace} editRace={editRace} riders={riders} />
+        <RaceForm prefilledRace={selectedRace} addRace={addRace} editRace={editRace} riders={riders} isLoading={isLoading} />
       </Modal>
-      <RacesCarousel type="admin" races={racesState} onEdit={onEditClick} onDelete={deleteRace} />
+      <RacesCarousel
+        type="admin"
+        races={races}
+        onEdit={onEditClick}
+        onDelete={deleteRace}
+        isLoadingRaces={isLoadingRaces}
+        isLoading={isLoading}
+      />
       <div className="flex justify-center mt-10">
         <button
           onClick={onAddClick}

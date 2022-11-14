@@ -139,4 +139,8 @@ export default class RaceService {
     const deletedRace = await this.raceRepo.delete(id);
     return res.status(200).json(deletedRace);
   }
+
+  public async getAllRaces() {
+    return this.raceRepo.getAll();
+  }
 }

@@ -7,6 +7,7 @@ import RidersCrud from '../components/RidersCrud';
 import TriggerScoreCalculation from '../components/TriggerScoreCalculation';
 import { useRaces } from '../hooks/useRaces';
 import { useRiders } from '../hooks/useRiders';
+import { useUsers } from '../hooks/useUsers';
 
 const useAdminRoute = () => {
   const session = useSession();
@@ -23,8 +24,9 @@ const useAdminRoute = () => {
 
 const Admin: FC = () => {
   const session = useAdminRoute();
-  const { races } = useRaces();
-  const { riders } = useRiders();
+  const { races, mutateRaces, isLoadingRaces } = useRaces();
+  const { riders, mutateRiders } = useRiders();
+  const { mutateUsers } = useUsers();
   return (
     <>
       {session.data?.user?.isAdmin ? (
@@ -33,19 +35,16 @@ const Admin: FC = () => {
             <h2 className="font-semibold text-gray-700 text-2xl mb-10">Races</h2>
           </div>
 
-          {races && riders && (
-            <>
-              <RacesCrud races={races} riders={riders} />
-              <div className="flex justify-center">
-                <h2 className="font-semibold text-gray-700 text-2xl mt-20 mb-10">Riders</h2>
-              </div>
-            </>
-          )}
-          {riders && <RidersCrud riders={riders} />}
+          <RacesCrud races={races} riders={riders} mutateRaces={mutateRaces} isLoadingRaces={isLoadingRaces} />
+          <div className="flex justify-center">
+            <h2 className="font-semibold text-gray-700 text-2xl mt-20 mb-10">Riders</h2>
+          </div>
+
+          <RidersCrud riders={riders} mutateRiders={mutateRiders} />
           <div className="flex justify-center">
             <h2 className="font-semibold text-gray-700 text-2xl mt-20 mb-10">Score calculation</h2>
           </div>
-          <TriggerScoreCalculation />
+          <TriggerScoreCalculation mutateUsers={mutateUsers} />
         </Layout>
       ) : (
         <></>

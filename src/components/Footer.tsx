@@ -11,7 +11,7 @@ export const Footer: FC = () => {
 
   return (
     <>
-      <footer className="rounded-lg bg-gray-50 px-5 py-6 shadow sm:px-6 -mt-5">
+      <footer className="lg:rounded-lg bg-gray-50 px-5 py-6 shadow sm:px-6 -mt-5">
         <div className="mx-auto max-w-7xl overflow-hidden pt-20">
           <div className="-mx-5 -my-2 flex flex-wrap justify-center" aria-label="Footer">
             <Link href="/">

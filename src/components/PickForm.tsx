@@ -3,22 +3,25 @@ import { FC, FormEvent, useState } from 'react';
 import { v4 as uuidv4 } from 'uuid';
 import { Pick, Race, Rider } from '../lib/types/types';
 import RiderSelector from './RiderSelector';
+import Spinner from './Spinner';
 
 type Props = {
   addPick: (pick: Pick) => void;
   editPick: (pick: Pick) => void;
   prefilledPick: Pick | null;
-  riders: Rider[];
+  riders?: Rider[];
   race: Race | null;
+  isLoading: boolean;
 };
 
-const PickForm: FC<Props> = ({ addPick, editPick, prefilledPick, riders, race }) => {
+const PickForm: FC<Props> = ({ addPick, editPick, prefilledPick, riders, race, isLoading }) => {
   const [selectedFirst, setSelectedFirst] = useState<Rider | null>(prefilledPick?.result?.first || null);
   const [selectedSecond, setSelectedSecond] = useState<Rider | null>(prefilledPick?.result?.second || null);
   const [selectedThird, setSelectedThird] = useState<Rider | null>(prefilledPick?.result?.third || null);
   const [selectedFourth, setSelectedFourth] = useState<Rider | null>(prefilledPick?.result?.fourth || null);
   const [selectedFifth, setSelectedFifth] = useState<Rider | null>(prefilledPick?.result?.fifth || null);
   const [selectedWildcard, setSelectedWildcard] = useState<Rider | null>(prefilledPick?.result?.wildcard || null);
+  const [isError, setIsError] = useState<boolean>(false);
 
   const session = useSession();
   const userId = session.data?.user.id;
@@ -33,10 +36,12 @@ const PickForm: FC<Props> = ({ addPick, editPick, prefilledPick, riders, race })
       !selectedFifth ||
       !selectedWildcard ||
       !race ||
-      !userId // login here
+      !userId
     ) {
+      setIsError(true);
       return;
     }
+    setIsError(false);
 
     const pick: Pick = {
       id: prefilledPick?.id || uuidv4(),
@@ -66,6 +71,7 @@ const PickForm: FC<Props> = ({ addPick, editPick, prefilledPick, riders, race })
       <div className="mt-8 sm:mx-auto sm:w-full sm:max-w-md">
         <form className="space-y-6" onSubmit={(e) => onSubmit(e)}>
           <RiderSelector
+            isError={isError}
             riders={riders}
             selectedFirst={selectedFirst}
             selectedSecond={selectedSecond}
@@ -82,10 +88,18 @@ const PickForm: FC<Props> = ({ addPick, editPick, prefilledPick, riders, race })
           />
           <div>
             <button
+              disabled={isLoading}
               type="submit"
               className="flex w-full justify-center rounded-md border border-transparent bg-gray-700 py-2 px-4 text-sm font-medium text-white shadow-sm hover:bg-gray-800 focus:outline-none focus:ring-2 focus:ring-gray-500 focus:ring-offset-2"
             >
-              Save
+              {isLoading ? (
+                <>
+                  <Spinner />
+                  ...Loading
+                </>
+              ) : (
+                'Save'
+              )}
             </button>
           </div>
         </form>

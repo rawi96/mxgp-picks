@@ -1,16 +1,18 @@
-import useSWR from 'swr';
+import useSWR, { KeyedMutator } from 'swr';
 import { Rider } from '../lib/types/types';
 
 export const useRiders = (): {
   riders?: Rider[];
-  isLoading: boolean;
+  mutateRiders: KeyedMutator<any>;
+  isLoadingRiders: boolean;
   isError: boolean;
 } => {
-  const { data, error } = useSWR(`/api/riders`);
+  const { data, error, mutate } = useSWR(`/api/riders`);
 
   return {
     riders: data,
-    isLoading: !error && !data,
+    mutateRiders: mutate,
+    isLoadingRiders: !error && !data,
     isError: error,
   };
 };

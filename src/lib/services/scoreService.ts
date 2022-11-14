@@ -27,32 +27,39 @@ export default class ScoreService {
     const picks = await this.pickRepo.getAll();
 
     users.forEach(async (user) => {
+      let scorePerRace: { [key: string]: number } = {};
       let score = 0;
       const userPicks = picks.filter((pick) => pick.userId === user.id);
       userPicks.forEach((pick) => {
         const pickedRace = races.find((race) => race.id === pick.raceId);
         if (pickedRace.raceResult && pickedRace.raceResult.result && pick.result) {
           if (pickedRace.raceResult.result.first.id === pick.result?.first.id) {
+            scorePerRace = { ...scorePerRace, [pickedRace.id]: (scorePerRace[pickedRace.id] || 0) + 25 };
             score += 25;
           }
           if (pickedRace.raceResult.result.second.id === pick.result?.second.id) {
+            scorePerRace = { ...scorePerRace, [pickedRace.id]: (scorePerRace[pickedRace.id] || 0) + 22 };
             score += 22;
           }
           if (pickedRace.raceResult.result.third.id === pick.result?.third.id) {
+            scorePerRace = { ...scorePerRace, [pickedRace.id]: (scorePerRace[pickedRace.id] || 0) + 20 };
             score += 20;
           }
           if (pickedRace.raceResult.result.fourth.id === pick.result?.fourth.id) {
+            scorePerRace = { ...scorePerRace, [pickedRace.id]: (scorePerRace[pickedRace.id] || 0) + 18 };
             score += 18;
           }
           if (pickedRace.raceResult.result.fifth.id === pick.result?.fifth.id) {
+            scorePerRace = { ...scorePerRace, [pickedRace.id]: (scorePerRace[pickedRace.id] || 0) + 16 };
             score += 16;
           }
           if (pickedRace.raceResult.result.wildcard.id === pick.result?.wildcard.id) {
+            scorePerRace = { ...scorePerRace, [pickedRace.id]: (scorePerRace[pickedRace.id] || 0) + 25 };
             score += 25;
           }
         }
       });
-      await this.userRepo.update(user.id, { ...user, score });
+      await this.userRepo.update(user.id, { ...user, score, scorePerRace: JSON.stringify(scorePerRace) });
     });
     return res.status(200).json({ message: 'Score calculated' });
   }

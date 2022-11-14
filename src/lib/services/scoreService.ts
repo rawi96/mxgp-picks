@@ -59,7 +59,6 @@ export default class ScoreService {
           }
         }
       });
-      console.log(scorePerRace);
       await this.userRepo.update(user.id, { ...user, score, scorePerRace: JSON.stringify(scorePerRace) });
     });
     return res.status(200).json({ message: 'Score calculated' });

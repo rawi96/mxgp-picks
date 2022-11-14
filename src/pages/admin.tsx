@@ -7,6 +7,7 @@ import RidersCrud from '../components/RidersCrud';
 import TriggerScoreCalculation from '../components/TriggerScoreCalculation';
 import { useRaces } from '../hooks/useRaces';
 import { useRiders } from '../hooks/useRiders';
+import { useUsers } from '../hooks/useUsers';
 
 const useAdminRoute = () => {
   const session = useSession();
@@ -25,6 +26,7 @@ const Admin: FC = () => {
   const session = useAdminRoute();
   const { races, mutateRaces, isLoadingRaces } = useRaces();
   const { riders, mutateRiders } = useRiders();
+  const { mutateUsers } = useUsers();
   return (
     <>
       {session.data?.user?.isAdmin ? (
@@ -42,7 +44,7 @@ const Admin: FC = () => {
           <div className="flex justify-center">
             <h2 className="font-semibold text-gray-700 text-2xl mt-20 mb-10">Score calculation</h2>
           </div>
-          <TriggerScoreCalculation />
+          <TriggerScoreCalculation mutateUsers={mutateUsers} />
         </Layout>
       ) : (
         <></>

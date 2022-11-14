@@ -1,9 +1,14 @@
 import { RocketLaunchIcon } from '@heroicons/react/24/outline';
 import { FC, useState } from 'react';
+import { KeyedMutator } from 'swr';
 import { useShowNotification } from '../lib/utils/utils';
 import Spinner from './Spinner';
 
-const TriggerScoreCalculation: FC = () => {
+type Props = {
+  mutateUsers: KeyedMutator<any>;
+};
+
+const TriggerScoreCalculation: FC<Props> = ({ mutateUsers }) => {
   const [loading, setLoading] = useState(false);
   const { showNotification } = useShowNotification();
 
@@ -14,6 +19,7 @@ const TriggerScoreCalculation: FC = () => {
       credentials: 'same-origin',
     });
     if (res.ok) {
+      mutateUsers();
       setLoading(false);
       showNotification('Successfully calculated score!', 'Success');
     } else {

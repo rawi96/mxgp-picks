@@ -76,7 +76,7 @@ const RiderCombobox: FC<Props> = ({ riders, selectedRider, setSelectedRider, lab
                   <>
                     <span className={classNames('block truncate', selected ? 'font-semibold' : 'font-normal')}>
                       <div className="flex">
-                        <div className="w-16">{rider?.numberplate}</div>
+                        <div className="w-8">{rider?.numberplate}</div>
                         <div>{`${rider?.firstname} ${rider?.lastname}`}</div>
                       </div>
                     </span>

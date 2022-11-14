@@ -13,9 +13,16 @@ const PersonalRanking: FC<Props> = ({ users }) => {
   const loggedInUserId = session.data?.user.id;
   const indexOfLoggedInUser = users.findIndex((user) => user.id === loggedInUserId);
 
-  const sliceOfUsers = users.slice(indexOfLoggedInUser - 3, indexOfLoggedInUser + 3);
+  let usersToShow: User[] = [];
+  if (indexOfLoggedInUser < 3) {
+    usersToShow = users.slice(0, 6);
+  } else if (indexOfLoggedInUser > users.length - 3) {
+    usersToShow = users.slice(users.length - 6, users.length);
+  } else {
+    usersToShow = users.slice(indexOfLoggedInUser - 3, indexOfLoggedInUser + 3);
+  }
 
-  const indexToMakeLoggedInUserVisible = sliceOfUsers.findIndex((user) => user.id === loggedInUserId);
+  const indexToMakeLoggedInUserVisible = usersToShow.findIndex((user) => user.id === loggedInUserId);
 
   return (
     <>
@@ -30,7 +37,7 @@ const PersonalRanking: FC<Props> = ({ users }) => {
       </div>
       <UsersTable
         indexToMakeLoggedInUserVisible={indexToMakeLoggedInUserVisible}
-        users={session.data?.user && indexToMakeLoggedInUserVisible > -1 ? sliceOfUsers : users.slice(0, 5)}
+        users={session.data?.user && indexToMakeLoggedInUserVisible > -1 ? usersToShow : users.slice(0, 5)}
       />
     </>
   );

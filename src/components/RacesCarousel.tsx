@@ -69,7 +69,7 @@ const RacesCarousel: FC<Props> = ({ races, onEdit, onDelete, onPick, onEditPick,
             );
           })
         ) : (
-          <RaceCard index={0} type={type} isLoading={isLoading} />
+          <RaceCard index={0} type={type} isLoadingRaces={isLoadingRaces} isLoading={isLoading} />
         )}
       </Carousel>
     </div>

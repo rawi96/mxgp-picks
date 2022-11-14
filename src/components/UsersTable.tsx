@@ -2,8 +2,8 @@ import { FC } from 'react';
 import { User } from '../lib/types/types';
 
 type Props = {
-  users: User[];
-  indexToMakeLoggedInUserVisible: number;
+  users?: User[];
+  indexToMakeLoggedInUserVisible?: number;
   filterRaceId?: string;
 };
 
@@ -39,7 +39,7 @@ const UsersTable: FC<Props> = ({ users, indexToMakeLoggedInUserVisible, filterRa
                 </tr>
               </thead>
               <tbody className="divide-y divide-gray-200 bg-white">
-                {users.map((user, index) => (
+                {users?.map((user, index) => (
                   <tr key={user.id}>
                     <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
                       <div className={`text-gray-700 ${indexToMakeLoggedInUserVisible === index && 'font-bold'}`}>

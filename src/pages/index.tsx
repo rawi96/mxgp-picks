@@ -15,8 +15,8 @@ const Index: FC = () => {
       <div className="flex justify-center">
         <h2 className="font-semibold text-gray-700 text-2xl mb-10">Races</h2>
       </div>
-      {<PicksCrud races={races} riders={riders} mutateRaces={mutateRaces} isLoadingRaces={isLoadingRaces} />}
-      {users && <PersonalRanking users={users} />}
+      <PicksCrud races={races} riders={riders} mutateRaces={mutateRaces} isLoadingRaces={isLoadingRaces} />
+      <PersonalRanking users={users} />
     </Layout>
   );
 };

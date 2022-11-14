@@ -21,6 +21,7 @@ const PickForm: FC<Props> = ({ addPick, editPick, prefilledPick, riders, race, i
   const [selectedFourth, setSelectedFourth] = useState<Rider | null>(prefilledPick?.result?.fourth || null);
   const [selectedFifth, setSelectedFifth] = useState<Rider | null>(prefilledPick?.result?.fifth || null);
   const [selectedWildcard, setSelectedWildcard] = useState<Rider | null>(prefilledPick?.result?.wildcard || null);
+  const [isError, setIsError] = useState<boolean>(false);
 
   const session = useSession();
   const userId = session.data?.user.id;
@@ -37,8 +38,10 @@ const PickForm: FC<Props> = ({ addPick, editPick, prefilledPick, riders, race, i
       !race ||
       !userId
     ) {
+      setIsError(true);
       return;
     }
+    setIsError(false);
 
     const pick: Pick = {
       id: prefilledPick?.id || uuidv4(),
@@ -68,6 +71,7 @@ const PickForm: FC<Props> = ({ addPick, editPick, prefilledPick, riders, race, i
       <div className="mt-8 sm:mx-auto sm:w-full sm:max-w-md">
         <form className="space-y-6" onSubmit={(e) => onSubmit(e)}>
           <RiderSelector
+            isError={isError}
             riders={riders}
             selectedFirst={selectedFirst}
             selectedSecond={selectedSecond}

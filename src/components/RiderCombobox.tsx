@@ -4,14 +4,20 @@ import { Dispatch, FC, SetStateAction, useState } from 'react';
 import { Rider } from '../lib/types/types';
 import { classNames } from '../lib/utils/utils';
 
+const INPUT_VALID_CLASSES =
+  'w-full rounded-md border border-gray-300 bg-white py-2 pl-3 pr-10 shadow-sm focus:border-gray-500 focus:outline-none focus:ring-1 focus:ring-gray-500 sm:text-sm';
+const INPUT_INVALID_CLASSES =
+  'w-full rounded-md border border-red-300 bg-white py-2 pl-3 pr-10 shadow-sm focus:border-red-500 focus:outline-none focus:ring-1 focus:ring-red-500 sm:text-sm';
+
 type Props = {
   riders?: Rider[];
   selectedRider: Rider | null;
   setSelectedRider: Dispatch<SetStateAction<null | Rider>>;
   label: string;
+  isError: boolean;
 };
 
-const RiderCombobox: FC<Props> = ({ riders, selectedRider, setSelectedRider, label }) => {
+const RiderCombobox: FC<Props> = ({ riders, selectedRider, setSelectedRider, label, isError }) => {
   const [query, setQuery] = useState('');
 
   const filteredRider =
@@ -47,7 +53,7 @@ const RiderCombobox: FC<Props> = ({ riders, selectedRider, setSelectedRider, lab
       </div>
       <div className="relative mt-1">
         <Combobox.Input
-          className="w-full rounded-md border border-gray-300 bg-white py-2 pl-3 pr-10 shadow-sm focus:border-gray-500 focus:outline-none focus:ring-1 focus:ring-gray-500 sm:text-sm"
+          className={`${isError && !selectedRider ? INPUT_INVALID_CLASSES : INPUT_VALID_CLASSES}`}
           onChange={(event) => setQuery(event.target.value)}
           displayValue={(rider: Rider) => rider && `${rider?.numberplate} ${rider?.firstname} ${rider?.lastname}`}
         />
@@ -98,6 +104,7 @@ const RiderCombobox: FC<Props> = ({ riders, selectedRider, setSelectedRider, lab
           </Combobox.Options>
         )}
       </div>
+      {isError && !selectedRider && <p className="mt-2 text-sm text-red-600">{'Please select a rider!'}</p>}
     </Combobox>
   );
 };

@@ -1,10 +1,10 @@
 import type { NextApiRequest, NextApiResponse } from 'next';
-import UserRepo from '../../../lib/repos/userRepo';
-import EmailService from '../../../lib/services/emailService';
-import UserService from '../../../lib/services/userService';
-import prisma from '../../../lib/utils/prisma';
+import UserRepo from '../../../../lib/repos/userRepo';
+import EmailService from '../../../../lib/services/emailService';
+import UserService from '../../../../lib/services/userService';
 
 const handler = async (req: NextApiRequest, res: NextApiResponse) => {
+  console.log('req.body', req.body);
   const { method } = req;
 
   const userService = new UserService(
@@ -13,10 +13,8 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
   );
   try {
     switch (method) {
-      case 'GET':
-        return await userService.getUsers(req, res);
       case 'POST':
-        return await userService.addUser(req, res);
+        return await userService.verifyUser(req, res);
       default:
         return res.status(405).json({ message: 'Method not allowed' });
     }
@@ -25,5 +23,4 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
     return res.status(500).json({ message: 'Internal server error' });
   }
 };
-
 export default handler;

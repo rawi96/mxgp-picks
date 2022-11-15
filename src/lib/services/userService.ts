@@ -4,12 +4,15 @@ import { default as UserRepo } from '../repos/userRepo';
 import { User } from '../types/types';
 import { comparePasswords, hashPassword } from '../utils/bcrypt';
 import { REGEX_EMAIL, REGEX_PASSWORD } from '../utils/utils';
+import EmailService from './emailService';
 
 export default class UserService {
   private userRepo: UserRepo;
+  private emailService: EmailService;
 
-  constructor(userRepo: UserRepo) {
+  constructor(userRepo: UserRepo, emailService: EmailService) {
     this.userRepo = userRepo;
+    this.emailService = emailService;
   }
 
   public async addUser(req: NextApiRequest, res: NextApiResponse): Promise<void | NextApiResponse<any>> {
@@ -47,10 +50,49 @@ export default class UserService {
       isAdmin: false,
       score: 0,
       scorePerRace: null,
+      isVerified: false,
+      verifyToken: uuidv4(),
     };
 
     const createdUser = await this.userRepo.create(newUser);
+    await this.emailService.sendMail({
+      to: 'raphi.wirth@gmail.com',
+      from: 'noreply@mxgp-picks.com',
+      subject: 'Welcome to MXGP Picks!',
+      text: `Click here to confirm your email`,
+      html: `Click <a href="https://www.mxgp-picks.com/confirm-user/${createdUser.id}?token=${createdUser.verifyToken}">here</a> to confirm your email.`,
+    });
+
     return res.status(200).json(createdUser);
+  }
+
+  public async verifyUser(req: NextApiRequest, res: NextApiResponse): Promise<void | NextApiResponse<any>> {
+    const { userId, token } = req.query;
+
+    console.log(req);
+    console.log(userId, token);
+
+    if (!userId || !token) {
+      return res.status(400).json({ message: 'Missing fields' });
+    }
+
+    const user = await this.userRepo.getById(userId as string);
+
+    if (!user) {
+      return res.status(400).json({ message: 'User not found' });
+    }
+
+    if (user.isVerified) {
+      return res.status(400).json({ message: 'User already verified' });
+    }
+
+    if (user.verifyToken !== token) {
+      return res.status(400).json({ message: 'Invalid token' });
+    }
+
+    await this.userRepo.update(userId as string, { ...user, isVerified: true });
+
+    return res.status(200).json({ message: 'User verified' });
   }
 
   public async getUsers(req: NextApiRequest, res: NextApiResponse): Promise<void | NextApiResponse<any>> {

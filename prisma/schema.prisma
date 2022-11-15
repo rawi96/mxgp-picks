@@ -19,6 +19,8 @@ model User {
   scorePerRace       String?
   password           String
   isAdmin            Boolean
+  isVerified         Boolean          @default(false)
+  verifyToken        String?
   picks              Pick[]
 }
 

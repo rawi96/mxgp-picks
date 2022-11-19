@@ -1,7 +1,7 @@
 import { Session } from 'next-auth';
 import { SessionProvider } from 'next-auth/react';
-import { LAYOUT_SELECTOR } from '../selectors';
 import Layout from '../../src/components/Layout';
+import { LAYOUT_SELECTOR } from '../selectors';
 
 const SESSION: Session = {
   user: {
@@ -9,6 +9,7 @@ const SESSION: Session = {
     email: 'john@doe.com',
     username: 'john',
     isAdmin: false,
+    isVerified: true,
   },
   expires: '',
 };

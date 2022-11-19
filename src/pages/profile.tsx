@@ -18,6 +18,7 @@ const useProfileRoute = () => {
 
 const Profile: FC = () => {
   const session = useProfileRoute();
+  console.log(session);
 
   return (
     <>

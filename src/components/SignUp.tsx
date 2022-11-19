@@ -40,6 +40,7 @@ const SignUp: FC = () => {
     if (res.ok) {
       setSignUpModalOpen(false);
       showNotification('Sign up successful', 'Success');
+      setLoginModalOpen(true);
     } else {
       const data = await res.json();
       showNotification(data.message || 'Something went wrong!', 'Error');

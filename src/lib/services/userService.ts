@@ -1,4 +1,5 @@
 import { NextApiRequest, NextApiResponse } from 'next';
+import { getSession } from 'next-auth/react';
 import { v4 as uuidv4 } from 'uuid';
 import { default as UserRepo } from '../repos/userRepo';
 import { User } from '../types/types';
@@ -59,18 +60,38 @@ export default class UserService {
       to: 'raphi.wirth@gmail.com',
       from: 'noreply@mxgp-picks.com',
       subject: 'Welcome to MXGP Picks!',
-      text: `Click here to confirm your email`,
-      html: `Click <a href="https://www.mxgp-picks.com/confirm-user/${createdUser.id}?token=${createdUser.verifyToken}">here</a> to confirm your email.`,
+      text: `Click here to verify your account`,
+      html: `Click <a href="${process.env.VERCEL_URL}/verify-account/${createdUser.id}?token=${createdUser.verifyToken}">here</a> to verify your account.`,
     });
 
     return res.status(200).json(createdUser);
   }
 
+  public async resendVerificationEmail(req: NextApiRequest, res: NextApiResponse): Promise<void | NextApiResponse<any>> {
+    const session = await getSession({ req });
+
+    if (!session?.user.id) {
+      return res.status(401).json({ message: 'Unauthorized' });
+    }
+
+    const user = await this.userRepo.getById(session.user.id);
+    if (!user) {
+      return res.status(401).json({ message: 'Unauthorized' });
+    }
+
+    await this.emailService.sendMail({
+      to: 'raphi.wirth@gmail.com',
+      from: 'noreply@mxgp-picks.com',
+      subject: 'Welcome to MXGP Picks!',
+      text: `Click here to verify your account`,
+      html: `Click <a href="${process.env.VERCEL_URL}/verify-account/${user.id}?token=${user.verifyToken}">here</a> to verify your account.`,
+    });
+
+    return res.status(200).json({ message: 'Verification email sent' });
+  }
+
   public async verifyUser(req: NextApiRequest, res: NextApiResponse): Promise<void | NextApiResponse<any>> {
     const { userId, token } = req.query;
-
-    console.log(req);
-    console.log(userId, token);
 
     if (!userId || !token) {
       return res.status(400).json({ message: 'Missing fields' });
@@ -80,10 +101,6 @@ export default class UserService {
 
     if (!user) {
       return res.status(400).json({ message: 'User not found' });
-    }
-
-    if (user.isVerified) {
-      return res.status(400).json({ message: 'User already verified' });
     }
 
     if (user.verifyToken !== token) {
@@ -118,6 +135,7 @@ export default class UserService {
         id: user?.id,
         username: user?.username,
         isAdmin: user?.isAdmin,
+        isVerified: user?.isVerified,
       },
     };
   }

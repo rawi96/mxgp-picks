@@ -2,9 +2,9 @@ import type { NextApiRequest, NextApiResponse } from 'next';
 import UserRepo from '../../../../lib/repos/userRepo';
 import EmailService from '../../../../lib/services/emailService';
 import UserService from '../../../../lib/services/userService';
+import prisma from '../../../../lib/utils/prisma';
 
 const handler = async (req: NextApiRequest, res: NextApiResponse) => {
-  console.log('req.body', req.body);
   const { method } = req;
 
   const userService = new UserService(

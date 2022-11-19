@@ -6,6 +6,7 @@ import RaceRepo from '../../lib/repos/raceRepo';
 import RaceResultRepo from '../../lib/repos/raceResultRepo';
 import ResultRepo from '../../lib/repos/resultRepo';
 import UserRepo from '../../lib/repos/userRepo';
+import EmailService from '../../lib/services/emailService';
 import RaceService from '../../lib/services/raceService';
 import UserService from '../../lib/services/userService';
 import { Race, User } from '../../lib/types/types';
@@ -21,7 +22,10 @@ const FilteredRankingPage: FC<Props> = ({ serverSideUsers, serverSideRaces }) =>
 };
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
-  const userService = new UserService(new UserRepo(prisma));
+  const userService = new UserService(
+    new UserRepo(prisma),
+    new EmailService(require('@sendgrid/mail').setApiKey(process.env.SENDGRID_API_KEY))
+  );
   const raceService = new RaceService(
     new RaceRepo(prisma),
     new PickRepo(prisma),

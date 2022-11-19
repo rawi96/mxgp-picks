@@ -3,9 +3,11 @@ import { ModalsContext } from '../context/modalsContext';
 import Login from './Login';
 import Modal from './Modal';
 import SignUp from './SignUp';
+import VerifyAccountMessage from './VerifyAccountMessage';
 
 const SessionModals: FC = () => {
-  const { loginModalOpen, setLoginModalOpen, setSignUpModalOpen, signUpModalOpen } = useContext(ModalsContext);
+  const { loginModalOpen, setLoginModalOpen, setSignUpModalOpen, signUpModalOpen, verifyAccountOpen, setVerifyAccountOpen } =
+    useContext(ModalsContext);
 
   return (
     <>
@@ -14,6 +16,9 @@ const SessionModals: FC = () => {
       </Modal>
       <Modal open={signUpModalOpen} setOpen={setSignUpModalOpen}>
         <SignUp />
+      </Modal>
+      <Modal open={verifyAccountOpen} setOpen={setVerifyAccountOpen}>
+        <VerifyAccountMessage />
       </Modal>
     </>
   );

@@ -10,6 +10,7 @@ const Index: FC = () => {
   const { races, mutateRaces, isLoadingRaces } = useRaces();
   const { riders } = useRiders();
   const { users } = useUsers();
+  console.log('users', users);
   return (
     <Layout>
       <div className="flex justify-center">

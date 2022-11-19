@@ -7,6 +7,8 @@ export type User = {
   password: string;
   isAdmin: boolean;
   position?: number;
+  isVerified: boolean;
+  verifyToken: string | null;
 };
 
 export type Rider = {

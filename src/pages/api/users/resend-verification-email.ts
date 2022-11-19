@@ -13,10 +13,8 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
   );
   try {
     switch (method) {
-      case 'GET':
-        return await userService.getUsers(req, res);
       case 'POST':
-        return await userService.addUser(req, res);
+        return await userService.resendVerificationEmail(req, res);
       default:
         return res.status(405).json({ message: 'Method not allowed' });
     }
@@ -25,5 +23,4 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
     return res.status(500).json({ message: 'Internal server error' });
   }
 };
-
 export default handler;

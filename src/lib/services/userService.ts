@@ -1,15 +1,19 @@
 import { NextApiRequest, NextApiResponse } from 'next';
+import { getSession } from 'next-auth/react';
 import { v4 as uuidv4 } from 'uuid';
 import { default as UserRepo } from '../repos/userRepo';
 import { User } from '../types/types';
 import { comparePasswords, hashPassword } from '../utils/bcrypt';
 import { REGEX_EMAIL, REGEX_PASSWORD } from '../utils/utils';
+import EmailService from './emailService';
 
 export default class UserService {
   private userRepo: UserRepo;
+  private emailService: EmailService;
 
-  constructor(userRepo: UserRepo) {
+  constructor(userRepo: UserRepo, emailService: EmailService) {
     this.userRepo = userRepo;
+    this.emailService = emailService;
   }
 
   public async addUser(req: NextApiRequest, res: NextApiResponse): Promise<void | NextApiResponse<any>> {
@@ -47,10 +51,65 @@ export default class UserService {
       isAdmin: false,
       score: 0,
       scorePerRace: null,
+      isVerified: false,
+      verifyToken: uuidv4(),
     };
 
     const createdUser = await this.userRepo.create(newUser);
+    await this.emailService.sendMail({
+      to: 'raphi.wirth@gmail.com',
+      from: 'noreply@mxgp-picks.com',
+      subject: 'Welcome to MXGP Picks!',
+      text: `Click here to verify your account`,
+      html: `Click <a href="${process.env.VERCEL_URL}/verify-account/${createdUser.id}?token=${createdUser.verifyToken}">here</a> to verify your account.`,
+    });
+
     return res.status(200).json(createdUser);
+  }
+
+  public async resendVerificationEmail(req: NextApiRequest, res: NextApiResponse): Promise<void | NextApiResponse<any>> {
+    const session = await getSession({ req });
+
+    if (!session?.user.id) {
+      return res.status(401).json({ message: 'Unauthorized' });
+    }
+
+    const user = await this.userRepo.getById(session.user.id);
+    if (!user) {
+      return res.status(401).json({ message: 'Unauthorized' });
+    }
+
+    await this.emailService.sendMail({
+      to: 'raphi.wirth@gmail.com',
+      from: 'noreply@mxgp-picks.com',
+      subject: 'Welcome to MXGP Picks!',
+      text: `Click here to verify your account`,
+      html: `Click <a href="${process.env.VERCEL_URL}/verify-account/${user.id}?token=${user.verifyToken}">here</a> to verify your account.`,
+    });
+
+    return res.status(200).json({ message: 'Verification email sent' });
+  }
+
+  public async verifyUser(req: NextApiRequest, res: NextApiResponse): Promise<void | NextApiResponse<any>> {
+    const { userId, token } = req.query;
+
+    if (!userId || !token) {
+      return res.status(400).json({ message: 'Missing fields' });
+    }
+
+    const user = await this.userRepo.getById(userId as string);
+
+    if (!user) {
+      return res.status(400).json({ message: 'User not found' });
+    }
+
+    if (user.verifyToken !== token) {
+      return res.status(400).json({ message: 'Invalid token' });
+    }
+
+    await this.userRepo.update(userId as string, { ...user, isVerified: true });
+
+    return res.status(200).json({ message: 'User verified' });
   }
 
   public async getUsers(req: NextApiRequest, res: NextApiResponse): Promise<void | NextApiResponse<any>> {
@@ -76,6 +135,7 @@ export default class UserService {
         id: user?.id,
         username: user?.username,
         isAdmin: user?.isAdmin,
+        isVerified: user?.isVerified,
       },
     };
   }

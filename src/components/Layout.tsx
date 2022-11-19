@@ -4,7 +4,7 @@ import { signOut, useSession } from 'next-auth/react';
 import Image from 'next/image';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
-import { FC, Fragment, ReactNode, useContext } from 'react';
+import { FC, Fragment, ReactNode, useContext, useEffect, useState } from 'react';
 import { ModalsContext } from '../context/modalsContext';
 import { classNames } from '../lib/utils/utils';
 import Footer from './Footer';
@@ -21,8 +21,24 @@ type Props = {
   children: ReactNode;
 };
 
+const useCheckIfAccountIsVerified = () => {
+  const session = useSession();
+  const { setVerifyAccountOpen } = useContext(ModalsContext);
+  const [loggedInAndNotVerified, setLoggedInAndNotVerified] = useState(false);
+
+  useEffect(() => {
+    if (session.data?.user?.id && !session.data?.user?.isVerified) {
+      setLoggedInAndNotVerified(true);
+      setVerifyAccountOpen(true);
+    }
+  }, [session, setVerifyAccountOpen]);
+
+  return loggedInAndNotVerified;
+};
+
 const Layout: FC<Props> = ({ children }) => {
-  const { setLoginModalOpen, setSignUpModalOpen } = useContext(ModalsContext);
+  const loggedInAndNotVerified = useCheckIfAccountIsVerified();
+  const { setLoginModalOpen, setSignUpModalOpen, setVerifyAccountOpen } = useContext(ModalsContext);
   const session = useSession();
   const router = useRouter();
   const pathname = (router && router.pathname) || '';
@@ -146,14 +162,28 @@ const Layout: FC<Props> = ({ children }) => {
                         {session.data?.user ? (
                           <Menu as="div" className="relative ml-3">
                             <div>
-                              <Menu.Button className="flex max-w-xs items-center rounded-full bg-gray-700 text-sm focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-700">
-                                <span className="sr-only">Open user menu</span>
-                                <span className="inline-flex h-10 w-10 items-center justify-center rounded-full bg-red-600">
-                                  <span className="text-sm font-medium leading-none text-white">
-                                    {session.data.user.username && session.data.user.username.substring(0, 2).toUpperCase()}
-                                  </span>
-                                </span>
-                              </Menu.Button>
+                              {loggedInAndNotVerified ? (
+                                <a
+                                  tabIndex={0}
+                                  onClick={() => setVerifyAccountOpen(true)}
+                                  onKeyDown={(e) => e.key === 'Enter' && setVerifyAccountOpen(true)}
+                                  className="bg-red-600 text-white hover:bg-red-900 px-3 py-2 rounded-md text-sm font-medium cursor-pointer whitespace-nowrap "
+                                >
+                                  Unverified Account!
+                                </a>
+                              ) : (
+                                <>
+                                  <Menu.Button className="flex max-w-xs items-center rounded-full bg-gray-700 text-sm focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-700">
+                                    <span className="sr-only">Open user menu</span>
+                                    <span className="inline-flex h-10 w-10 items-center justify-center rounded-full bg-red-600">
+                                      <span className="text-sm font-medium leading-none text-white">
+                                        {session.data.user.username &&
+                                          session.data.user.username.substring(0, 2).toUpperCase()}
+                                      </span>
+                                    </span>
+                                  </Menu.Button>
+                                </>
+                              )}
                             </div>
                             <Transition
                               as={Fragment}

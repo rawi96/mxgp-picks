@@ -25,6 +25,8 @@ async function main() {
     isAdmin: true,
     score: 0,
     scorePerRace: null,
+    isVerified: true,
+    verifyToken: null,
   };
 
   const roesti: User = {
@@ -35,6 +37,8 @@ async function main() {
     isAdmin: false,
     score: 0,
     scorePerRace: null,
+    isVerified: false,
+    verifyToken: null,
   };
 
   const skaterboy: User = {
@@ -45,6 +49,8 @@ async function main() {
     isAdmin: false,
     score: 0,
     scorePerRace: null,
+    isVerified: false,
+    verifyToken: null,
   };
 
   const beautyQueen: User = {
@@ -55,6 +61,8 @@ async function main() {
     isAdmin: false,
     score: 0,
     scorePerRace: null,
+    isVerified: false,
+    verifyToken: null,
   };
 
   const schuegaKing: User = {
@@ -65,6 +73,8 @@ async function main() {
     isAdmin: false,
     score: 0,
     scorePerRace: null,
+    isVerified: false,
+    verifyToken: null,
   };
 
   const ironman: User = {
@@ -75,6 +85,8 @@ async function main() {
     isAdmin: false,
     score: 0,
     scorePerRace: null,
+    isVerified: false,
+    verifyToken: null,
   };
 
   const seewer: Rider = {

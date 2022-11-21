@@ -17,7 +17,6 @@ const useVerifyAccount = () => {
       return;
     }
     const verifyAccount = async () => {
-      console.log(session);
       const response = await fetch(`/api/users/verify-account/${userId}?token=${token}`, {
         method: 'POST',
         headers: {

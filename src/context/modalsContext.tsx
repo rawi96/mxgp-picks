@@ -5,6 +5,8 @@ type ModalsContextType = {
   signUpModalOpen: boolean;
   setLoginModalOpen: Dispatch<SetStateAction<boolean>>;
   setSignUpModalOpen: Dispatch<SetStateAction<boolean>>;
+  sendResetPasswordMailModalOpen: boolean;
+  setSendResetPasswordMailModalOpen: Dispatch<SetStateAction<boolean>>;
   notificationModalOpen: boolean;
   setNotificationModalOpen: Dispatch<SetStateAction<boolean>>;
   verifyAccountOpen: boolean;
@@ -20,6 +22,8 @@ const modalsContextDefaultValues: ModalsContextType = {
   signUpModalOpen: false,
   setLoginModalOpen: () => null,
   setSignUpModalOpen: () => null,
+  sendResetPasswordMailModalOpen: false,
+  setSendResetPasswordMailModalOpen: () => null,
   notificationModalOpen: false,
   setNotificationModalOpen: () => null,
   verifyAccountOpen: false,
@@ -39,6 +43,7 @@ type Props = {
 export function ModalsContextProvider({ children }: Props) {
   const [loginModalOpen, setLoginModalOpen] = useState(false);
   const [signUpModalOpen, setSignUpModalOpen] = useState(false);
+  const [sendResetPasswordMailModalOpen, setSendResetPasswordMailModalOpen] = useState(false);
   const [notificationModalOpen, setNotificationModalOpen] = useState(false);
   const [verifyAccountOpen, setVerifyAccountOpen] = useState(false);
   const [notificationModalMessage, setNotificationModalMessage] = useState('');
@@ -48,6 +53,8 @@ export function ModalsContextProvider({ children }: Props) {
     signUpModalOpen,
     setLoginModalOpen,
     setSignUpModalOpen,
+    sendResetPasswordMailModalOpen,
+    setSendResetPasswordMailModalOpen,
     notificationModalOpen,
     setNotificationModalOpen,
     verifyAccountOpen,

@@ -55,16 +55,87 @@ export default class UserService {
       verifyToken: uuidv4(),
     };
 
+    const url = `${process.env.VERCEL_ENV === 'production' ? 'https://mxgp-picks.com' : process.env.VERCEL_URL}`;
+
     const createdUser = await this.userRepo.create(newUser);
     await this.emailService.sendMail({
       to: 'raphi.wirth@gmail.com',
       from: 'noreply@mxgp-picks.com',
       subject: 'Welcome to MXGP Picks!',
       text: `Click here to verify your account`,
-      html: `Click <a href="${process.env.VERCEL_URL}/verify-account/${createdUser.id}?token=${createdUser.verifyToken}">here</a> to verify your account.`,
+      html: `Click <a href="${url}/verify-account/${createdUser.id}?token=${createdUser.verifyToken}">here</a> to verify your account.`,
     });
 
     return res.status(200).json(createdUser);
+  }
+
+  public async updateUser(req: NextApiRequest, res: NextApiResponse): Promise<void | NextApiResponse<any>> {
+    const { username, oldPassword, newPassword } = req.body;
+
+    const session = await getSession({ req });
+
+    if (!session?.user.id) {
+      return res.status(401).json({ message: 'Unauthorized' });
+    }
+
+    const user = await this.userRepo.getById(session.user.id);
+    if (!user) {
+      return res.status(400).json({ message: 'Unauthorized' });
+    }
+
+    if (username) {
+      const usernameExists = await this.userRepo.getByUsername(username);
+
+      if (usernameExists) {
+        return res.status(400).json({ message: 'Username already exists!' });
+      }
+
+      await this.userRepo.update(session.user.id, { ...user, username });
+
+      return res.status(200).json({ message: 'Username updated' });
+    }
+
+    if (oldPassword && newPassword) {
+      if (!REGEX_PASSWORD.test(newPassword)) {
+        return res.status(400).json({ message: 'Invalid password' });
+      }
+
+      if (!(await comparePasswords(oldPassword, user.password))) {
+        return res.status(400).json({ message: 'Old password is incorrect!' });
+      }
+
+      await this.userRepo.update(session.user.id, { ...user, password: await hashPassword(newPassword) });
+
+      return res.status(200).json({ message: 'Password updated' });
+    }
+
+    return res.status(400).json({ message: 'Missing fields' });
+  }
+
+  public async resetPassword(req: NextApiRequest, res: NextApiResponse): Promise<void | NextApiResponse<any>> {
+    const { newPassword, passwordResetToken, userId } = req.body;
+
+    if (!newPassword || !passwordResetToken || !userId) {
+      return res.status(400).json({ message: 'Missing fields' });
+    }
+
+    const user = await this.userRepo.getById(userId);
+
+    if (!user) {
+      return res.status(400).json({ message: 'User not found' });
+    }
+
+    if (!REGEX_PASSWORD.test(newPassword)) {
+      return res.status(400).json({ message: 'Invalid password' });
+    }
+
+    if (passwordResetToken !== user.resetPasswordToken) {
+      return res.status(400).json({ message: 'Invalid token' });
+    }
+
+    await this.userRepo.update(userId, { ...user, password: await hashPassword(newPassword) });
+
+    return res.status(200).json({ message: 'Password updated' });
   }
 
   public async resendVerificationEmail(req: NextApiRequest, res: NextApiResponse): Promise<void | NextApiResponse<any>> {
@@ -79,15 +150,46 @@ export default class UserService {
       return res.status(401).json({ message: 'Unauthorized' });
     }
 
+    const url = `${process.env.VERCEL_ENV === 'production' ? 'https://mxgp-picks.com' : process.env.VERCEL_URL}`;
+
     await this.emailService.sendMail({
       to: 'raphi.wirth@gmail.com',
       from: 'noreply@mxgp-picks.com',
       subject: 'Welcome to MXGP Picks!',
       text: `Click here to verify your account`,
-      html: `Click <a href="${process.env.VERCEL_URL}/verify-account/${user.id}?token=${user.verifyToken}">here</a> to verify your account.`,
+      html: `Click <a href="${url}/verify-account/${user.id}?token=${user.verifyToken}">here</a> to verify your account.`,
     });
 
     return res.status(200).json({ message: 'Verification email sent' });
+  }
+
+  public async sendResetPasswordMail(req: NextApiRequest, res: NextApiResponse): Promise<void | NextApiResponse<any>> {
+    const { email } = req.body;
+
+    if (!email) {
+      return res.status(400).json({ message: 'Missing fields' });
+    }
+
+    const user = await this.userRepo.getByEmail(email);
+
+    if (!user) {
+      return res.status(400).json({ message: 'Email not found!' });
+    }
+
+    const url = `${process.env.VERCEL_ENV === 'production' ? 'https://mxgp-picks.com' : process.env.VERCEL_URL}`;
+
+    const resetPasswordToken = uuidv4();
+    await this.userRepo.update(user.id, { ...user, resetPasswordToken });
+
+    await this.emailService.sendMail({
+      to: 'raphi.wirth@gmail.com',
+      from: 'noreply@mxgp-picks.com',
+      subject: 'Password reset',
+      text: `Click here to set a new password`,
+      html: `Click <a href="${url}/reset-password/${user.id}?token=${resetPasswordToken}">here</a> to set a new password.`,
+    });
+
+    return res.status(200).json({ message: 'Password reset email sent' });
   }
 
   public async verifyUser(req: NextApiRequest, res: NextApiResponse): Promise<void | NextApiResponse<any>> {
@@ -136,6 +238,7 @@ export default class UserService {
         username: user?.username,
         isAdmin: user?.isAdmin,
         isVerified: user?.isVerified,
+        score: user?.score,
       },
     };
   }

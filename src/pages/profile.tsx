@@ -1,8 +1,9 @@
 import { useSession } from 'next-auth/react';
 import { useRouter } from 'next/router';
-import { FC, useEffect } from 'react';
+import { FC, useEffect, useState } from 'react';
 import Layout from '../components/Layout';
-
+import Modal from '../components/Modal';
+import ProfileForm from '../components/ProfileForm';
 const useProfileRoute = () => {
   const session = useSession();
   const router = useRouter();
@@ -18,7 +19,8 @@ const useProfileRoute = () => {
 
 const Profile: FC = () => {
   const session = useProfileRoute();
-  console.log(session);
+  const [formType, setFormType] = useState<'username' | 'password'>('username');
+  const [showForm, setShowForm] = useState(false);
 
   return (
     <>
@@ -35,19 +37,54 @@ const Profile: FC = () => {
               <dl className="sm:divide-y sm:divide-gray-200">
                 <div className="py-4 sm:grid sm:grid-cols-3 sm:gap-4 sm:py-5 sm:px-6">
                   <dt className="text-sm font-medium text-gray-500">Username</dt>
-                  <dd className="mt-1 text-sm text-gray-900 sm:col-span-2 sm:mt-0">{session.data.user.username}</dd>
+                  <dd className="mt-1 flex text-sm text-gray-900 sm:col-span-2 sm:mt-0">
+                    <span className="flex-grow">{session.data.user.username}</span>
+                    <span className="ml-4 flex-shrink-0">
+                      <button
+                        onClick={() => {
+                          setFormType('username');
+                          setShowForm(true);
+                        }}
+                        type="button"
+                        className="rounded-md bg-white font-medium text-gray-600 hover:text-gray-900 focus:outline-none focus:ring-2 focus:ring-gray-500 focus:ring-offset-2"
+                      >
+                        Edit
+                      </button>
+                    </span>
+                  </dd>
+                </div>
+                <div className="py-4 sm:grid sm:grid-cols-3 sm:gap-4 sm:py-5 sm:px-6">
+                  <dt className="text-sm font-medium text-gray-500">Password</dt>
+                  <dd className="mt-1 flex text-sm text-gray-900 sm:col-span-2 sm:mt-0">
+                    <span className="flex-grow">**********</span>
+                    <span className="ml-4 flex-shrink-0">
+                      <button
+                        onClick={() => {
+                          setFormType('password');
+                          setShowForm(true);
+                        }}
+                        type="button"
+                        className="rounded-md bg-white font-medium text-gray-600 hover:text-gray-900 focus:outline-none focus:ring-2 focus:ring-gray-500 focus:ring-offset-2"
+                      >
+                        Edit
+                      </button>
+                    </span>
+                  </dd>
                 </div>
                 <div className="py-4 sm:grid sm:grid-cols-3 sm:gap-4 sm:py-5 sm:px-6">
                   <dt className="text-sm font-medium text-gray-500">Email address</dt>
                   <dd className="mt-1 text-sm text-gray-900 sm:col-span-2 sm:mt-0">{session.data.user.email}</dd>
                 </div>
                 <div className="py-4 sm:grid sm:grid-cols-3 sm:gap-4 sm:py-5 sm:px-6">
-                  <dt className="text-sm font-medium text-gray-500">Password</dt>
-                  <dd className="mt-1 text-sm text-gray-900 sm:col-span-2 sm:mt-0">**********</dd>
+                  <dt className="text-sm font-medium text-gray-500">Score</dt>
+                  <dd className="mt-1 text-sm text-gray-900 sm:col-span-2 sm:mt-0">{session.data.user.score}</dd>
                 </div>
               </dl>
             </div>
           </div>
+          <Modal open={showForm} setOpen={setShowForm}>
+            <ProfileForm setShowForm={setShowForm} type={formType} />
+          </Modal>
         </Layout>
       ) : (
         <></>

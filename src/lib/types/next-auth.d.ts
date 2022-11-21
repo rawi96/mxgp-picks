@@ -8,6 +8,7 @@ declare module 'next-auth' {
       username: string;
       isAdmin: boolean;
       isVerified: boolean;
+      score: number;
     };
   }
 }

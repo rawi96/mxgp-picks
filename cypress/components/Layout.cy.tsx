@@ -10,6 +10,7 @@ const SESSION: Session = {
     username: 'john',
     isAdmin: false,
     isVerified: true,
+    score: 0,
   },
   expires: '',
 };

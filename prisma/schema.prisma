@@ -12,16 +12,17 @@ generator client {
 //   includeRelationFromFields = true
 // }
 model User {
-  id                 String             @id @default(uuid())
-  email              String             @unique
-  username           String             @unique
-  score              Int                @default(0)
-  scorePerRace       String?
-  password           String
-  isAdmin            Boolean
-  isVerified         Boolean          @default(false)
-  verifyToken        String?
-  picks              Pick[]
+  id                      String             @id @default(uuid())
+  email                   String             @unique
+  username                String             @unique
+  score                   Int                @default(0)
+  scorePerRace            String?
+  password                String
+  isAdmin                 Boolean
+  isVerified              Boolean           @default(false)
+  verifyToken             String?
+  resetPasswordToken      String?
+  picks                   Pick[]
 }
 
 model Pick {

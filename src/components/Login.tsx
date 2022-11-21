@@ -15,7 +15,7 @@ interface FormInput {
 }
 
 const Login: FC = () => {
-  const { setLoginModalOpen, setSignUpModalOpen } = useContext(ModalsContext);
+  const { setLoginModalOpen, setSignUpModalOpen, setSendResetPasswordMailModalOpen } = useContext(ModalsContext);
   const { showNotification } = useShowNotification();
 
   const {
@@ -38,6 +38,7 @@ const Login: FC = () => {
       showNotification('Email or password incorrect!', 'Error');
     }
   };
+
   return (
     <div className="flex min-h-full flex-col py-8 px-8">
       <h2 className="text-3xl font-bold tracking-tight text-gray-700">Login</h2>
@@ -100,7 +101,7 @@ const Login: FC = () => {
               <a
                 onClick={() => {
                   setLoginModalOpen(false);
-                  setSignUpModalOpen(true);
+                  setSendResetPasswordMailModalOpen(true);
                 }}
                 className="font-medium text-gray-700 hover:text-gray-900 underline cursor-pointer"
               >

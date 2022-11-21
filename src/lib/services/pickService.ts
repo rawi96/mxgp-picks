@@ -14,7 +14,7 @@ export default class PickService {
   public async addPick(req: NextApiRequest, res: NextApiResponse): Promise<void | NextApiResponse<any>> {
     const session = await getSession({ req });
 
-    if (!session?.user) {
+    if (!session?.user || !session?.user.isVerified) {
       return res.status(401).json({ message: 'Unauthorized' });
     }
 
@@ -40,7 +40,7 @@ export default class PickService {
   public async getPicks(req: NextApiRequest, res: NextApiResponse): Promise<void | NextApiResponse<any>> {
     const session = await getSession({ req });
 
-    if (!session?.user) {
+    if (!session?.user || !session?.user.isVerified) {
       return res.status(401).json({ message: 'Unauthorized' });
     }
 
@@ -51,7 +51,7 @@ export default class PickService {
   public async updatePick(req: NextApiRequest, res: NextApiResponse): Promise<void | NextApiResponse<any>> {
     const session = await getSession({ req });
 
-    if (!session?.user) {
+    if (!session?.user || !session?.user.isVerified) {
       return res.status(401).json({ message: 'Unauthorized' });
     }
 

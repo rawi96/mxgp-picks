@@ -1,5 +1,5 @@
 import { Carousel } from 'flowbite-react';
-import { FC } from 'react';
+import { FC, useEffect, useState } from 'react';
 import { Race } from '../lib/types/types';
 import RaceCard from './RaceCard';
 
@@ -32,7 +32,10 @@ const LeftArrow = () => (
 );
 
 const RightArrow = () => (
-  <span className="inline-flex h-8 w-8 items-center justify-center rounded-full bg-gray-700 group-hover:bg-gray-800 group-focus:ring-2 group-focus:ring-gray-500 group-focus:ring-offset-2 sm:h-10 sm:w-10">
+  <span
+    id="right-arrow"
+    className="inline-flex h-8 w-8 items-center justify-center rounded-full bg-gray-700 group-hover:bg-gray-800 group-focus:ring-2 group-focus:ring-gray-500 group-focus:ring-offset-2 sm:h-10 sm:w-10"
+  >
     <svg
       stroke="currentColor"
       fill="none"
@@ -49,6 +52,22 @@ const RightArrow = () => (
 );
 
 const RacesCarousel: FC<Props> = ({ races, onEdit, onDelete, onPick, onEditPick, type, isLoadingRaces, isLoading }) => {
+  const [scrolled, setScrolled] = useState(false);
+  useEffect(() => {
+    const indexOfNextRace = races?.findIndex((race) => new Date() < new Date(race.date));
+    const rightArrow = document.getElementById('right-arrow');
+    if (!scrolled && rightArrow && indexOfNextRace && indexOfNextRace > -1) {
+      setTimeout(() => {
+        for (let index = 0; index < indexOfNextRace; index++) {
+          setTimeout(() => {
+            rightArrow.click();
+          }, 100);
+        }
+        setScrolled(true);
+      }, 1000);
+    }
+  }, [races, scrolled]);
+
   return (
     <div className="flex justify-center">
       <Carousel slide={false} leftControl={<LeftArrow />} rightControl={<RightArrow />}>

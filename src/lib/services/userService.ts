@@ -130,7 +130,7 @@ export default class UserService {
       return res.status(400).json({ message: 'Invalid password' });
     }
 
-    if (passwordResetToken !== user.resetPasswordToken) {
+    if (!user.resetPasswordToken || user.resetPasswordToken !== passwordResetToken) {
       return res.status(400).json({ message: 'Invalid token' });
     }
 

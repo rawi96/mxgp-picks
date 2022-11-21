@@ -147,7 +147,7 @@ async function main() {
   const argentina: Race = {
     id: uuidv4(),
     title: 'MXGP of Patagonia Argentina',
-    date: new Date('2023-03-12'),
+    date: new Date('2022-10-25'),
     factor: 1,
     wildcardPos: 10,
   };
@@ -155,7 +155,7 @@ async function main() {
   const trentino: Race = {
     id: uuidv4(),
     title: 'MXGP of Trentino',
-    date: new Date('2023-04-16'),
+    date: new Date('2022-11-11'),
     factor: 1,
     wildcardPos: 14,
   };

@@ -1,8 +1,9 @@
 import { signIn } from 'next-auth/react';
-import { FC, useContext } from 'react';
+import { FC, useContext, useState } from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { ModalsContext } from '../context/modalsContext';
 import { useShowNotification } from '../lib/utils/utils';
+import Spinner from './Spinner';
 
 const INPUT_VALID_CLASSES =
   'block w-full appearance-none rounded-md border border-gray-300 px-3 py-2 placeholder-gray-400 shadow-sm focus:border-gray-500 focus:outline-none focus:ring-gray-500 sm:text-sm';
@@ -17,6 +18,7 @@ interface FormInput {
 const Login: FC = () => {
   const { setLoginModalOpen, setSignUpModalOpen, setSendResetPasswordMailModalOpen } = useContext(ModalsContext);
   const { showNotification } = useShowNotification();
+  const [loading, setLoading] = useState(false);
 
   const {
     register,
@@ -25,6 +27,7 @@ const Login: FC = () => {
   } = useForm<FormInput>();
 
   const onSubmit: SubmitHandler<FormInput> = async (data) => {
+    setLoading(true);
     const { email, password } = data;
     const res: any = await signIn('credentials', {
       email,
@@ -32,9 +35,11 @@ const Login: FC = () => {
       redirect: false,
     });
     if (res && res.ok) {
+      setLoading(false);
       setLoginModalOpen(false);
       window.location.reload();
     } else {
+      setLoading(false);
       showNotification('Email or password incorrect!', 'Error');
     }
   };
@@ -111,10 +116,18 @@ const Login: FC = () => {
           </div>
           <div>
             <button
+              disabled={loading}
               type="submit"
               className="flex w-full justify-center rounded-md border border-transparent bg-gray-700 py-2 px-4 text-sm font-medium text-white shadow-sm hover:bg-gray-800 focus:outline-none focus:ring-2 focus:ring-gray-500 focus:ring-offset-2"
             >
-              Login
+              {loading ? (
+                <>
+                  <Spinner />
+                  ...Loading
+                </>
+              ) : (
+                'Login'
+              )}
             </button>
           </div>
         </form>

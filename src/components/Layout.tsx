@@ -19,25 +19,26 @@ export const adminNavigation = [...navigation, { name: 'Admin', href: '/admin' }
 
 type Props = {
   children: ReactNode;
+  hideVerifyAccountMessage?: boolean;
 };
 
-const useCheckIfAccountIsVerified = () => {
+const useCheckIfAccountIsVerified = (hideVerifyAccountMessage: boolean) => {
   const session = useSession();
   const { setVerifyAccountOpen } = useContext(ModalsContext);
   const [loggedInAndNotVerified, setLoggedInAndNotVerified] = useState(false);
 
   useEffect(() => {
-    if (session.data?.user?.id && !session.data?.user?.isVerified) {
+    if (!hideVerifyAccountMessage && session.data?.user?.id && !session.data?.user?.isVerified) {
       setLoggedInAndNotVerified(true);
       setVerifyAccountOpen(true);
     }
-  }, [session, setVerifyAccountOpen]);
+  }, [session, setVerifyAccountOpen, hideVerifyAccountMessage]);
 
   return loggedInAndNotVerified;
 };
 
-const Layout: FC<Props> = ({ children }) => {
-  const loggedInAndNotVerified = useCheckIfAccountIsVerified();
+const Layout: FC<Props> = ({ children, hideVerifyAccountMessage = false }) => {
+  const loggedInAndNotVerified = useCheckIfAccountIsVerified(hideVerifyAccountMessage);
   const { setLoginModalOpen, setSignUpModalOpen, setVerifyAccountOpen } = useContext(ModalsContext);
   const session = useSession();
   const router = useRouter();

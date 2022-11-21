@@ -37,5 +37,3 @@ const ResetPassword: FC = () => {
 };
 
 export default ResetPassword;
-
-//secure your API routes is verified

@@ -40,7 +40,7 @@ const useVerifyAccount = () => {
 const VerifyAccount: FC = () => {
   useVerifyAccount();
   return (
-    <Layout>
+    <Layout hideVerifyAccountMessage={true}>
       <div className="sm:flex sm:items-center">
         <div className="sm:flex-auto">
           <h1 className="text-2xl font-semibold text-gray-700">Verify Account</h1>

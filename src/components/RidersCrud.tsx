@@ -56,7 +56,7 @@ const useRiders = (mutateRiders: KeyedMutator<any>): UseRiders => {
       body: JSON.stringify(rider),
     });
     if (res.ok) {
-      reloadRiders();
+      await reloadRiders();
       setModalOpen(false);
       showNotification('Successfully added!', 'Success');
       setModalOpen(false);
@@ -77,7 +77,7 @@ const useRiders = (mutateRiders: KeyedMutator<any>): UseRiders => {
       body: JSON.stringify(rider),
     });
     if (res.ok) {
-      reloadRiders();
+      await reloadRiders();
       setIsLoading(false);
       showNotification('Successfully updated!', 'Success');
       setModalOpen(false);
@@ -93,7 +93,7 @@ const useRiders = (mutateRiders: KeyedMutator<any>): UseRiders => {
     });
     if (res.ok) {
       showNotification('Successfully deleted!', 'Success');
-      reloadRiders();
+      await reloadRiders();
       setIsLoading(false);
     } else {
       showNotification('Rider is already used in a result!', 'Error');

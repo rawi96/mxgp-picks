@@ -31,7 +31,7 @@ export default class RaceService {
   public async addRace(req: NextApiRequest, res: NextApiResponse): Promise<void | NextApiResponse<any>> {
     const session = await getSession({ req });
 
-    if (!session?.user.isAdmin) {
+    if (!session?.user.isAdmin || !session?.user.isVerified) {
       return res.status(401).json({ message: 'Unauthorized' });
     }
 
@@ -76,7 +76,7 @@ export default class RaceService {
   public async updateRace(req: NextApiRequest, res: NextApiResponse): Promise<void | NextApiResponse<any>> {
     const session = await getSession({ req });
 
-    if (!session?.user.isAdmin) {
+    if (!session?.user.isAdmin || !session?.user.isVerified) {
       return res.status(401).json({ message: 'Unauthorized' });
     }
 
@@ -110,7 +110,7 @@ export default class RaceService {
   public async deleteRace(req: NextApiRequest, res: NextApiResponse): Promise<void | NextApiResponse<any>> {
     const session = await getSession({ req });
 
-    if (!session?.user.isAdmin) {
+    if (!session?.user.isAdmin || !session?.user.isVerified) {
       return res.status(401).json({ message: 'Unauthorized' });
     }
 

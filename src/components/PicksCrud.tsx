@@ -46,7 +46,7 @@ const usePick = (mutateRaces: KeyedMutator<any>): UsePicks => {
       body: JSON.stringify(pick),
     });
     if (res.ok) {
-      reloadRaces();
+      await reloadRaces();
       setModalOpen(false);
       showNotification('Successfully added!', 'Success');
       setIsLoading(false);
@@ -66,7 +66,7 @@ const usePick = (mutateRaces: KeyedMutator<any>): UsePicks => {
       body: JSON.stringify(pick),
     });
     if (res.ok) {
-      reloadRaces();
+      await reloadRaces();
       setModalOpen(false);
       showNotification('Successfully edited!', 'Success');
       setIsLoading(false);

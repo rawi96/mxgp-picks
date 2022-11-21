@@ -57,9 +57,9 @@ const useRaces = (mutateRaces: KeyedMutator<any>): UseRaces => {
       body: JSON.stringify(race),
     });
     if (res.ok) {
+      await reloadRaces();
       setModalOpen(false);
       showNotification('Successfully added!', 'Success');
-      reloadRaces();
       setIsLoading(false);
     } else {
       showNotification('Something went wrong', 'Error');
@@ -77,10 +77,9 @@ const useRaces = (mutateRaces: KeyedMutator<any>): UseRaces => {
       body: JSON.stringify(race),
     });
     if (res.ok) {
-      reloadRaces();
+      await reloadRaces();
       setModalOpen(false);
       showNotification('Successfully updated!', 'Success');
-      reloadRaces();
       setIsLoading(false);
     } else {
       showNotification('Something went wrong', 'Error');
@@ -95,10 +94,9 @@ const useRaces = (mutateRaces: KeyedMutator<any>): UseRaces => {
       method: 'DELETE',
     });
     if (res.ok) {
-      reloadRaces();
+      await reloadRaces();
       setModalOpen(false);
       showNotification('Successfully deleted!', 'Success');
-      reloadRaces();
       setIsLoading(false);
     } else {
       showNotification('Something went wrong!', 'Error');

@@ -27,36 +27,169 @@ export default class ScoreService {
     const picks = await this.pickRepo.getAll();
 
     users.forEach(async (user) => {
-      let scorePerRace: { [key: string]: number } = {};
+      let scorePerRace: { [key: string]: { score: number; createdAt: Date } } = {};
       let score = 0;
       const userPicks = picks.filter((pick) => pick.userId === user.id);
       userPicks.forEach((pick) => {
         const pickedRace = races.find((race) => race.id === pick.raceId);
-        if (pickedRace.raceResult && pickedRace.raceResult.result && pick.result) {
-          if (pickedRace.raceResult.result.first.id === pick.result?.first.id) {
-            scorePerRace = { ...scorePerRace, [pickedRace.id]: (scorePerRace[pickedRace.id] || 0) + 25 };
-            score += 25;
-          }
-          if (pickedRace.raceResult.result.second.id === pick.result?.second.id) {
-            scorePerRace = { ...scorePerRace, [pickedRace.id]: (scorePerRace[pickedRace.id] || 0) + 22 };
-            score += 22;
-          }
-          if (pickedRace.raceResult.result.third.id === pick.result?.third.id) {
-            scorePerRace = { ...scorePerRace, [pickedRace.id]: (scorePerRace[pickedRace.id] || 0) + 20 };
-            score += 20;
-          }
-          if (pickedRace.raceResult.result.fourth.id === pick.result?.fourth.id) {
-            scorePerRace = { ...scorePerRace, [pickedRace.id]: (scorePerRace[pickedRace.id] || 0) + 18 };
-            score += 18;
-          }
-          if (pickedRace.raceResult.result.fifth.id === pick.result?.fifth.id) {
-            scorePerRace = { ...scorePerRace, [pickedRace.id]: (scorePerRace[pickedRace.id] || 0) + 16 };
-            score += 16;
-          }
-          if (pickedRace.raceResult.result.wildcard.id === pick.result?.wildcard.id) {
-            scorePerRace = { ...scorePerRace, [pickedRace.id]: (scorePerRace[pickedRace.id] || 0) + 25 };
-            score += 25;
-          }
+        const raceResultResult = pickedRace?.raceResult?.result;
+        const userPickResult = pick.result;
+        if (!raceResultResult || !userPickResult) {
+          return;
+        }
+        const {
+          first: firstResult,
+          second: secondResult,
+          third: thirdResult,
+          fourth: fourthResult,
+          fifth: fifthResult,
+          wildcard: wildcardResult,
+        } = raceResultResult;
+
+        const {
+          first: firstPick,
+          second: secondPick,
+          third: thirdPick,
+          fourth: fourthPick,
+          fifth: fifthPick,
+          wildcard: wildcardPick,
+        } = userPickResult;
+
+        if (firstPick.id === firstResult.id) {
+          const reward = 25 * pickedRace.factor;
+          scorePerRace = {
+            ...scorePerRace,
+            [pickedRace.id]: { score: (scorePerRace[pickedRace.id]?.score || 0) + reward, createdAt: pick.createdAt },
+          };
+          score += reward;
+        } else if (
+          firstPick.id === secondResult.id ||
+          firstPick.id === thirdResult.id ||
+          firstPick.id === fourthResult.id ||
+          firstPick.id === fifthResult.id
+        ) {
+          const reward = 5 * pickedRace.factor;
+          scorePerRace = {
+            ...scorePerRace,
+            [pickedRace.id]: { score: (scorePerRace[pickedRace.id]?.score || 0) + reward, createdAt: pick.createdAt },
+          };
+
+          score += reward;
+        } else {
+          scorePerRace = {
+            ...scorePerRace,
+            [pickedRace.id]: { score: scorePerRace[pickedRace.id]?.score || 0 + 0, createdAt: pick.createdAt },
+          };
+        }
+
+        if (secondPick.id === secondResult.id) {
+          const reward = 22 * pickedRace.factor;
+          scorePerRace = {
+            ...scorePerRace,
+            [pickedRace.id]: { score: (scorePerRace[pickedRace.id]?.score || 0) + reward, createdAt: pick.createdAt },
+          };
+          score += reward;
+        } else if (
+          secondPick.id === firstResult.id ||
+          secondPick.id === thirdResult.id ||
+          secondPick.id === fourthResult.id ||
+          secondPick.id === fifthResult.id
+        ) {
+          const reward = 5 * pickedRace.factor;
+          scorePerRace = {
+            ...scorePerRace,
+            [pickedRace.id]: { score: (scorePerRace[pickedRace.id]?.score || 0) + reward, createdAt: pick.createdAt },
+          };
+
+          score += reward;
+        } else {
+          scorePerRace = {
+            ...scorePerRace,
+            [pickedRace.id]: { score: scorePerRace[pickedRace.id]?.score || 0 + 0, createdAt: pick.createdAt },
+          };
+        }
+        if (thirdPick.id === thirdResult.id) {
+          const reward = 20 * pickedRace.factor;
+          scorePerRace = {
+            ...scorePerRace,
+            [pickedRace.id]: { score: (scorePerRace[pickedRace.id]?.score || 0) + reward, createdAt: pick.createdAt },
+          };
+          score += reward;
+        } else if (
+          thirdPick.id === firstResult.id ||
+          thirdPick.id === secondResult.id ||
+          thirdPick.id === fourthResult.id ||
+          thirdPick.id === fifthResult.id
+        ) {
+          const reward = 5 * pickedRace.factor;
+          scorePerRace = {
+            ...scorePerRace,
+            [pickedRace.id]: { score: (scorePerRace[pickedRace.id]?.score || 0) + reward, createdAt: pick.createdAt },
+          };
+          score += reward;
+        } else {
+          scorePerRace = {
+            ...scorePerRace,
+            [pickedRace.id]: { score: scorePerRace[pickedRace.id]?.score || 0 + 0, createdAt: pick.createdAt },
+          };
+        }
+        if (fourthPick.id === fourthResult.id) {
+          const reward = 18 * pickedRace.factor;
+          scorePerRace = {
+            ...scorePerRace,
+            [pickedRace.id]: { score: (scorePerRace[pickedRace.id]?.score || 0) + reward, createdAt: pick.createdAt },
+          };
+          score += reward;
+        } else if (
+          fourthPick.id === firstResult.id ||
+          fourthPick.id === secondResult.id ||
+          fourthPick.id === thirdResult.id ||
+          fourthPick.id === fifthResult.id
+        ) {
+          const reward = 5 * pickedRace.factor;
+          scorePerRace = {
+            ...scorePerRace,
+            [pickedRace.id]: { score: (scorePerRace[pickedRace.id]?.score || 0) + reward, createdAt: pick.createdAt },
+          };
+          score += reward;
+        } else {
+          scorePerRace = {
+            ...scorePerRace,
+            [pickedRace.id]: { score: scorePerRace[pickedRace.id]?.score || 0 + 0, createdAt: pick.createdAt },
+          };
+        }
+        if (fifthPick.id === fifthResult.id) {
+          const reward = 16 * pickedRace.factor;
+          scorePerRace = {
+            ...scorePerRace,
+            [pickedRace.id]: { score: (scorePerRace[pickedRace.id]?.score || 0) + reward, createdAt: pick.createdAt },
+          };
+          score += reward;
+        } else if (
+          fifthPick.id === firstResult.id ||
+          fifthPick.id === secondResult.id ||
+          fifthPick.id === thirdResult.id ||
+          fifthPick.id === fourthResult.id
+        ) {
+          const reward = 5 * pickedRace.factor;
+          scorePerRace = {
+            ...scorePerRace,
+            [pickedRace.id]: { score: (scorePerRace[pickedRace.id]?.score || 0) + reward, createdAt: pick.createdAt },
+          };
+          score += reward;
+        } else {
+          scorePerRace = {
+            ...scorePerRace,
+            [pickedRace.id]: { score: scorePerRace[pickedRace.id]?.score || 0 + 0, createdAt: pick.createdAt },
+          };
+        }
+        if (wildcardPick.id === wildcardResult.id) {
+          const reward = 25 * pickedRace.factor;
+          scorePerRace = {
+            ...scorePerRace,
+            [pickedRace.id]: { score: (scorePerRace[pickedRace.id]?.score || 0) + reward, createdAt: pick.createdAt },
+          };
+          score += reward;
         }
       });
       await this.userRepo.update(user.id, { ...user, score, scorePerRace: JSON.stringify(scorePerRace) });

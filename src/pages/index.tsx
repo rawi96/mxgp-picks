@@ -1,3 +1,4 @@
+import { useSession } from 'next-auth/react';
 import { FC } from 'react';
 import Layout from '../components/Layout';
 import PersonalRanking from '../components/PersonalRanking';

@@ -21,7 +21,7 @@ export const getStaticProps: GetStaticProps = async () => {
 
   return {
     props: {
-      serverSideUsers,
+      serverSideUsers: JSON.parse(JSON.stringify(serverSideUsers)),
       serverSideRaces: JSON.parse(JSON.stringify(serverSideRaces)),
     },
     revalidate: 10,

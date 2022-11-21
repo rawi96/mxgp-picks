@@ -23,6 +23,7 @@ model User {
   verifyToken             String?
   resetPasswordToken      String?
   picks                   Pick[]
+  createdAt               DateTime           @default(now())
 }
 
 model Pick {
@@ -33,6 +34,7 @@ model Pick {
   raceId             String             
   result             Result             @relation(fields: [resultId], references: [id], onDelete: Cascade, onUpdate: Cascade)
   resultId           String             @unique
+  createdAt          DateTime           @default(now())
 }
 
 model Rider {

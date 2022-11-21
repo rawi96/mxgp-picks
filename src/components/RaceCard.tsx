@@ -1,8 +1,10 @@
 import { PencilIcon, TrashIcon } from '@heroicons/react/24/outline';
+import { useSession } from 'next-auth/react';
 import Image from 'next/image';
+import Link from 'next/link';
 import { FC } from 'react';
 import { Race } from '../lib/types/types';
-import { dateToString } from '../lib/utils/utils';
+import { dateToString, dateToStringWithTime } from '../lib/utils/utils';
 import Spinner from './Spinner';
 
 type Props = {
@@ -36,10 +38,119 @@ const Placeholder = () => (
   </svg>
 );
 
+const getScoreFor = (
+  type: 'first' | 'second' | 'third' | 'fourth' | 'fifth' | 'wildcard' | 'total',
+  race?: Race,
+  scorePerRace?: string | null
+) => {
+  if (!race?.raceResult) {
+    return 'TODO stats';
+  }
+
+  const firstResult = race.raceResult.result.first.id;
+  const secondResult = race.raceResult.result.second.id;
+  const thirdResult = race.raceResult.result.third.id;
+  const fourthResult = race.raceResult.result.fourth.id;
+  const fifthResult = race.raceResult.result.fifth.id;
+  const wildcardResult = race.raceResult.result.wildcard.id;
+
+  const inTop5bonus = 5 * race.factor;
+
+  switch (type) {
+    case 'first':
+      const firstPick = race.pick?.result?.first.id;
+      if (firstPick === firstResult) {
+        return 25 * race.factor;
+      } else if (
+        firstPick === secondResult ||
+        firstPick === thirdResult ||
+        firstPick === fourthResult ||
+        firstPick === fifthResult
+      ) {
+        return inTop5bonus;
+      }
+      return 0;
+
+    case 'second':
+      const secondPick = race.pick?.result?.second.id;
+      if (secondPick === secondResult) {
+        return 22 * race.factor;
+      } else if (
+        secondPick === firstResult ||
+        secondPick === thirdResult ||
+        secondPick === fourthResult ||
+        secondPick === fifthResult
+      ) {
+        return inTop5bonus;
+      }
+      return 0;
+
+    case 'third':
+      const thirdPick = race.pick?.result?.third.id;
+      if (thirdPick === thirdResult) {
+        return 20 * race.factor;
+      } else if (
+        thirdPick === firstResult ||
+        thirdPick === secondResult ||
+        thirdPick === fourthResult ||
+        thirdPick === fifthResult
+      ) {
+        return inTop5bonus;
+      }
+      return 0;
+
+    case 'fourth':
+      const fourthPick = race.pick?.result?.fourth.id;
+      if (fourthPick === fourthResult) {
+        return 18 * race.factor;
+      } else if (
+        fourthPick === firstResult ||
+        fourthPick === secondResult ||
+        fourthPick === thirdResult ||
+        fourthPick === fifthResult
+      ) {
+        return inTop5bonus;
+      }
+      return 0;
+    case 'fifth':
+      const fifthPick = race.pick?.result?.fifth.id;
+      if (fifthPick === fifthResult) {
+        return 16 * race.factor;
+      } else if (
+        fifthPick === firstResult ||
+        fifthPick === secondResult ||
+        fifthPick === thirdResult ||
+        fifthPick === fourthResult
+      ) {
+        return inTop5bonus;
+      }
+      return 0;
+
+    case 'wildcard':
+      const wildcardPick = race.pick?.result?.wildcard.id;
+      if (wildcardPick === wildcardResult) {
+        const reward = 25 * race.factor;
+        return reward;
+      }
+      return 0;
+
+    case 'total':
+      const json = JSON.parse(scorePerRace || '{}');
+      if (!json) {
+        return 0;
+      }
+      return json[race.id]?.score || 0;
+    default:
+      return 0;
+  }
+};
+
 const RaceCard: FC<Props> = ({ race, index, onEdit, onDelete, onPick, onEditPick, type, isLoadingRaces, isLoading }) => {
+  const session = useSession();
+  const scorePerRace = session.data?.user.scorePerRace;
   return (
     <div className="grid place-items-center">
-      <div className="lg:max-w-lg sm:max-w-sm max-w-xs bg-white rounded-lg shadow-md mb-20">
+      <div className="lg:max-w-lg sm:max-w-sm max-w-xs bg-white rounded-lg shadow-md mb-8">
         <div className="relative">
           {isLoadingRaces ? (
             <Placeholder />
@@ -112,9 +223,7 @@ const RaceCard: FC<Props> = ({ race, index, onEdit, onDelete, onPick, onEditPick
                 <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
                   {race?.pick?.result?.first.firstname} {race?.pick?.result?.first.lastname}
                 </td>
-                <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
-                  {race?.raceResult ? (race?.raceResult.result.first.id === race?.pick?.result?.first.id ? 25 : 0) : 'TODO'}
-                </td>
+                <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">{getScoreFor('first', race)}</td>
               </tr>
               <tr>
                 <td className="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-gray-900 sm:pl-6">2</td>
@@ -126,13 +235,7 @@ const RaceCard: FC<Props> = ({ race, index, onEdit, onDelete, onPick, onEditPick
                 <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
                   {race?.pick?.result?.second.firstname} {race?.pick?.result?.second.lastname}
                 </td>
-                <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
-                  {race?.raceResult
-                    ? race?.raceResult.result.second.id === race?.pick?.result?.second.id
-                      ? 22
-                      : 0
-                    : 'TODO'}
-                </td>
+                <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">{getScoreFor('second', race)}</td>
               </tr>
               <tr>
                 <td className="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-gray-900 sm:pl-6">3</td>
@@ -144,9 +247,7 @@ const RaceCard: FC<Props> = ({ race, index, onEdit, onDelete, onPick, onEditPick
                 <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
                   {race?.pick?.result?.third.firstname} {race?.pick?.result?.third.lastname}
                 </td>
-                <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
-                  {race?.raceResult ? (race?.raceResult.result.third.id === race?.pick?.result?.third.id ? 20 : 0) : 'TODO'}
-                </td>
+                <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">{getScoreFor('third', race)}</td>
               </tr>
               <tr>
                 <td className="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-gray-900 sm:pl-6">4</td>
@@ -158,13 +259,7 @@ const RaceCard: FC<Props> = ({ race, index, onEdit, onDelete, onPick, onEditPick
                 <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
                   {race?.pick?.result?.fourth.firstname} {race?.pick?.result?.fourth.lastname}
                 </td>
-                <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
-                  {race?.raceResult
-                    ? race?.raceResult.result.fourth.id === race?.pick?.result?.fourth.id
-                      ? 18
-                      : 0
-                    : 'TODO'}
-                </td>
+                <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">{getScoreFor('fourth', race)}</td>
               </tr>
               <tr>
                 <td className="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-gray-900 sm:pl-6">5</td>
@@ -176,9 +271,7 @@ const RaceCard: FC<Props> = ({ race, index, onEdit, onDelete, onPick, onEditPick
                 <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
                   {race?.pick?.result?.fifth.firstname} {race?.pick?.result?.fifth.lastname}
                 </td>
-                <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
-                  {race?.raceResult ? (race?.raceResult.result.fifth.id === race?.pick?.result?.fifth.id ? 16 : 0) : 'TODO'}
-                </td>
+                <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">{getScoreFor('fifth', race)}</td>
               </tr>
               <tr>
                 <td className="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-gray-900 sm:pl-6">
@@ -192,13 +285,13 @@ const RaceCard: FC<Props> = ({ race, index, onEdit, onDelete, onPick, onEditPick
                 <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
                   {race?.pick?.result?.wildcard.firstname} {race?.pick?.result?.wildcard.lastname}
                 </td>
-                <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
-                  {race?.raceResult
-                    ? race?.raceResult.result.wildcard.id === race?.pick?.result?.wildcard.id
-                      ? 25
-                      : 0
-                    : 'TODO'}
-                </td>
+                <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">{getScoreFor('wildcard', race)}</td>
+              </tr>
+              <tr>
+                <td className="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-gray-900 sm:pl-6"></td>
+                {race?.raceResult && <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500"></td>}
+                <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500"></td>
+                <td className="whitespace-nowrap px-3 py-4 text-sm font-bold">{getScoreFor('total', race, scorePerRace)}</td>
               </tr>
             </tbody>
           </table>
@@ -285,6 +378,19 @@ const RaceCard: FC<Props> = ({ race, index, onEdit, onDelete, onPick, onEditPick
             )}
           </div>
         </div>
+      </div>
+      <div className="text-center text-sm text-gray-500 mb-16">
+        {race?.raceResult ? (
+          <>
+            Check your{' '}
+            <Link href={`/ranking/${race?.id}`}>
+              <a className="text-gray-700 hover:text-gray-900 underline font-medium cursor-pointer">Ranking</a>
+            </Link>{' '}
+            for this race.
+          </>
+        ) : (
+          <>{race?.pick && <>Picked at: {dateToStringWithTime(race?.pick?.createdAt)}</>}</>
+        )}
       </div>
     </div>
   );

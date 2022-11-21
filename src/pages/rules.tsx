@@ -93,6 +93,7 @@ const Rules: FC = () => {
             },
           },
           pick: {
+            createdAt: new Date(),
             id: '',
             result: {
               id: '',

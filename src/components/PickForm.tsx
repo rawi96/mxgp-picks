@@ -55,6 +55,7 @@ const PickForm: FC<Props> = ({ addPick, editPick, prefilledPick, riders, race, i
         fifth: selectedFifth,
         wildcard: selectedWildcard,
       },
+      createdAt: new Date(),
     };
 
     if (prefilledPick) {

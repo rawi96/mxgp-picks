@@ -113,6 +113,7 @@ export default class PickRepo {
         raceId: pick.raceId,
         userId: pick.userId,
         resultId: pick.resultId,
+        createdAt: pick.createdAt,
       },
       ...this.includeNested,
     });

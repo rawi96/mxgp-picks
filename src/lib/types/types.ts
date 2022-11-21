@@ -10,6 +10,7 @@ export type User = {
   isVerified: boolean;
   verifyToken: string | null;
   resetPasswordToken: string | null;
+  createdAt: Date;
 };
 
 export type Rider = {
@@ -56,4 +57,5 @@ export type Pick = {
   raceId?: string;
   resultId?: string;
   result?: Result;
+  createdAt: Date;
 };

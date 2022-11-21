@@ -30,6 +30,7 @@ export default class PickService {
       userId: session.user.id,
       result,
       resultId: result.id,
+      createdAt: new Date(),
     };
 
     const createdPick = await this.pickRepo.create(newPick);
@@ -68,6 +69,7 @@ export default class PickService {
       userId: session.user.id,
       result,
       resultId: result.id,
+      createdAt: new Date(),
     };
 
     const updatedPick = await this.pickRepo.update(newPick);

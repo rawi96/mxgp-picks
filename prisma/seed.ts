@@ -28,6 +28,7 @@ async function main() {
     isVerified: true,
     verifyToken: null,
     resetPasswordToken: null,
+    createdAt: new Date(),
   };
 
   const roesti: User = {
@@ -41,6 +42,7 @@ async function main() {
     isVerified: false,
     verifyToken: null,
     resetPasswordToken: null,
+    createdAt: new Date(),
   };
 
   const skaterboy: User = {
@@ -54,6 +56,7 @@ async function main() {
     isVerified: false,
     verifyToken: null,
     resetPasswordToken: null,
+    createdAt: new Date(),
   };
 
   const beautyQueen: User = {
@@ -67,6 +70,7 @@ async function main() {
     isVerified: false,
     verifyToken: null,
     resetPasswordToken: null,
+    createdAt: new Date(),
   };
 
   const schuegaKing: User = {
@@ -80,6 +84,7 @@ async function main() {
     isVerified: false,
     verifyToken: null,
     resetPasswordToken: null,
+    createdAt: new Date(),
   };
 
   const ironman: User = {
@@ -93,6 +98,7 @@ async function main() {
     isVerified: false,
     verifyToken: null,
     resetPasswordToken: null,
+    createdAt: new Date(),
   };
 
   const seewer: Rider = {
@@ -137,7 +143,7 @@ async function main() {
     numberplate: 70,
   };
 
-  const Jonass: Rider = {
+  const jonass: Rider = {
     id: uuidv4(),
     firstname: 'Pauls',
     lastname: 'Jonass',
@@ -186,12 +192,12 @@ async function main() {
 
   const resultAdminArgentina = {
     id: uuidv4(),
-    firstId: gajser.id,
-    secondId: seewer.id,
-    thirdId: prado.id,
+    firstId: prado.id,
+    secondId: renaux.id,
+    thirdId: gajser.id,
     fourthId: coldenhoff.id,
-    fifthId: renaux.id,
-    wildcardId: fernandez.id,
+    fifthId: seewer.id,
+    wildcardId: jonass.id,
   };
 
   const resultAdminTrentino = {
@@ -201,7 +207,7 @@ async function main() {
     thirdId: renaux.id,
     fourthId: coldenhoff.id,
     fifthId: fernandez.id,
-    wildcardId: Jonass.id,
+    wildcardId: jonass.id,
   };
 
   const resultAdminPortugal = {
@@ -231,7 +237,7 @@ async function main() {
     thirdId: gajser.id,
     fourthId: coldenhoff.id,
     fifthId: seewer.id,
-    wildcardId: Jonass.id,
+    wildcardId: jonass.id,
   };
 
   const resultSkaterboyArgentina = {
@@ -246,7 +252,7 @@ async function main() {
 
   const resultSkaterboyTrentino = {
     id: uuidv4(),
-    firstId: Jonass.id,
+    firstId: jonass.id,
     secondId: gajser.id,
     thirdId: renaux.id,
     fourthId: coldenhoff.id,
@@ -266,7 +272,7 @@ async function main() {
 
   const resultBeautyQueenTrentino = {
     id: uuidv4(),
-    firstId: Jonass.id,
+    firstId: jonass.id,
     secondId: gajser.id,
     thirdId: renaux.id,
     fourthId: coldenhoff.id,
@@ -279,6 +285,7 @@ async function main() {
     userId: admin.id,
     raceId: argentina.id,
     resultId: resultAdminArgentina.id,
+    createdAt: new Date('2022-10-20'),
   };
 
   const pickAdminTrentino = {
@@ -286,6 +293,7 @@ async function main() {
     userId: admin.id,
     raceId: trentino.id,
     resultId: resultAdminTrentino.id,
+    createdAt: new Date('2022-11-05'),
   };
 
   const pickAdminPortugal = {
@@ -293,6 +301,7 @@ async function main() {
     userId: admin.id,
     raceId: portugal.id,
     resultId: resultAdminPortugal.id,
+    createdAt: new Date('2022-11-10'),
   };
 
   const pickRoestiArgentina = {
@@ -300,6 +309,7 @@ async function main() {
     userId: roesti.id,
     raceId: argentina.id,
     resultId: resultRoestiArgentina.id,
+    createdAt: new Date('2022-10-15'),
   };
 
   const pickRoestiTrentino = {
@@ -307,6 +317,7 @@ async function main() {
     userId: roesti.id,
     raceId: trentino.id,
     resultId: resultRoestiTrentino.id,
+    createdAt: new Date('2022-11-04'),
   };
 
   const pickSkaterboyArgentina = {
@@ -314,6 +325,7 @@ async function main() {
     userId: skaterboy.id,
     raceId: argentina.id,
     resultId: resultSkaterboyArgentina.id,
+    createdAt: new Date('2022-10-13'),
   };
 
   const pickSkaterboyTrentino = {
@@ -321,6 +333,7 @@ async function main() {
     userId: skaterboy.id,
     raceId: trentino.id,
     resultId: resultSkaterboyTrentino.id,
+    createdAt: new Date('2022-11-02'),
   };
 
   const pickSkaterboyPortugal = {
@@ -328,6 +341,7 @@ async function main() {
     userId: skaterboy.id,
     raceId: portugal.id,
     resultId: resultSkaterboyPortugal.id,
+    createdAt: new Date('2022-11-13'),
   };
 
   const pickBeautyQueenTrentino = {
@@ -335,6 +349,7 @@ async function main() {
     userId: beautyQueen.id,
     raceId: trentino.id,
     resultId: resultBeautyQueenTrentino.id,
+    createdAt: new Date('2022-11-03'),
   };
 
   const argentinaResult = {
@@ -349,22 +364,12 @@ async function main() {
 
   const trentinoResult = {
     id: uuidv4(),
-    firstId: Jonass.id,
+    firstId: jonass.id,
     secondId: gajser.id,
     thirdId: renaux.id,
     fourthId: coldenhoff.id,
     fifthId: fernandez.id,
     wildcardId: seewer.id,
-  };
-
-  const portugalResult = {
-    id: uuidv4(),
-    firstId: coldenhoff.id,
-    secondId: renaux.id,
-    thirdId: prado.id,
-    fourthId: gajser.id,
-    fifthId: seewer.id,
-    wildcardId: fernandez.id,
   };
 
   const argentinaRaceResult = {
@@ -379,19 +384,13 @@ async function main() {
     resultId: trentinoResult.id,
   };
 
-  const portugalRaceResult = {
-    id: uuidv4(),
-    raceId: portugal.id,
-    resultId: portugalResult.id,
-  };
-
   await prisma.user.createMany({
     data: [admin, roesti, skaterboy, beautyQueen, ironman, schuegaKing],
     skipDuplicates: true,
   });
 
   await prisma.rider.createMany({
-    data: [seewer, gajser, prado, coldenhoff, renaux, fernandez, Jonass],
+    data: [seewer, gajser, prado, coldenhoff, renaux, fernandez, jonass],
     skipDuplicates: true,
   });
 
@@ -413,7 +412,6 @@ async function main() {
       resultBeautyQueenTrentino,
       argentinaResult,
       trentinoResult,
-      portugalResult,
     ],
     skipDuplicates: true,
   });
@@ -434,7 +432,7 @@ async function main() {
   });
 
   await prisma.raceResult.createMany({
-    data: [argentinaRaceResult, trentinoRaceResult, portugalRaceResult],
+    data: [argentinaRaceResult, trentinoRaceResult],
     skipDuplicates: true,
   });
 }

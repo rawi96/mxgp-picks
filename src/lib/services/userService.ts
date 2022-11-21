@@ -54,6 +54,7 @@ export default class UserService {
       isVerified: false,
       verifyToken: uuidv4(),
       resetPasswordToken: null,
+      createdAt: new Date(),
     };
 
     const url = `${process.env.VERCEL_ENV === 'production' ? 'https://mxgp-picks.com' : process.env.VERCEL_URL}`;
@@ -240,6 +241,7 @@ export default class UserService {
         isAdmin: user?.isAdmin,
         isVerified: user?.isVerified,
         score: user?.score,
+        scorePerRace: user?.scorePerRace,
       },
     };
   }
@@ -253,14 +255,21 @@ export default class UserService {
 
     users = users.map((user) => {
       const scorePerRace = JSON.parse(user.scorePerRace || '{}');
-      const userScoreForRace = scorePerRace[raceId] || 0;
+      const userScoreForRace = scorePerRace[raceId]?.score || 0;
+      const createdAt = scorePerRace[raceId]?.createdAt || 0;
       return {
         ...user,
         score: userScoreForRace,
+        createdAt,
       };
     });
 
-    users = users.sort((a, b) => b.score - a.score);
+    users = users.sort((a, b) => {
+      if (a.score === b.score) {
+        return new Date(a.createdAt).getTime() - new Date(b.createdAt).getTime();
+      }
+      return b.score - a.score;
+    });
 
     return users.map((user, index) => ({
       ...user,

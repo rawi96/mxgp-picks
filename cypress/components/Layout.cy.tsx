@@ -11,6 +11,7 @@ const SESSION: Session = {
     isAdmin: false,
     isVerified: true,
     score: 0,
+    scorePerRace: null,
   },
   expires: '',
 };

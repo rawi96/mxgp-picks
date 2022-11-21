@@ -8,17 +8,6 @@ type Props = {
 };
 
 const UsersTable: FC<Props> = ({ users, indexToMakeLoggedInUserVisible, filterRaceId }) => {
-  const getScoreOrFilteredScore = (user: User) => {
-    if (!filterRaceId) {
-      return user.score;
-    }
-    if (!user.scorePerRace) {
-      return 0;
-    }
-    const scorePerRace: { [key: string]: number } = JSON.parse(user.scorePerRace);
-    return scorePerRace[filterRaceId] ?? 0;
-  };
-
   return (
     <div className="mt-8 flex flex-col">
       <div className="-my-2 -mx-4 overflow-x-auto sm:-mx-6 lg:-mx-8">
@@ -64,7 +53,7 @@ const UsersTable: FC<Props> = ({ users, indexToMakeLoggedInUserVisible, filterRa
                     </td>
                     <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
                       <div className={`text-gray-700 ${indexToMakeLoggedInUserVisible === index && 'font-bold'}`}>
-                        {getScoreOrFilteredScore(user)}
+                        {user.score}
                       </div>
                     </td>
                   </tr>

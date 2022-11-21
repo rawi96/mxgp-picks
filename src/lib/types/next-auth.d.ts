@@ -9,6 +9,7 @@ declare module 'next-auth' {
       isAdmin: boolean;
       isVerified: boolean;
       score: number;
+      scorePerRace: string | null;
     };
   }
 }

@@ -16,6 +16,24 @@ export const dateToString = (date: Date) => {
   return `${dd}.${mm}.${yyyy}`;
 };
 
+export const dateToStringWithTime = (date: Date) => {
+  const castedDate = new Date(date);
+  const dd = castedDate.getDate();
+  const mm = castedDate.getMonth() + 1;
+  const yyyy = castedDate.getFullYear();
+  let hh: string | number = castedDate.getHours();
+  let min: string | number = castedDate.getMinutes();
+
+  if (hh < 10) {
+    hh = '0' + hh;
+  }
+  if (min < 10) {
+    min = '0' + min;
+  }
+
+  return `${dd}.${mm}.${yyyy} - ${hh}:${min}`;
+};
+
 export const dateToStringForNativeInput = (date: Date) => {
   const castedDate = new Date(date);
   const dd = castedDate.getDate();

@@ -53,6 +53,7 @@ export default class UserService {
       scorePerRace: null,
       isVerified: false,
       verifyToken: uuidv4(),
+      resetPasswordToken: null,
     };
 
     const url = `${process.env.VERCEL_ENV === 'production' ? 'https://mxgp-picks.com' : process.env.VERCEL_URL}`;

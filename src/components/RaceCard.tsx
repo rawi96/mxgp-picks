@@ -194,22 +194,26 @@ const RaceCard: FC<Props> = ({ race, index, onEdit, onDelete, onPick, onEditPick
                     Result
                   </th>
                 )}
-                <th
-                  scope="col"
-                  className={`py-3.5 pl-4 pr-3 text-left text-sm font-semibold text-gray-900 sm:pl-6 ${
-                    race?.raceResult ? 'w-1/4' : 'w-1/3'
-                  }`}
-                >
-                  Your Pick
-                </th>
-                <th
-                  scope="col"
-                  className={`py-3.5 pl-4 pr-3 text-left text-sm font-semibold text-gray-900 sm:pl-6 ${
-                    race?.raceResult ? 'w-1/4' : 'w-1/3'
-                  }`}
-                >
-                  {race?.raceResult ? 'Score' : 'Stats'}
-                </th>
+                {type === 'home' && (
+                  <th
+                    scope="col"
+                    className={`py-3.5 pl-4 pr-3 text-left text-sm font-semibold text-gray-900 sm:pl-6 ${
+                      race?.raceResult ? 'w-1/4' : 'w-1/3'
+                    }`}
+                  >
+                    Your Pick
+                  </th>
+                )}
+                {race?.raceResult && type === 'home' && (
+                  <th
+                    scope="col"
+                    className={`py-3.5 pl-4 pr-3 text-left text-sm font-semibold text-gray-900 sm:pl-6 ${
+                      race?.raceResult ? 'w-1/4' : 'w-1/3'
+                    }`}
+                  >
+                    Score
+                  </th>
+                )}
               </tr>
             </thead>
             <tbody className="divide-y divide-gray-200 bg-white">
@@ -220,10 +224,14 @@ const RaceCard: FC<Props> = ({ race, index, onEdit, onDelete, onPick, onEditPick
                     {race?.raceResult?.result.first.firstname} {race?.raceResult?.result.first.lastname}
                   </td>
                 )}
-                <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
-                  {race?.pick?.result?.first.firstname} {race?.pick?.result?.first.lastname}
-                </td>
-                <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">{getScoreFor('first', race)}</td>
+                {type === 'home' && (
+                  <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
+                    {race?.pick?.result?.first.firstname} {race?.pick?.result?.first.lastname}
+                  </td>
+                )}
+                {race?.raceResult && type === 'home' && (
+                  <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">{getScoreFor('first', race)}</td>
+                )}
               </tr>
               <tr>
                 <td className="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-gray-900 sm:pl-6">2</td>
@@ -232,10 +240,14 @@ const RaceCard: FC<Props> = ({ race, index, onEdit, onDelete, onPick, onEditPick
                     {race?.raceResult?.result.second.firstname} {race?.raceResult?.result.second.lastname}
                   </td>
                 )}
-                <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
-                  {race?.pick?.result?.second.firstname} {race?.pick?.result?.second.lastname}
-                </td>
-                <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">{getScoreFor('second', race)}</td>
+                {type === 'home' && (
+                  <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
+                    {race?.pick?.result?.second.firstname} {race?.pick?.result?.second.lastname}
+                  </td>
+                )}
+                {race?.raceResult && type === 'home' && (
+                  <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">{getScoreFor('second', race)}</td>
+                )}
               </tr>
               <tr>
                 <td className="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-gray-900 sm:pl-6">3</td>
@@ -244,10 +256,14 @@ const RaceCard: FC<Props> = ({ race, index, onEdit, onDelete, onPick, onEditPick
                     {race?.raceResult?.result.third.firstname} {race?.raceResult?.result.third.lastname}
                   </td>
                 )}
-                <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
-                  {race?.pick?.result?.third.firstname} {race?.pick?.result?.third.lastname}
-                </td>
-                <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">{getScoreFor('third', race)}</td>
+                {type === 'home' && (
+                  <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
+                    {race?.pick?.result?.third.firstname} {race?.pick?.result?.third.lastname}
+                  </td>
+                )}
+                {race?.raceResult && type === 'home' && (
+                  <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">{getScoreFor('third', race)}</td>
+                )}
               </tr>
               <tr>
                 <td className="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-gray-900 sm:pl-6">4</td>
@@ -256,10 +272,14 @@ const RaceCard: FC<Props> = ({ race, index, onEdit, onDelete, onPick, onEditPick
                     {race?.raceResult?.result.fourth.firstname} {race?.raceResult?.result.fourth.lastname}
                   </td>
                 )}
-                <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
-                  {race?.pick?.result?.fourth.firstname} {race?.pick?.result?.fourth.lastname}
-                </td>
-                <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">{getScoreFor('fourth', race)}</td>
+                {type === 'home' && (
+                  <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
+                    {race?.pick?.result?.fourth.firstname} {race?.pick?.result?.fourth.lastname}
+                  </td>
+                )}
+                {race?.raceResult && type === 'home' && (
+                  <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">{getScoreFor('fourth', race)}</td>
+                )}
               </tr>
               <tr>
                 <td className="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-gray-900 sm:pl-6">5</td>
@@ -268,10 +288,14 @@ const RaceCard: FC<Props> = ({ race, index, onEdit, onDelete, onPick, onEditPick
                     {race?.raceResult?.result.fifth.firstname} {race?.raceResult?.result.fifth.lastname}
                   </td>
                 )}
-                <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
-                  {race?.pick?.result?.fifth.firstname} {race?.pick?.result?.fifth.lastname}
-                </td>
-                <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">{getScoreFor('fifth', race)}</td>
+                {type === 'home' && (
+                  <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
+                    {race?.pick?.result?.fifth.firstname} {race?.pick?.result?.fifth.lastname}
+                  </td>
+                )}
+                {race?.raceResult && type === 'home' && (
+                  <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">{getScoreFor('fifth', race)}</td>
+                )}
               </tr>
               <tr>
                 <td className="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-gray-900 sm:pl-6">
@@ -282,17 +306,25 @@ const RaceCard: FC<Props> = ({ race, index, onEdit, onDelete, onPick, onEditPick
                     {race?.raceResult?.result.wildcard.firstname} {race?.raceResult?.result.wildcard.lastname}
                   </td>
                 )}
-                <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
-                  {race?.pick?.result?.wildcard.firstname} {race?.pick?.result?.wildcard.lastname}
-                </td>
-                <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">{getScoreFor('wildcard', race)}</td>
+                {type === 'home' && (
+                  <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
+                    {race?.pick?.result?.wildcard.firstname} {race?.pick?.result?.wildcard.lastname}
+                  </td>
+                )}
+                {race?.raceResult && type === 'home' && (
+                  <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">{getScoreFor('wildcard', race)}</td>
+                )}
               </tr>
-              <tr>
-                <td className="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-gray-900 sm:pl-6"></td>
-                {race?.raceResult && <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500"></td>}
-                <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500"></td>
-                <td className="whitespace-nowrap px-3 py-4 text-sm font-bold">{getScoreFor('total', race, scorePerRace)}</td>
-              </tr>
+              {race?.raceResult && type === 'home' && (
+                <tr>
+                  <td className="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-gray-900 sm:pl-6"></td>
+                  {race?.raceResult && <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500"></td>}
+                  <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500"></td>
+                  <td className="whitespace-nowrap px-3 py-4 text-sm font-bold">
+                    {getScoreFor('total', race, scorePerRace)}
+                  </td>
+                </tr>
+              )}
             </tbody>
           </table>
           <div className="flex justify-center mt-10">
@@ -380,7 +412,7 @@ const RaceCard: FC<Props> = ({ race, index, onEdit, onDelete, onPick, onEditPick
         </div>
       </div>
       <div className="text-center text-sm text-gray-500 mb-16">
-        {race?.raceResult ? (
+        {race?.raceResult && type === 'home' ? (
           <>
             Check your{' '}
             <Link href={`/ranking/${race?.id}`}>
@@ -389,7 +421,7 @@ const RaceCard: FC<Props> = ({ race, index, onEdit, onDelete, onPick, onEditPick
             for this race.
           </>
         ) : (
-          <>{race?.pick && <>Picked at: {dateToStringWithTime(race?.pick?.createdAt)}</>}</>
+          <>{race?.pick && type === 'home' && <>Picked at: {dateToStringWithTime(race?.pick?.createdAt)}</>}</>
         )}
       </div>
     </div>

@@ -143,4 +143,20 @@ export default class RaceService {
   public async getAllRaces() {
     return this.raceRepo.getAll();
   }
+
+  public async getFavoriteRiderOfAllRaces(req: NextApiRequest, res: NextApiResponse): Promise<void | NextApiResponse<any>> {
+    const allPicks = await this.pickRepo.getAll();
+    const allResults = allPicks.map((pick) => pick.result);
+    const allFirstRiders = allResults.map((result) => result?.first);
+
+    console.log(allFirstRiders);
+
+    const idOfAllFirstRiders = allFirstRiders.map((rider) => rider?.id);
+    const mostOftenFirstRiderId = idOfAllFirstRiders
+      .sort((a, b) => allFirstRiders.filter((v) => v === a).length - allFirstRiders.filter((v) => v === b).length)
+      .pop();
+
+    const favoriteRider = allFirstRiders.find((rider) => rider?.id === mostOftenFirstRiderId);
+    return res.status(200).json(favoriteRider);
+  }
 }

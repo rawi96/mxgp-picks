@@ -1,7 +1,7 @@
 import { FC, useContext, useState } from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { ModalsContext } from '../context/modalsContext';
-import { useShowNotification } from '../lib/utils/utils';
+import { useShowNotification } from '../hooks/useShowNotifications';
 import Spinner from './Spinner';
 
 const INPUT_VALID_CLASSES =

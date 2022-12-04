@@ -17,7 +17,7 @@ export default class RiderRepo {
   }
 
   public async getById(id: string): Promise<Rider | null> {
-    return await await this.prisma.rider.findUnique({
+    return await this.prisma.rider.findUnique({
       where: {
         id,
       },

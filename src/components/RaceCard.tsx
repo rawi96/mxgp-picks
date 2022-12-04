@@ -362,7 +362,7 @@ const RaceCard: FC<Props> = ({ race, index, onEdit, onDelete, onPick, onEditPick
                   ) : (
                     <>
                       <TrashIcon className="-ml-0.5 mr-2 h-4 w-4" aria-hidden="true" />
-                      Edit
+                      Delete
                     </>
                   )}
                 </button>

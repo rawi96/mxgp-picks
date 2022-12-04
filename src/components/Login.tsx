@@ -2,7 +2,7 @@ import { signIn } from 'next-auth/react';
 import { FC, useContext, useState } from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { ModalsContext } from '../context/modalsContext';
-import { useShowNotification } from '../lib/utils/utils';
+import { useShowNotification } from '../hooks/useShowNotifications';
 import Spinner from './Spinner';
 
 const INPUT_VALID_CLASSES =
@@ -45,7 +45,7 @@ const Login: FC = () => {
   };
 
   return (
-    <div className="flex min-h-full flex-col py-8 px-8">
+    <div data-test-id="login" className="flex min-h-full flex-col py-8 px-8">
       <h2 className="text-3xl font-bold tracking-tight text-gray-700">Login</h2>
 
       <div className="mt-8 sm:mx-auto sm:w-full sm:max-w-md">

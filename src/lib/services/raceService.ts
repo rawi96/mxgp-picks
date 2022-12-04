@@ -149,8 +149,6 @@ export default class RaceService {
     const allResults = allPicks.map((pick) => pick.result);
     const allFirstRiders = allResults.map((result) => result?.first);
 
-    console.log(allFirstRiders);
-
     const idOfAllFirstRiders = allFirstRiders.map((rider) => rider?.id);
     const mostOftenFirstRiderId = idOfAllFirstRiders
       .sort((a, b) => allFirstRiders.filter((v) => v === a).length - allFirstRiders.filter((v) => v === b).length)

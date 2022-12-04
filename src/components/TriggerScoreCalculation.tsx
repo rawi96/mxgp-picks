@@ -1,7 +1,7 @@
 import { RocketLaunchIcon } from '@heroicons/react/24/outline';
 import { FC, useState } from 'react';
 import { KeyedMutator } from 'swr';
-import { useShowNotification } from '../lib/utils/utils';
+import { useShowNotification } from '../hooks/useShowNotifications';
 import Spinner from './Spinner';
 
 type Props = {

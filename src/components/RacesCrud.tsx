@@ -1,8 +1,8 @@
 import { PlusIcon } from '@heroicons/react/24/outline';
 import { FC, useState } from 'react';
 import { KeyedMutator } from 'swr';
+import { useShowNotification } from '../hooks/useShowNotifications';
 import { Race, Rider } from '../lib/types/types';
-import { useShowNotification } from '../lib/utils/utils';
 import Modal from './Modal';
 import RaceForm from './RaceForm';
 import RacesCarousel from './RacesCarousel';

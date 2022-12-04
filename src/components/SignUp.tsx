@@ -1,7 +1,8 @@
 import { FC, useContext, useState } from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { ModalsContext } from '../context/modalsContext';
-import { REGEX_EMAIL, REGEX_PASSWORD, useShowNotification } from '../lib/utils/utils';
+import { useShowNotification } from '../hooks/useShowNotifications';
+import { REGEX_EMAIL, REGEX_PASSWORD } from '../lib/utils/utils';
 import Spinner from './Spinner';
 
 const INPUT_VALID_CLASSES =
@@ -52,7 +53,7 @@ const SignUp: FC = () => {
     }
   };
   return (
-    <div className="flex min-h-full flex-col py-8 px-8">
+    <div data-test-id="sign-up" className="flex min-h-full flex-col py-8 px-8">
       <h2 className="text-3xl font-bold tracking-tight text-gray-700">Sign up</h2>
 
       <div className="mt-8 sm:mx-auto sm:w-full sm:max-w-md">

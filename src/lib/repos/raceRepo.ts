@@ -93,7 +93,7 @@ export default class RaceRepo {
     });
   }
 
-  public async create(entity: Race): Promise<Race> {
+  public async create(entity: any): Promise<any> {
     return await this.prisma.race.create({
       data: entity,
     });

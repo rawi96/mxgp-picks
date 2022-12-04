@@ -2,25 +2,25 @@ import { classNames, dateToString, dateToStringForNativeInput, dateToStringWithT
 
 describe('Date Transformations', () => {
   it('should transform a date to a string properly', () => {
-    const date = new Date('1996-03-12T00:00:00.000Z');
+    const date = new Date('1996-03-12T00:00:00');
     const result = dateToString(date);
     expect(result).to.equal('12.3.1996');
   });
 
   it('should transform a date to a string with time properly', () => {
-    const date = new Date('1996-03-12T10:30:15.000Z');
+    const date = new Date('1996-03-12T10:30:15');
     const result = dateToStringWithTime(date);
-    expect(result).to.equal('12.3.1996 - 11:30');
+    expect(result).to.equal('12.3.1996 - 10:30');
   });
 
   it('should transform a date to a string with time properly with leading zeros', () => {
-    const date = new Date('1996-03-12T08:05:59.000Z');
+    const date = new Date('1996-03-12T08:05:59');
     const result = dateToStringWithTime(date);
-    expect(result).to.equal('12.3.1996 - 09:05');
+    expect(result).to.equal('12.3.1996 - 08:05');
   });
 
   it('should transform a date for the native input properly', () => {
-    const date = new Date('1996-03-12T08:05:59.000Z');
+    const date = new Date('1996-03-12T08:05:59');
     const result = dateToStringForNativeInput(date);
     expect(result).to.equal('1996-03-12');
   });

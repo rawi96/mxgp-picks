@@ -1,6 +1,6 @@
 import { signOut } from 'next-auth/react';
 import { FC } from 'react';
-import { useShowNotification } from '../lib/utils/utils';
+import { useShowNotification } from '../hooks/useShowNotifications';
 
 const useVerifyAccountMessage = () => {
   const { showNotification } = useShowNotification();

@@ -2,7 +2,8 @@ import { useRouter } from 'next/router';
 import { Dispatch, FC, SetStateAction, useContext, useState } from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { ModalsContext } from '../context/modalsContext';
-import { REGEX_PASSWORD, useShowNotification } from '../lib/utils/utils';
+import { useShowNotification } from '../hooks/useShowNotifications';
+import { REGEX_PASSWORD } from '../lib/utils/utils';
 import Spinner from './Spinner';
 
 const INPUT_VALID_CLASSES =

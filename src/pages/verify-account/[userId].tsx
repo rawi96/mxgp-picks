@@ -3,7 +3,7 @@ import { useRouter } from 'next/router';
 import { FC, useContext, useEffect } from 'react';
 import Layout from '../../components/Layout';
 import { ModalsContext } from '../../context/modalsContext';
-import { useShowNotification } from '../../lib/utils/utils';
+import { useShowNotification } from '../../hooks/useShowNotifications';
 
 const useVerifyAccount = () => {
   const router = useRouter();

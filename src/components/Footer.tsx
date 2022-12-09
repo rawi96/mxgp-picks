@@ -33,7 +33,7 @@ export const Footer: FC = () => {
       </footer>
 
       <footer className="fixed bottom-0 right-0 left-0 bg-gray-700 px-5 py-3 sm:px-6 -mt-5">
-        <p className="text-center text-base text-gray-400">{new Date().getFullYear()} mxgp-picks.com</p>
+        <p className="text-center text-base text-gray-300">{new Date().getFullYear()} mxgp-picks.com</p>
       </footer>
     </>
   );

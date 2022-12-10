@@ -61,7 +61,7 @@ export default class UserService {
 
     const createdUser = await this.userRepo.create(newUser);
     await this.emailService.sendMail({
-      to: 'raphi.wirth@gmail.com',
+      to: createdUser.email,
       from: 'noreply@mxgp-picks.com',
       subject: 'Welcome to MXGP Picks!',
       text: `Click here to verify your account`,
@@ -155,7 +155,7 @@ export default class UserService {
     const url = `${process.env.VERCEL_ENV === 'production' ? 'https://mxgp-picks.com' : process.env.VERCEL_URL}`;
 
     await this.emailService.sendMail({
-      to: 'raphi.wirth@gmail.com',
+      to: user.email,
       from: 'noreply@mxgp-picks.com',
       subject: 'Welcome to MXGP Picks!',
       text: `Click here to verify your account`,
@@ -184,7 +184,7 @@ export default class UserService {
     await this.userRepo.update(user.id, { ...user, resetPasswordToken });
 
     await this.emailService.sendMail({
-      to: 'raphi.wirth@gmail.com',
+      to: user.email,
       from: 'noreply@mxgp-picks.com',
       subject: 'Password reset',
       text: `Click here to set a new password`,

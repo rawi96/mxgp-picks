@@ -17,13 +17,10 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
   );
 
   try {
-    switch (method) {
-      case 'GET':
-        return await raceService.getFavoriteRiderOfAllRaces(req, res);
-
-      default:
-        return res.status(405).json({ message: 'Method not allowed' });
+    if (method === 'GET') {
+      return await raceService.getFavoriteRiderOfAllRaces(req, res);
     }
+    return res.status(405).json({ message: 'Method not allowed' });
   } catch (error) {
     console.error(error);
     return res.status(500).json({ message: 'Internal server error' });

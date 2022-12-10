@@ -9,14 +9,13 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
   const riderService = new RiderService(new RiderRepo(prisma));
 
   try {
-    switch (method) {
-      case 'GET':
-        return await riderService.getRiders(req, res);
-      case 'POST':
-        return await riderService.addRider(req, res);
-      default:
-        return res.status(405).json({ message: 'Method not allowed' });
+    if (method === 'GET') {
+      return await riderService.getRiders(req, res);
     }
+    if (method === 'POST') {
+      return await riderService.addRider(req, res);
+    }
+    return res.status(405).json({ message: 'Method not allowed' });
   } catch (error) {
     console.error(error);
     return res.status(500).json({ message: 'Internal server error' });

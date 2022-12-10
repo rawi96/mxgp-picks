@@ -12,12 +12,10 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
     new EmailService(require('@sendgrid/mail').setApiKey(process.env.SENDGRID_API_KEY))
   );
   try {
-    switch (method) {
-      case 'POST':
-        return await userService.resendVerificationEmail(req, res);
-      default:
-        return res.status(405).json({ message: 'Method not allowed' });
+    if (method === 'POST') {
+      return await userService.resendVerificationEmail(req, res);
     }
+    return res.status(405).json({ message: 'Method not allowed' });
   } catch (error) {
     console.error(error);
     return res.status(500).json({ message: 'Internal server error' });

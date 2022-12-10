@@ -11,12 +11,11 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
   const scoreService = new ScoreService(new RaceRepo(prisma), new PickRepo(prisma), new UserRepo(prisma));
 
   try {
-    switch (method) {
-      case 'POST':
-        return await scoreService.calculateScore(req, res);
-      default:
-        return res.status(405).json({ message: 'Method not allowed' });
+    if (method === 'POST') {
+      return await scoreService.calculateScore(req, res);
     }
+
+    return res.status(405).json({ message: 'Method not allowed' });
   } catch (error) {
     console.error(error);
     return res.status(500).json({ message: 'Internal server error' });

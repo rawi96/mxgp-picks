@@ -1,14 +1,17 @@
 import { NextApiRequest, NextApiResponse } from 'next';
 import { getSession } from 'next-auth/react';
 import { v4 as uuidv4 } from 'uuid';
+import ResultRepo from '../repos/resultRepo';
 import RiderRepo from '../repos/riderRepo';
 import { Rider } from '../types/types';
 
 export default class RiderService {
   private riderRepo: RiderRepo;
+  private resultRepo: ResultRepo;
 
-  constructor(riderRepo: RiderRepo) {
+  constructor(riderRepo: RiderRepo, resultRepo: ResultRepo) {
     this.riderRepo = riderRepo;
+    this.resultRepo = resultRepo;
   }
 
   public async addRider(req: NextApiRequest, res: NextApiResponse): Promise<void | NextApiResponse<any>> {
@@ -77,6 +80,11 @@ export default class RiderService {
 
     if (!id) {
       return res.status(400).json({ message: 'Missing fields' });
+    }
+
+    const results = await this.resultRepo.getByRiderId(id);
+    if (results.length > 0) {
+      return res.status(400).json({ message: 'Rider has results' });
     }
 
     const deletedRider = await this.riderRepo.delete(id);

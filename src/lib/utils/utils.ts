@@ -1,6 +1,3 @@
-import { useContext } from 'react';
-import { ModalsContext } from '../../context/modalsContext';
-
 export const REGEX_EMAIL = /^\w+([-+.']\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*$/;
 
 // Password must contain minimum 6 and contain at least one numeric digit, one uppercase and one lowercase letter!

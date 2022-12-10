@@ -12,6 +12,33 @@ export default class ResultRepo {
     return await this.prisma.result.findMany();
   }
 
+  public async getByRiderId(id: string): Promise<any[]> {
+    return await this.prisma.result.findMany({
+      where: {
+        OR: [
+          {
+            firstId: id,
+          },
+          {
+            secondId: id,
+          },
+          {
+            thirdId: id,
+          },
+          {
+            fourthId: id,
+          },
+          {
+            fifthId: id,
+          },
+          {
+            wildcardId: id,
+          },
+        ],
+      },
+    });
+  }
+
   public createOrUpdate = async (entity: Result): Promise<any> => {
     const data = {
       id: entity.id,

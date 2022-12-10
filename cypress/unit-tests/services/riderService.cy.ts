@@ -5,7 +5,10 @@ describe('Rider Service', () => {
     const riderRepoStub = {
       getAll: cy.stub().returns([]),
     };
-    const service = new RiderService(riderRepoStub as any);
+    const resultRepoStub = {
+      getAll: cy.stub().returns([]),
+    };
+    const service = new RiderService(riderRepoStub as any, resultRepoStub as any);
     const nextApiRequestStub = {
       query: {},
     };

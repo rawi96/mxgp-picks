@@ -1,4 +1,5 @@
 import type { NextApiRequest, NextApiResponse } from 'next';
+import ResultRepo from '../../../lib/repos/resultRepo';
 import RiderRepo from '../../../lib/repos/riderRepo';
 import RiderService from '../../../lib/services/riderService';
 import prisma from '../../../lib/utils/prisma';
@@ -6,7 +7,7 @@ import prisma from '../../../lib/utils/prisma';
 const handler = async (req: NextApiRequest, res: NextApiResponse) => {
   const { method } = req;
 
-  const riderService = new RiderService(new RiderRepo(prisma));
+  const riderService = new RiderService(new RiderRepo(prisma), new ResultRepo(prisma));
 
   try {
     switch (method) {

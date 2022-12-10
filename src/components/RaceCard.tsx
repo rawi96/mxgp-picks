@@ -17,6 +17,7 @@ type Props = {
   onPick?: (race: Race) => void;
   onEditPick?: (race: Race) => void;
   type: 'admin' | 'home';
+  hardCodedTotal?: number;
 };
 
 const Placeholder = () => (
@@ -145,7 +146,18 @@ const getScoreFor = (
   }
 };
 
-const RaceCard: FC<Props> = ({ race, index, onEdit, onDelete, onPick, onEditPick, type, isLoadingRaces, isLoading }) => {
+const RaceCard: FC<Props> = ({
+  race,
+  index,
+  onEdit,
+  onDelete,
+  onPick,
+  onEditPick,
+  type,
+  isLoadingRaces,
+  isLoading,
+  hardCodedTotal,
+}) => {
   const session = useSession();
   const scorePerRace = session.data?.user.scorePerRace;
   return (
@@ -321,7 +333,7 @@ const RaceCard: FC<Props> = ({ race, index, onEdit, onDelete, onPick, onEditPick
                   {race?.raceResult && <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500"></td>}
                   <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500"></td>
                   <td className="whitespace-nowrap px-3 py-4 text-sm font-bold">
-                    {getScoreFor('total', race, scorePerRace)}
+                    {hardCodedTotal ?? getScoreFor('total', race, scorePerRace)}
                   </td>
                 </tr>
               )}

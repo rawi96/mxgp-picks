@@ -39,4 +39,11 @@ export const dateToStringForNativeInput = (date: Date) => {
   return `${yyyy}-${mm < 10 ? '0' + mm : mm}-${dd < 10 ? '0' + dd : dd}`;
 };
 
+export const isNotYetMidnightBeforeRace = (raceDate: Date) => {
+  const now = new Date();
+  const midnight = new Date(raceDate);
+  midnight.setHours(0, 0, 0, 0);
+  return now < midnight;
+};
+
 export const classNames = (...classes: string[]) => classes.filter(Boolean).join(' ');

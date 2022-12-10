@@ -110,9 +110,9 @@ const Rules: FC = () => {
                 numberplate: 84,
               },
               third: {
-                id: '243',
-                firstname: 'Tim',
-                lastname: 'Gajser',
+                id: '959',
+                firstname: 'Maxime',
+                lastname: 'Renaux',
                 numberplate: 4,
               },
               fourth: {
@@ -122,10 +122,10 @@ const Rules: FC = () => {
                 numberplate: 92,
               },
               fifth: {
-                id: '959',
-                firstname: 'Maxime',
-                lastname: 'Renaux',
-                numberplate: 959,
+                id: '243',
+                firstname: 'Tim',
+                lastname: 'Gajser',
+                numberplate: 243,
               },
               wildcard: {
                 id: '61',

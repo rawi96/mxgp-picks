@@ -4,7 +4,7 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { FC } from 'react';
 import { Race } from '../lib/types/types';
-import { dateToString, dateToStringWithTime } from '../lib/utils/utils';
+import { dateToString, dateToStringWithTime, isNotYetMidnightBeforeRace } from '../lib/utils/utils';
 import Spinner from './Spinner';
 
 type Props = {
@@ -369,7 +369,7 @@ const RaceCard: FC<Props> = ({ race, index, onEdit, onDelete, onPick, onEditPick
               </>
             ) : (
               <>
-                {race && !race?.pick && !race?.raceResult && (
+                {race && !race?.pick && !race?.raceResult && isNotYetMidnightBeforeRace(race.date) && (
                   <button
                     onClick={() => !isLoading && onPick && onPick(race)}
                     type="button"
@@ -386,7 +386,7 @@ const RaceCard: FC<Props> = ({ race, index, onEdit, onDelete, onPick, onEditPick
                     )}
                   </button>
                 )}
-                {race?.pick && !race?.raceResult && (
+                {race?.pick && !race?.raceResult && isNotYetMidnightBeforeRace(race.date) && (
                   <button
                     onClick={() => !isLoading && onEditPick && onEditPick(race)}
                     type="button"

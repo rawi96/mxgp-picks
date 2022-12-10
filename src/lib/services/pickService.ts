@@ -2,13 +2,17 @@ import { NextApiRequest, NextApiResponse } from 'next';
 import { getSession } from 'next-auth/react';
 import { v4 as uuidv4 } from 'uuid';
 import PickRepo from '../repos/pickRepo';
+import RaceRepo from '../repos/raceRepo';
 import { Pick } from '../types/types';
+import { isNotYetMidnightBeforeRace } from '../utils/utils';
 
 export default class PickService {
   private pickRepo: PickRepo;
+  private raceRepo: RaceRepo;
 
-  constructor(pickRepo: PickRepo) {
+  constructor(pickRepo: PickRepo, raceRepo: RaceRepo) {
     this.pickRepo = pickRepo;
+    this.raceRepo = raceRepo;
   }
 
   public async addPick(req: NextApiRequest, res: NextApiResponse): Promise<void | NextApiResponse<any>> {
@@ -22,6 +26,14 @@ export default class PickService {
 
     if (!raceId || !result) {
       return res.status(400).json({ message: 'Missing fields' });
+    }
+
+    const race = await this.raceRepo.getById(raceId);
+
+    if (!isNotYetMidnightBeforeRace(race.date)) {
+      return res.status(400).json({
+        message: 'You can no longer make a pick for this',
+      });
     }
 
     const newPick: Pick = {

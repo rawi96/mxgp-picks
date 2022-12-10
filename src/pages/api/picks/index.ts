@@ -1,12 +1,13 @@
 import type { NextApiRequest, NextApiResponse } from 'next';
 import PickRepo from '../../../lib/repos/pickRepo';
+import RaceRepo from '../../../lib/repos/raceRepo';
 import PickService from '../../../lib/services/pickService';
 import prisma from '../../../lib/utils/prisma';
 
 const handler = async (req: NextApiRequest, res: NextApiResponse) => {
   const { method } = req;
 
-  const pickService = new PickService(new PickRepo(prisma));
+  const pickService = new PickService(new PickRepo(prisma), new RaceRepo(prisma));
 
   try {
     switch (method) {

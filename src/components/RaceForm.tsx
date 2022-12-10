@@ -194,6 +194,7 @@ const RaceForm: FC<Props> = ({ addRace, editRace, prefilledRace, riders, isLoadi
               setSelectedFourth={setSelectedFourth}
               setSelectedFifth={setSelectedFifth}
               setSelectedWildcard={setSelectedWildcard}
+              wildcardPosition={prefilledRace?.wildcardPos}
             />
           )}
           <div>

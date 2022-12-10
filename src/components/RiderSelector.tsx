@@ -17,6 +17,7 @@ type Props = {
   setSelectedFifth: Dispatch<SetStateAction<Rider | null>>;
   setSelectedWildcard: Dispatch<SetStateAction<Rider | null>>;
   isError: boolean;
+  wildcardPosition?: number;
 };
 
 const RiderSelector: FC<Props> = ({
@@ -34,6 +35,7 @@ const RiderSelector: FC<Props> = ({
   setSelectedFifth,
   setSelectedWildcard,
   isError,
+  wildcardPosition,
 }) => {
   const allRidersExceptSelected = riders?.filter(
     (rider) =>
@@ -84,7 +86,7 @@ const RiderSelector: FC<Props> = ({
       />
       <RiderCombobox
         isError={isError}
-        label="Wildcard"
+        label={`Wildcard Position ${wildcardPosition}` || 'Wildcard'}
         riders={allRidersExceptSelected}
         selectedRider={selectedWildcard}
         setSelectedRider={setSelectedWildcard}

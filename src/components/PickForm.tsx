@@ -86,6 +86,7 @@ const PickForm: FC<Props> = ({ addPick, editPick, prefilledPick, riders, race, i
             setSelectedFourth={setSelectedFourth}
             setSelectedFifth={setSelectedFifth}
             setSelectedWildcard={setSelectedWildcard}
+            wildcardPosition={race?.wildcardPos}
           />
           <div>
             <button

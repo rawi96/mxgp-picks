@@ -44,6 +44,7 @@ const Rules: FC = () => {
       <RaceCard
         isLoading={false}
         index={0}
+        hardCodedTotal={71}
         race={{
           id: '',
           title: 'MXGP Switzerland',

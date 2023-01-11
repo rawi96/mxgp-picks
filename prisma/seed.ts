@@ -101,6 +101,34 @@ async function main() {
     createdAt: new Date(),
   };
 
+  const experte: User = {
+    id: uuidv4(),
+    username: 'experte',
+    email: 'experte@gmail.com',
+    password: await hashPassword('zBw_1234'),
+    isAdmin: false,
+    score: 0,
+    scorePerRace: null,
+    isVerified: true,
+    verifyToken: null,
+    resetPasswordToken: null,
+    createdAt: new Date(),
+  };
+
+  const betreuer: User = {
+    id: uuidv4(),
+    username: 'betreuer',
+    email: 'betreuer@gmail.com',
+    password: await hashPassword('zBw_1234'),
+    isAdmin: false,
+    score: 0,
+    scorePerRace: null,
+    isVerified: true,
+    verifyToken: null,
+    resetPasswordToken: null,
+    createdAt: new Date(),
+  };
+
   const seewer: Rider = {
     id: uuidv4(),
     firstname: 'Jeremy',
@@ -150,6 +178,13 @@ async function main() {
     numberplate: 41,
   };
 
+  const febvre: Rider = {
+    id: uuidv4(),
+    firstname: 'Romain',
+    lastname: 'Febvre',
+    numberplate: 3,
+  };
+
   const argentina: Race = {
     id: uuidv4(),
     title: 'MXGP of Patagonia Argentina',
@@ -185,9 +220,9 @@ async function main() {
   const france: Race = {
     id: uuidv4(),
     title: 'MXGP of France',
-    date: new Date('2023-05-21'),
+    date: new Date('2023-01-30'),
     factor: 1,
-    wildcardPos: 11,
+    wildcardPos: 8,
   };
 
   const resultAdminArgentina = {
@@ -385,12 +420,12 @@ async function main() {
   };
 
   await prisma.user.createMany({
-    data: [admin, roesti, skaterboy, beautyQueen, ironman, schuegaKing],
+    data: [admin, roesti, skaterboy, beautyQueen, ironman, schuegaKing, betreuer, experte],
     skipDuplicates: true,
   });
 
   await prisma.rider.createMany({
-    data: [seewer, gajser, prado, coldenhoff, renaux, fernandez, jonass],
+    data: [seewer, gajser, prado, coldenhoff, renaux, fernandez, jonass, febvre],
     skipDuplicates: true,
   });
 

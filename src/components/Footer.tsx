@@ -11,7 +11,7 @@ export const Footer: FC = () => {
 
   return (
     <>
-      <footer className="lg:rounded-lg bg-gray-50 px-5 py-6 shadow sm:px-6 -mt-5">
+      <footer className="lg:rounded-lg bg-red-50 px-5 py-6 shadow sm:px-6 -mt-5">
         <div className="mx-auto max-w-7xl overflow-hidden pt-20">
           <div className="-mx-5 -my-2 flex flex-wrap justify-center" aria-label="Footer">
             <Link href="/">
@@ -24,7 +24,7 @@ export const Footer: FC = () => {
             {sessionNavigation.map((item) => (
               <div key={item.name} className="px-5 py-2">
                 <Link href={item.href}>
-                  <a className="text-base text-gray-500 hover:text-gray-700">{item.name}</a>
+                  <a className="text-base text-red-500 hover:text-red-700">{item.name}</a>
                 </Link>
               </div>
             ))}
@@ -32,8 +32,8 @@ export const Footer: FC = () => {
         </div>
       </footer>
 
-      <footer className="fixed bottom-0 right-0 left-0 bg-gray-700 px-5 py-3 sm:px-6 -mt-5">
-        <p className="text-center text-base text-gray-300">{new Date().getFullYear()} mxgp-picks.com</p>
+      <footer className="fixed bottom-0 right-0 left-0 bg-red-700 px-5 py-3 sm:px-6 -mt-5">
+        <p className="text-center text-base text-red-300">{new Date().getFullYear()} mxgp-picks.com</p>
       </footer>
     </>
   );

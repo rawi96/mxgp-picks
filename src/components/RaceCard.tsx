@@ -185,12 +185,12 @@ const RaceCard: FC<Props> = ({
           </div>
         </div>
         <div className="p-5 overflow-auto">
-          <table className="divide-y divide-gray-300 m-auto w-full">
-            <thead className="bg-gray-50">
+          <table className="divide-y divide-red-300 m-auto w-full">
+            <thead className="bg-red-50">
               <tr>
                 <th
                   scope="col"
-                  className={`py-3.5 pl-4 pr-3 text-left text-sm font-semibold text-gray-900 sm:pl-6 ${
+                  className={`py-3.5 pl-4 pr-3 text-left text-sm font-semibold text-red-900 sm:pl-6 ${
                     race?.raceResult ? 'w-1/4' : 'w-1/3'
                   }`}
                 >
@@ -199,7 +199,7 @@ const RaceCard: FC<Props> = ({
                 {race?.raceResult && (
                   <th
                     scope="col"
-                    className={`py-3.5 pl-4 pr-3 text-left text-sm font-semibold text-gray-900 sm:pl-6 ${
+                    className={`py-3.5 pl-4 pr-3 text-left text-sm font-semibold text-red-900 sm:pl-6 ${
                       race?.raceResult ? 'w-1/4' : 'w-1/3'
                     }`}
                   >
@@ -209,7 +209,7 @@ const RaceCard: FC<Props> = ({
                 {type === 'home' && (
                   <th
                     scope="col"
-                    className={`py-3.5 pl-4 pr-3 text-left text-sm font-semibold text-gray-900 sm:pl-6 ${
+                    className={`py-3.5 pl-4 pr-3 text-left text-sm font-semibold text-red-900 sm:pl-6 ${
                       race?.raceResult ? 'w-1/4' : 'w-1/3'
                     }`}
                   >
@@ -219,7 +219,7 @@ const RaceCard: FC<Props> = ({
                 {race?.raceResult && type === 'home' && (
                   <th
                     scope="col"
-                    className={`py-3.5 pl-4 pr-3 text-left text-sm font-semibold text-gray-900 sm:pl-6 ${
+                    className={`py-3.5 pl-4 pr-3 text-left text-sm font-semibold text-red-900 sm:pl-6 ${
                       race?.raceResult ? 'w-1/4' : 'w-1/3'
                     }`}
                   >
@@ -228,110 +228,110 @@ const RaceCard: FC<Props> = ({
                 )}
               </tr>
             </thead>
-            <tbody className="divide-y divide-gray-200 bg-white">
+            <tbody className="divide-y divide-red-200 bg-white">
               <tr>
-                <td className="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-gray-900 sm:pl-6">1</td>
+                <td className="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-red-900 sm:pl-6">1</td>
                 {race?.raceResult && (
-                  <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
+                  <td className="whitespace-nowrap px-3 py-4 text-sm text-red-500">
                     {race?.raceResult?.result.first.firstname} {race?.raceResult?.result.first.lastname}
                   </td>
                 )}
                 {type === 'home' && (
-                  <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
+                  <td className="whitespace-nowrap px-3 py-4 text-sm text-red-500">
                     {race?.pick?.result?.first.firstname} {race?.pick?.result?.first.lastname}
                   </td>
                 )}
                 {race?.raceResult && type === 'home' && (
-                  <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">{getScoreFor('first', race)}</td>
+                  <td className="whitespace-nowrap px-3 py-4 text-sm text-red-500">{getScoreFor('first', race)}</td>
                 )}
               </tr>
               <tr>
-                <td className="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-gray-900 sm:pl-6">2</td>
+                <td className="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-red-900 sm:pl-6">2</td>
                 {race?.raceResult && (
-                  <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
+                  <td className="whitespace-nowrap px-3 py-4 text-sm text-red-500">
                     {race?.raceResult?.result.second.firstname} {race?.raceResult?.result.second.lastname}
                   </td>
                 )}
                 {type === 'home' && (
-                  <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
+                  <td className="whitespace-nowrap px-3 py-4 text-sm text-red-500">
                     {race?.pick?.result?.second.firstname} {race?.pick?.result?.second.lastname}
                   </td>
                 )}
                 {race?.raceResult && type === 'home' && (
-                  <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">{getScoreFor('second', race)}</td>
+                  <td className="whitespace-nowrap px-3 py-4 text-sm text-red-500">{getScoreFor('second', race)}</td>
                 )}
               </tr>
               <tr>
-                <td className="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-gray-900 sm:pl-6">3</td>
+                <td className="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-red-900 sm:pl-6">3</td>
                 {race?.raceResult && (
-                  <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
+                  <td className="whitespace-nowrap px-3 py-4 text-sm text-red-500">
                     {race?.raceResult?.result.third.firstname} {race?.raceResult?.result.third.lastname}
                   </td>
                 )}
                 {type === 'home' && (
-                  <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
+                  <td className="whitespace-nowrap px-3 py-4 text-sm text-red-500">
                     {race?.pick?.result?.third.firstname} {race?.pick?.result?.third.lastname}
                   </td>
                 )}
                 {race?.raceResult && type === 'home' && (
-                  <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">{getScoreFor('third', race)}</td>
+                  <td className="whitespace-nowrap px-3 py-4 text-sm text-red-500">{getScoreFor('third', race)}</td>
                 )}
               </tr>
               <tr>
-                <td className="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-gray-900 sm:pl-6">4</td>
+                <td className="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-red-900 sm:pl-6">4</td>
                 {race?.raceResult && (
-                  <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
+                  <td className="whitespace-nowrap px-3 py-4 text-sm text-red-500">
                     {race?.raceResult?.result.fourth.firstname} {race?.raceResult?.result.fourth.lastname}
                   </td>
                 )}
                 {type === 'home' && (
-                  <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
+                  <td className="whitespace-nowrap px-3 py-4 text-sm text-red-500">
                     {race?.pick?.result?.fourth.firstname} {race?.pick?.result?.fourth.lastname}
                   </td>
                 )}
                 {race?.raceResult && type === 'home' && (
-                  <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">{getScoreFor('fourth', race)}</td>
+                  <td className="whitespace-nowrap px-3 py-4 text-sm text-red-500">{getScoreFor('fourth', race)}</td>
                 )}
               </tr>
               <tr>
-                <td className="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-gray-900 sm:pl-6">5</td>
+                <td className="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-red-900 sm:pl-6">5</td>
                 {race?.raceResult && (
-                  <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
+                  <td className="whitespace-nowrap px-3 py-4 text-sm text-red-500">
                     {race?.raceResult?.result.fifth.firstname} {race?.raceResult?.result.fifth.lastname}
                   </td>
                 )}
                 {type === 'home' && (
-                  <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
+                  <td className="whitespace-nowrap px-3 py-4 text-sm text-red-500">
                     {race?.pick?.result?.fifth.firstname} {race?.pick?.result?.fifth.lastname}
                   </td>
                 )}
                 {race?.raceResult && type === 'home' && (
-                  <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">{getScoreFor('fifth', race)}</td>
+                  <td className="whitespace-nowrap px-3 py-4 text-sm text-red-500">{getScoreFor('fifth', race)}</td>
                 )}
               </tr>
               <tr>
-                <td className="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-gray-900 sm:pl-6">
+                <td className="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-red-900 sm:pl-6">
                   {race?.wildcardPos}
                 </td>
                 {race?.raceResult && (
-                  <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
+                  <td className="whitespace-nowrap px-3 py-4 text-sm text-red-500">
                     {race?.raceResult?.result.wildcard.firstname} {race?.raceResult?.result.wildcard.lastname}
                   </td>
                 )}
                 {type === 'home' && (
-                  <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
+                  <td className="whitespace-nowrap px-3 py-4 text-sm text-red-500">
                     {race?.pick?.result?.wildcard.firstname} {race?.pick?.result?.wildcard.lastname}
                   </td>
                 )}
                 {race?.raceResult && type === 'home' && (
-                  <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">{getScoreFor('wildcard', race)}</td>
+                  <td className="whitespace-nowrap px-3 py-4 text-sm text-red-500">{getScoreFor('wildcard', race)}</td>
                 )}
               </tr>
               {race?.raceResult && type === 'home' && (
                 <tr>
-                  <td className="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-gray-900 sm:pl-6"></td>
-                  {race?.raceResult && <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500"></td>}
-                  <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500"></td>
+                  <td className="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-red-900 sm:pl-6"></td>
+                  {race?.raceResult && <td className="whitespace-nowrap px-3 py-4 text-sm text-red-500"></td>}
+                  <td className="whitespace-nowrap px-3 py-4 text-sm text-red-500"></td>
                   <td className="whitespace-nowrap px-3 py-4 text-sm font-bold">
                     {hardCodedTotal ?? getScoreFor('total', race, scorePerRace)}
                   </td>
@@ -346,7 +346,7 @@ const RaceCard: FC<Props> = ({
                   onClick={() => !isLoading && onEdit && onEdit(race)}
                   type="button"
                   disabled={isLoading}
-                  className="inline-flex justify-center mr-2 w-full items-center rounded-md border border-transparent bg-gray-700 px-3 py-2 text-sm font-medium leading-4 text-white shadow-sm hover:bg-gray-800 focus:outline-none focus:ring-2 focus:ring-gray-500 focus:ring-offset-2"
+                  className="inline-flex justify-center mr-2 w-full items-center rounded-md border border-transparent bg-red-700 px-3 py-2 text-sm font-medium leading-4 text-white shadow-sm hover:bg-red-800 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2"
                 >
                   {isLoading ? (
                     <>
@@ -364,7 +364,7 @@ const RaceCard: FC<Props> = ({
                   onClick={() => !isLoading && onDelete && onDelete(race?.id)}
                   type="button"
                   disabled={isLoading}
-                  className="inline-flex justify-center ml-2 w-full items-center rounded-md border border-transparent bg-red-600 px-3 py-2 text-sm font-medium leading-4 text-white shadow-sm hover:bg-red-900 focus:outline-none focus:ring-2 focus:ring-gray-500 focus:ring-offset-2"
+                  className="inline-flex justify-center ml-2 w-full items-center rounded-md border border-transparent bg-red-600 px-3 py-2 text-sm font-medium leading-4 text-white shadow-sm hover:bg-red-900 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2"
                 >
                   {isLoading ? (
                     <>
@@ -386,7 +386,7 @@ const RaceCard: FC<Props> = ({
                     onClick={() => !isLoading && onPick && onPick(race)}
                     type="button"
                     disabled={isLoading}
-                    className="inline-flex justify-center mr-2 w-full items-center rounded-md border border-transparent bg-gray-700 px-3 py-2 text-sm font-medium leading-4 text-white shadow-sm hover:bg-gray-800 focus:outline-none focus:ring-2 focus:ring-gray-500 focus:ring-offset-2"
+                    className="inline-flex justify-center mr-2 w-full items-center rounded-md border border-transparent bg-red-700 px-3 py-2 text-sm font-medium leading-4 text-white shadow-sm hover:bg-red-800 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2"
                   >
                     {isLoading ? (
                       <>
@@ -403,7 +403,7 @@ const RaceCard: FC<Props> = ({
                     onClick={() => !isLoading && onEditPick && onEditPick(race)}
                     type="button"
                     disabled={isLoading}
-                    className="inline-flex justify-center mr-2 w-full items-center rounded-md border border-transparent bg-gray-700 px-3 py-2 text-sm font-medium leading-4 text-white shadow-sm hover:bg-gray-800 focus:outline-none focus:ring-2 focus:ring-gray-500 focus:ring-offset-2"
+                    className="inline-flex justify-center mr-2 w-full items-center rounded-md border border-transparent bg-red-700 px-3 py-2 text-sm font-medium leading-4 text-white shadow-sm hover:bg-red-800 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2"
                   >
                     {isLoading ? (
                       <>
@@ -423,12 +423,12 @@ const RaceCard: FC<Props> = ({
           </div>
         </div>
       </div>
-      <div className="text-center text-sm text-gray-500 mb-16">
+      <div className="text-center text-sm text-red-500 mb-16">
         {race?.raceResult && type === 'home' ? (
           <>
             Check your{' '}
             <Link href={`/ranking/${race?.id}`}>
-              <a className="text-gray-700 hover:text-gray-900 underline font-medium cursor-pointer">Ranking</a>
+              <a className="text-red-700 hover:text-red-900 underline font-medium cursor-pointer">Ranking</a>
             </Link>{' '}
             for this race.
           </>

@@ -5,7 +5,7 @@ import { Rider } from '../lib/types/types';
 import { classNames } from '../lib/utils/utils';
 
 const INPUT_VALID_CLASSES =
-  'w-full rounded-md border border-gray-300 bg-white py-2 pl-3 pr-10 shadow-sm focus:border-gray-500 focus:outline-none focus:ring-1 focus:ring-gray-500 sm:text-sm';
+  'w-full rounded-md border border-red-300 bg-white py-2 pl-3 pr-10 shadow-sm focus:border-red-500 focus:outline-none focus:ring-1 focus:ring-red-500 sm:text-sm';
 const INPUT_INVALID_CLASSES =
   'w-full rounded-md border border-red-300 bg-white py-2 pl-3 pr-10 shadow-sm focus:border-red-500 focus:outline-none focus:ring-1 focus:ring-red-500 sm:text-sm';
 
@@ -35,7 +35,7 @@ const RiderCombobox: FC<Props> = ({ riders, selectedRider, setSelectedRider, lab
   return (
     <Combobox as="div" value={selectedRider} onChange={setSelectedRider}>
       <div className="flex justify-between">
-        <Combobox.Label className="block text-sm font-medium text-gray-700">{label}</Combobox.Label>
+        <Combobox.Label className="block text-sm font-medium text-red-700">{label}</Combobox.Label>
         {selectedRider && (
           <div
             tabIndex={0}
@@ -45,7 +45,7 @@ const RiderCombobox: FC<Props> = ({ riders, selectedRider, setSelectedRider, lab
                 setSelectedRider(null);
               }
             }}
-            className="mr-1 block text-sm font-medium rounded text-red-600 cursor-pointer hover:text-red-900 focus:outline-none focus:ring-2 focus:ring-gray-500"
+            className="mr-1 block text-sm font-medium rounded text-red-600 cursor-pointer hover:text-red-900 focus:outline-none focus:ring-2 focus:ring-red-500"
           >
             Clear
           </div>
@@ -60,7 +60,7 @@ const RiderCombobox: FC<Props> = ({ riders, selectedRider, setSelectedRider, lab
         <Combobox.Button className="absolute inset-y-0 right-0 flex items-center rounded-r-md px-2">
           <ChevronDownIcon
             tabIndex={0}
-            className="h-5 w-5 text-gray-400 rounded focus:outline-none focus:ring-2 focus:ring-gray-500"
+            className="h-5 w-5 text-red-400 rounded focus:outline-none focus:ring-2 focus:ring-red-500"
             aria-hidden="true"
           />
         </Combobox.Button>
@@ -74,7 +74,7 @@ const RiderCombobox: FC<Props> = ({ riders, selectedRider, setSelectedRider, lab
                 className={({ active }) =>
                   classNames(
                     'relative cursor-default select-none py-2 pl-8 pr-4',
-                    active ? 'bg-gray-600 text-white' : 'text-gray-900'
+                    active ? 'bg-red-600 text-white' : 'text-red-900'
                   )
                 }
               >
@@ -91,7 +91,7 @@ const RiderCombobox: FC<Props> = ({ riders, selectedRider, setSelectedRider, lab
                       <span
                         className={classNames(
                           'absolute inset-y-0 left-0 flex items-center pl-1.5',
-                          active ? 'text-white' : 'text-gray-600'
+                          active ? 'text-white' : 'text-red-600'
                         )}
                       >
                         <CheckIcon className="h-5 w-5" aria-hidden="true" />

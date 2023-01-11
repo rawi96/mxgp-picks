@@ -27,7 +27,7 @@ const VerifyAccountMessage: FC = () => {
   const resendMail = useVerifyAccountMessage();
   return (
     <div className="flex min-h-full flex-col py-8 px-8">
-      <h2 className="text-3xl font-bold tracking-tight text-gray-700">Verify your account!</h2>
+      <h2 className="text-3xl font-bold tracking-tight text-red-700">Verify your account!</h2>
 
       <div className="mt-8 sm:mx-auto sm:w-full sm:max-w-md">
         <div className="flex items-center justify-between">
@@ -40,13 +40,13 @@ const VerifyAccountMessage: FC = () => {
               onClick={() => {
                 resendMail();
               }}
-              className="font-medium text-gray-700 hover:text-gray-900 underline cursor-pointer block"
+              className="font-medium text-red-700 hover:text-red-900 underline cursor-pointer block"
             >
               Resend verification email
             </a>
             <a
               onClick={() => signOut()}
-              className="font-medium text-gray-700 hover:text-gray-900 underline cursor-pointer block mt-8"
+              className="font-medium text-red-700 hover:text-red-900 underline cursor-pointer block mt-8"
             >
               Logout
             </a>

@@ -6,7 +6,7 @@ import { REGEX_EMAIL, REGEX_PASSWORD } from '../lib/utils/utils';
 import Spinner from './Spinner';
 
 const INPUT_VALID_CLASSES =
-  'block w-full appearance-none rounded-md border border-gray-300 px-3 py-2 placeholder-gray-400 shadow-sm focus:border-gray-500 focus:outline-none focus:ring-gray-500 sm:text-sm';
+  'block w-full appearance-none rounded-md border border-red-300 px-3 py-2 placeholder-red-400 shadow-sm focus:border-red-500 focus:outline-none focus:ring-red-500 sm:text-sm';
 const INPUT_INVALID_CLASSES =
   'block w-full rounded-md border-red-300 text-red-900 placeholder-red-300 focus:border-red-500 focus:outline-none focus:ring-red-500 sm:text-sm';
 
@@ -54,12 +54,12 @@ const SignUp: FC = () => {
   };
   return (
     <div data-test-id="sign-up" className="flex min-h-full flex-col py-8 px-8">
-      <h2 className="text-3xl font-bold tracking-tight text-gray-700">Sign up</h2>
+      <h2 className="text-3xl font-bold tracking-tight text-red-700">Sign up</h2>
 
       <div className="mt-8 sm:mx-auto sm:w-full sm:max-w-md">
         <form className="space-y-6" onSubmit={handleSubmit(onSubmit)}>
           <div>
-            <label htmlFor="email" className="block text-sm font-medium text-gray-700">
+            <label htmlFor="email" className="block text-sm font-medium text-red-700">
               Email address
             </label>
             <div className="mt-1">
@@ -79,7 +79,7 @@ const SignUp: FC = () => {
             </div>
           </div>
           <div>
-            <label htmlFor="username" className="block text-sm font-medium text-gray-700">
+            <label htmlFor="username" className="block text-sm font-medium text-red-700">
               Username
             </label>
             <div className="mt-1">
@@ -99,7 +99,7 @@ const SignUp: FC = () => {
           </div>
 
           <div>
-            <label htmlFor="password" className="block text-sm font-medium text-gray-700">
+            <label htmlFor="password" className="block text-sm font-medium text-red-700">
               Password
             </label>
             <div className="mt-1">
@@ -121,7 +121,7 @@ const SignUp: FC = () => {
           </div>
 
           <div>
-            <label htmlFor="password" className="block text-sm font-medium text-gray-700">
+            <label htmlFor="password" className="block text-sm font-medium text-red-700">
               Confirm Password
             </label>
             <div className="mt-1">
@@ -154,7 +154,7 @@ const SignUp: FC = () => {
                   setSignUpModalOpen(false);
                   setLoginModalOpen(true);
                 }}
-                className="font-medium text-gray-700 hover:text-gray-900 underline cursor-pointer"
+                className="font-medium text-red-700 hover:text-red-900 underline cursor-pointer"
               >
                 Already an Account?
               </a>
@@ -165,7 +165,7 @@ const SignUp: FC = () => {
             <button
               disabled={loading}
               type="submit"
-              className="flex w-full justify-center rounded-md border border-transparent bg-gray-700 py-2 px-4 text-sm font-medium text-white shadow-sm hover:bg-gray-800 focus:outline-none focus:ring-2 focus:ring-gray-500 focus:ring-offset-2"
+              className="flex w-full justify-center rounded-md border border-transparent bg-red-700 py-2 px-4 text-sm font-medium text-white shadow-sm hover:bg-red-800 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2"
             >
               {loading ? (
                 <>

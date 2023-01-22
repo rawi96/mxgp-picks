@@ -12,6 +12,7 @@ describe('/sign up and login properly', () => {
     cy.get(LAYOUT_SELECTOR).contains('Sign up').click();
     cy.get(SIGN_UP_SELECTOR).should('exist');
     cy.get(SIGN_UP_SELECTOR).contains('Email').type(`${randomId}@email.com`);
+
     cy.get(SIGN_UP_SELECTOR).contains('Username').type(`user#${randomId}`);
     cy.get(SIGN_UP_SELECTOR).contains('Password').type('98t3q89eGEargRREGQ*ç');
     cy.get('#confirmPassword').type('98t3q89eGEargRREGQ*ç');

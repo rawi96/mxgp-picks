@@ -15,7 +15,7 @@ type Props = {
 };
 
 const LeftArrow = () => (
-  <span className="inline-flex h-8 w-8 items-center justify-center rounded-full bg-gray-700 group-hover:bg-gray-800 group-focus:ring-2 group-focus:ring-gray-500 group-focus:ring-offset-2 sm:h-10 sm:w-10">
+  <span className="inline-flex h-8 w-8 items-center justify-center rounded-full bg-red-700 group-hover:bg-red-800 group-focus:ring-2 group-focus:ring-red-500 group-focus:ring-offset-2 sm:h-10 sm:w-10">
     <svg
       stroke="currentColor"
       fill="none"
@@ -34,7 +34,7 @@ const LeftArrow = () => (
 const RightArrow = () => (
   <span
     id="right-arrow"
-    className="inline-flex h-8 w-8 items-center justify-center rounded-full bg-gray-700 group-hover:bg-gray-800 group-focus:ring-2 group-focus:ring-gray-500 group-focus:ring-offset-2 sm:h-10 sm:w-10"
+    className="inline-flex h-8 w-8 items-center justify-center rounded-full bg-red-700 group-hover:bg-red-800 group-focus:ring-2 group-focus:ring-red-500 group-focus:ring-offset-2 sm:h-10 sm:w-10"
   >
     <svg
       stroke="currentColor"

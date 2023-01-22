@@ -13,25 +13,25 @@ const UsersTable: FC<Props> = ({ users, indexToMakeLoggedInUserVisible, filterRa
       <div className="-my-2 -mx-4 overflow-x-auto sm:-mx-6 lg:-mx-8">
         <div className="inline-block min-w-full py-2 align-middle md:px-6 lg:px-8">
           <div className="overflow-hidden shadow ring-1 ring-black ring-opacity-5 md:rounded-lg">
-            <table className="min-w-full divide-y divide-gray-300">
-              <thead className="bg-gray-50">
+            <table className="min-w-full divide-y divide-red-300">
+              <thead className="bg-red-50">
                 <tr>
-                  <th scope="col" className="py-3.5 pl-4 pr-3 text-left text-sm font-semibold text-gray-700 sm:pl-6">
+                  <th scope="col" className="py-3.5 pl-4 pr-3 text-left text-sm font-semibold text-red-700 sm:pl-6">
                     Position
                   </th>
-                  <th scope="col" className="px-3 py-3.5 text-left text-sm font-semibold text-gray-700">
+                  <th scope="col" className="px-3 py-3.5 text-left text-sm font-semibold text-red-700">
                     Username
                   </th>
-                  <th scope="col" className="px-3 py-3.5 text-left text-sm font-semibold text-gray-700">
+                  <th scope="col" className="px-3 py-3.5 text-left text-sm font-semibold text-red-700">
                     Score
                   </th>
                 </tr>
               </thead>
-              <tbody className="divide-y divide-gray-200 bg-white">
+              <tbody className="divide-y divide-red-200 bg-white">
                 {users?.map((user, index) => (
                   <tr key={user.id}>
-                    <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
-                      <div className={`text-gray-700 ${indexToMakeLoggedInUserVisible === index && 'font-bold'}`}>
+                    <td className="whitespace-nowrap px-3 py-4 text-sm text-red-500">
+                      <div className={`text-red-700 ${indexToMakeLoggedInUserVisible === index && 'font-bold'}`}>
                         {user.position}
                       </div>
                     </td>
@@ -45,14 +45,14 @@ const UsersTable: FC<Props> = ({ users, indexToMakeLoggedInUserVisible, filterRa
                           </span>
                         </div>
                         <div className="ml-4">
-                          <div className={`text-gray-700 ${indexToMakeLoggedInUserVisible === index && 'font-bold'}`}>
+                          <div className={`text-red-700 ${indexToMakeLoggedInUserVisible === index && 'font-bold'}`}>
                             {user.username}
                           </div>
                         </div>
                       </div>
                     </td>
-                    <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
-                      <div className={`text-gray-700 ${indexToMakeLoggedInUserVisible === index && 'font-bold'}`}>
+                    <td className="whitespace-nowrap px-3 py-4 text-sm text-red-500">
+                      <div className={`text-red-700 ${indexToMakeLoggedInUserVisible === index && 'font-bold'}`}>
                         {user.score}
                       </div>
                     </td>

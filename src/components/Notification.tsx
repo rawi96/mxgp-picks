@@ -41,13 +41,13 @@ const Notification: FC = () => {
                     )}
                   </div>
                   <div className="ml-3 w-0 flex-1 pt-0.5">
-                    <p className="text-sm font-medium text-gray-900">{notificationType}</p>
-                    <p className="mt-1 text-sm text-gray-500">{notificationModalMessage}</p>
+                    <p className="text-sm font-medium text-red-900">{notificationType}</p>
+                    <p className="mt-1 text-sm text-red-500">{notificationModalMessage}</p>
                   </div>
                   <div className="ml-4 flex flex-shrink-0">
                     <button
                       type="button"
-                      className="inline-flex rounded-md bg-white text-gray-400 hover:text-gray-500 focus:outline-none focus:ring-2 focus:ring-gray-500 focus:ring-offset-2"
+                      className="inline-flex rounded-md bg-white text-red-400 hover:text-red-500 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2"
                       onClick={() => {
                         setNotificationModalOpen(false);
                       }}

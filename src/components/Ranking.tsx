@@ -23,14 +23,14 @@ const Ranking: FC<Props> = ({ serverSideUsers, serverSideRaces }) => {
     <Layout>
       <div className="sm:flex sm:items-center">
         <div className="sm:flex-auto">
-          <h1 className="text-2xl font-semibold text-gray-700">Ranking</h1>
-          <p className="mt-2 text-sm text-gray-700">
+          <h1 className="text-2xl font-semibold text-red-700">Ranking</h1>
+          <p className="mt-2 text-sm text-red-700">
             Check out the current mxgp-picks ranking. Either overall or individually per race.
           </p>
         </div>
         <div className="mt-4 sm:mt-0 sm:ml-16 sm:flex-none">
           <div>
-            <label htmlFor="location" className="block text-sm font-medium text-gray-700">
+            <label htmlFor="location" className="block text-sm font-medium text-red-700">
               Filter
             </label>
             <select
@@ -40,7 +40,7 @@ const Ranking: FC<Props> = ({ serverSideUsers, serverSideRaces }) => {
                 router.push(url.toString());
               }}
               name="filter"
-              className="mt-1 block w-full rounded-md border-gray-300 py-2 pl-3 pr-10 text-base focus:border-gray-500 focus:outline-none focus:ring-gray-500 sm:text-sm"
+              className="mt-1 block w-full rounded-md border-red-300 py-2 pl-3 pr-10 text-base focus:border-red-500 focus:outline-none focus:ring-red-500 sm:text-sm"
               defaultValue={raceId ?? ''}
             >
               <option value="">Overall</option>

@@ -67,7 +67,7 @@ const PickForm: FC<Props> = ({ addPick, editPick, prefilledPick, riders, race, i
 
   return (
     <div className="flex min-h-full flex-col py-8 px-8">
-      <h2 className="text-3xl font-bold tracking-tight text-gray-700">Race</h2>
+      <h2 className="text-3xl font-bold tracking-tight text-red-700">Race</h2>
 
       <div className="mt-8 sm:mx-auto sm:w-full sm:max-w-md">
         <form className="space-y-6" onSubmit={(e) => onSubmit(e)}>
@@ -92,7 +92,7 @@ const PickForm: FC<Props> = ({ addPick, editPick, prefilledPick, riders, race, i
             <button
               disabled={isLoading}
               type="submit"
-              className="flex w-full justify-center rounded-md border border-transparent bg-gray-700 py-2 px-4 text-sm font-medium text-white shadow-sm hover:bg-gray-800 focus:outline-none focus:ring-2 focus:ring-gray-500 focus:ring-offset-2"
+              className="flex w-full justify-center rounded-md border border-transparent bg-red-700 py-2 px-4 text-sm font-medium text-white shadow-sm hover:bg-red-800 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2"
             >
               {isLoading ? (
                 <>

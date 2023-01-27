@@ -6,18 +6,18 @@ const Rules: FC = () => {
   return (
     <Layout>
       <div className="flex justify-center">
-        <h2 className="font-semibold text-gray-700 text-2xl mb-10">Scoring</h2>
+        <h2 className="font-semibold text-red-700 text-2xl mb-10">Scoring</h2>
       </div>
 
       <div className="flex flex-col md:flex-row justify-center">
         <div className="flex flex-col md:mr-10 md:w-1/2">
-          <p className="text-gray-700 text-base mb-10">
+          <p className="text-red-700 text-base mb-10">
             To score points you must submit for each GP which riders you believe will take the top five position + Wildcard*.
             (The mxgp overall result is decisive). You can only submit until midnight before the race day. After that the
             picks are closed. The points are distributed as follows: If a rider places in the exact spot you predicted, you
             will get the following points:
           </p>
-          <ul className="list-disc text-gray-700 text-base ml-4 mb-10">
+          <ul className="list-disc text-red-700 text-base ml-4 mb-10">
             <li>1st Place = 25 Points</li>
             <li>2nd Place = 22 Points</li>
             <li>3rd Place = 20 Points</li>
@@ -27,19 +27,19 @@ const Rules: FC = () => {
           </ul>
         </div>
         <div className="flex flex-col md:ml-2 md:w-1/2">
-          <p className="text-gray-700 text-base mb-10">
+          <p className="text-red-700 text-base mb-10">
             If a rider places in the top 5 and you predicted him to be in the top 5 but he finishes not in the exact spot you
             predicted you get 10 points. If you have exactly the same number of points in a race as someone else. The person
             who picked first wins.
           </p>
-          <p className="text-gray-700 text-base mb-10">
+          <p className="text-red-700 text-base mb-10">
             <strong>* Wildcard: </strong>This is your last pick that&apos;s as valuable as your first place pick. We pick a
             placing (6th-20nd) and let you select a rider for that placement. If you get it right, you score 25 points!
           </p>
         </div>
       </div>
       <div className="flex justify-center">
-        <h2 className="font-semibold text-gray-700 text-2xl mb-10 mt-20">Example</h2>
+        <h2 className="font-semibold text-red-700 text-2xl mb-10 mt-20">Example</h2>
       </div>
       <RaceCard
         isLoading={false}

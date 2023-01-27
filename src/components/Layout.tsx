@@ -47,7 +47,7 @@ const Layout: FC<Props> = ({ children, hideVerifyAccountMessage = false }) => {
   const sessionNavigation = session?.data?.user?.isAdmin ? adminNavigation : navigation;
 
   const MobileMenu = (
-    <Disclosure.Panel className="border-b border-gray-700 md:hidden">
+    <Disclosure.Panel className="border-b border-red-700 md:hidden">
       <div className="space-y-1 px-2 py-3 sm:px-3">
         {sessionNavigation.map((item) => (
           <Disclosure.Button
@@ -55,7 +55,7 @@ const Layout: FC<Props> = ({ children, hideVerifyAccountMessage = false }) => {
             as="a"
             href={item.href}
             className={classNames(
-              pathname === item.href ? 'bg-gray-800 text-white' : 'text-gray-300 hover:bg-gray-600 hover:text-white',
+              pathname === item.href ? 'bg-red-800 text-white' : 'text-red-300 hover:bg-red-600 hover:text-white',
               'block px-3 py-2 rounded-md text-base font-medium'
             )}
             aria-current={pathname === item.href ? 'page' : undefined}
@@ -64,7 +64,7 @@ const Layout: FC<Props> = ({ children, hideVerifyAccountMessage = false }) => {
           </Disclosure.Button>
         ))}
       </div>
-      <div className="border-t border-gray-700 pt-4 pb-3">
+      <div className="border-t border-red-700 pt-4 pb-3">
         {session.data?.user ? (
           <>
             <div className="flex items-center px-5">
@@ -77,20 +77,20 @@ const Layout: FC<Props> = ({ children, hideVerifyAccountMessage = false }) => {
               </div>
               <div>
                 <div className="text-base font-medium leading-none text-white ml-3">{session.data.user.username}</div>
-                <div className="text-sm font-medium leading-none text-gray-400 ml-3 mt-1">{session.data.user.email}</div>
+                <div className="text-sm font-medium leading-none text-red-400 ml-3 mt-1">{session.data.user.email}</div>
               </div>
             </div>
             <div className="mt-3 space-y-1 px-2">
               <Disclosure.Button
                 as="a"
                 href={'/profile'}
-                className="block rounded-md px-3 py-2 text-base font-medium text-gray-400 hover:bg-gray-600 hover:text-white"
+                className="block rounded-md px-3 py-2 text-base font-medium text-red-400 hover:bg-red-600 hover:text-white"
               >
                 Profile
               </Disclosure.Button>
               <Disclosure.Button
                 as="a"
-                className="block rounded-md px-3 py-2 text-base font-medium text-gray-400 hover:bg-gray-600 hover:text-white cursor-pointer"
+                className="block rounded-md px-3 py-2 text-base font-medium text-red-400 hover:bg-red-600 hover:text-white cursor-pointer"
                 onClick={() => signOut()}
               >
                 Sign out
@@ -103,13 +103,13 @@ const Layout: FC<Props> = ({ children, hideVerifyAccountMessage = false }) => {
               <Disclosure.Button
                 as="a"
                 onClick={() => setSignUpModalOpen(true)}
-                className="block rounded-md px-3 py-2 text-base font-medium text-gray-400 hover:bg-gray-600 hover:text-white cursor-pointer whitespace-nowrap"
+                className="block rounded-md px-3 py-2 text-base font-medium text-red-400 hover:bg-red-600 hover:text-white cursor-pointer whitespace-nowrap"
               >
                 Sign up
               </Disclosure.Button>
               <Disclosure.Button
                 as="a"
-                className="block rounded-md px-3 py-2 text-base font-medium text-gray-400 hover:bg-gray-600 hover:text-white cursor-pointer"
+                className="block rounded-md px-3 py-2 text-base font-medium text-red-400 hover:bg-red-600 hover:text-white cursor-pointer"
                 onClick={() => setLoginModalOpen(true)}
               >
                 Login
@@ -123,12 +123,12 @@ const Layout: FC<Props> = ({ children, hideVerifyAccountMessage = false }) => {
 
   return (
     <div data-test-id="layout" className="min-h-full">
-      <div className="bg-gray-700 pb-32">
-        <Disclosure as="nav" className="bg-gray-700">
+      <div className="bg-red-700 pb-32">
+        <Disclosure as="nav" className="bg-red-700">
           {({ open }) => (
             <>
               <div className="mx-auto max-w-7xl sm:px-6 lg:px-8">
-                <div className="border-b border-gray-700">
+                <div className="border-b border-red-700">
                   <div className="flex h-16 items-center justify-between px-4 sm:px-0">
                     <div className="flex items-center">
                       <div className="flex-shrink-0">
@@ -145,8 +145,8 @@ const Layout: FC<Props> = ({ children, hideVerifyAccountMessage = false }) => {
                               <a
                                 className={classNames(
                                   pathname === item.href
-                                    ? 'bg-gray-800 text-white'
-                                    : 'text-gray-300 hover:bg-gray-600 hover:text-white',
+                                    ? 'bg-red-800 text-white'
+                                    : 'text-red-300 hover:bg-red-600 hover:text-white',
                                   'px-3 py-2 rounded-md text-sm font-medium'
                                 )}
                                 aria-current={pathname === item.href ? 'page' : undefined}
@@ -174,7 +174,7 @@ const Layout: FC<Props> = ({ children, hideVerifyAccountMessage = false }) => {
                                 </a>
                               ) : (
                                 <>
-                                  <Menu.Button className="flex max-w-xs items-center rounded-full bg-gray-700 text-sm focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-700">
+                                  <Menu.Button className="flex max-w-xs items-center rounded-full bg-red-700 text-sm focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-red-700">
                                     <span className="sr-only">Open user menu</span>
                                     <span className="inline-flex h-10 w-10 items-center justify-center rounded-full bg-red-600">
                                       <span className="text-sm font-medium leading-none text-white">
@@ -201,8 +201,8 @@ const Layout: FC<Props> = ({ children, hideVerifyAccountMessage = false }) => {
                                     <Link href={'/profile'}>
                                       <a
                                         className={classNames(
-                                          active ? 'bg-gray-100' : '',
-                                          'block px-4 py-2 text-sm text-gray-700'
+                                          active ? 'bg-red-100' : '',
+                                          'block px-4 py-2 text-sm text-red-700'
                                         )}
                                       >
                                         Profile
@@ -215,8 +215,8 @@ const Layout: FC<Props> = ({ children, hideVerifyAccountMessage = false }) => {
                                     <a
                                       onClick={() => signOut()}
                                       className={classNames(
-                                        active ? 'bg-gray-100' : '',
-                                        'block px-4 py-2 text-sm text-gray-700 cursor-pointer whitespace-nowrap	'
+                                        active ? 'bg-red-100' : '',
+                                        'block px-4 py-2 text-sm text-red-700 cursor-pointer whitespace-nowrap	'
                                       )}
                                     >
                                       Sign out
@@ -232,7 +232,7 @@ const Layout: FC<Props> = ({ children, hideVerifyAccountMessage = false }) => {
                               tabIndex={0}
                               onClick={() => setSignUpModalOpen(true)}
                               onKeyDown={(e) => e.key === 'Enter' && setSignUpModalOpen(true)}
-                              className="text-gray-300 hover:bg-gray-600 hover:text-white px-3 py-2 rounded-md text-sm font-medium cursor-pointer whitespace-nowrap"
+                              className="text-red-300 hover:bg-red-600 hover:text-white px-3 py-2 rounded-md text-sm font-medium cursor-pointer whitespace-nowrap"
                             >
                               Sign up
                             </a>
@@ -240,7 +240,7 @@ const Layout: FC<Props> = ({ children, hideVerifyAccountMessage = false }) => {
                               tabIndex={0}
                               onClick={() => setLoginModalOpen(true)}
                               onKeyDown={(e) => e.key === 'Enter' && setLoginModalOpen(true)}
-                              className="text-gray-300 hover:bg-gray-600 hover:text-white px-3 py-2 rounded-md text-sm font-medium cursor-pointer"
+                              className="text-red-300 hover:bg-red-600 hover:text-white px-3 py-2 rounded-md text-sm font-medium cursor-pointer"
                             >
                               Login
                             </a>
@@ -250,7 +250,7 @@ const Layout: FC<Props> = ({ children, hideVerifyAccountMessage = false }) => {
                     </div>
                     <div className="-mr-2 flex md:hidden">
                       {/* Mobile menu button */}
-                      <Disclosure.Button className="inline-flex items-center justify-center rounded-md bg-gray-700 p-2 text-gray-400 hover:bg-gray-600 hover:text-white focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-700">
+                      <Disclosure.Button className="inline-flex items-center justify-center rounded-md bg-red-700 p-2 text-red-400 hover:bg-red-600 hover:text-white focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-red-700">
                         <span className="sr-only">Open main menu</span>
                         {open ? (
                           <XMarkIcon className="block h-6 w-6" aria-hidden="true" />
@@ -270,7 +270,7 @@ const Layout: FC<Props> = ({ children, hideVerifyAccountMessage = false }) => {
 
       <main className="-mt-32">
         <div className="lg:mx-auto lg:max-w-7xl pb-12 lg:px-8">
-          <div className="lg:rounded-lg bg-gray-50 px-8 py-8 shadow">{children}</div>
+          <div className="lg:rounded-lg bg-red-50 px-8 py-8 shadow">{children}</div>
           <Footer />
         </div>
       </main>

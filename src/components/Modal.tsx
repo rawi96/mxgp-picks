@@ -21,7 +21,7 @@ const Modal: FC<Props> = ({ children, open, setOpen }) => {
           leaveFrom="opacity-100"
           leaveTo="opacity-0"
         >
-          <div className="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity" />
+          <div className="fixed inset-0 bg-red-500 bg-opacity-75 transition-opacity" />
         </Transition.Child>
 
         <div className="fixed inset-0 z-10 overflow-y-auto">
@@ -39,7 +39,7 @@ const Modal: FC<Props> = ({ children, open, setOpen }) => {
                 <div className="absolute top-0 right-0 pt-4 pr-4">
                   <button
                     type="button"
-                    className="rounded-md bg-white text-gray-400 hover:text-gray-500 focus:outline-none focus:ring-2 focus:ring-gray-500 focus:ring-offset-2"
+                    className="rounded-md bg-white text-red-400 hover:text-red-500 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2"
                     onClick={() => setOpen(false)}
                   >
                     <span className="sr-only">Close</span>

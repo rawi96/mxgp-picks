@@ -19,7 +19,7 @@ const ResetPassword: FC = () => {
     <Layout>
       <div className="sm:flex sm:items-center">
         <div className="sm:flex-auto">
-          <h1 className="text-2xl font-semibold text-gray-700">Reset Password</h1>
+          <h1 className="text-2xl font-semibold text-red-700">Reset Password</h1>
         </div>
       </div>
       <Modal open={profileFormOpen} setOpen={setProfileFormOpen}>

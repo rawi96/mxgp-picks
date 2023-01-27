@@ -34,24 +34,24 @@ const Admin: FC = () => {
       {session.data?.user?.isAdmin ? (
         <Layout>
           <div className="flex justify-center">
-            <h2 className="font-semibold text-gray-700 text-2xl mb-10">Races</h2>
+            <h2 className="font-semibold text-red-700 text-2xl mb-10">Races</h2>
           </div>
 
           <RacesCrud races={races} riders={riders} mutateRaces={mutateRaces} isLoadingRaces={isLoadingRaces} />
           <div className="flex justify-center">
-            <h2 className="font-semibold text-gray-700 text-2xl mt-20 mb-10">Riders</h2>
+            <h2 className="font-semibold text-red-700 text-2xl mt-20 mb-10">Riders</h2>
           </div>
 
           <RidersCrud riders={riders} mutateRiders={mutateRiders} />
           <div className="flex justify-center">
-            <h2 className="font-semibold text-gray-700 text-2xl mt-20 mb-10">Score calculation</h2>
+            <h2 className="font-semibold text-red-700 text-2xl mt-20 mb-10">Score calculation</h2>
           </div>
           <TriggerScoreCalculation mutateUsers={mutateUsers} />
           <div className="flex justify-center">
-            <h2 className="font-semibold text-gray-700 text-2xl mt-20 mb-5">Favorite Rider</h2>
+            <h2 className="font-semibold text-red-700 text-2xl mt-20 mb-5">Favorite Rider</h2>
           </div>
           <div className="flex justify-center">
-            <p className="mt-2 text-sm text-gray-700">
+            <p className="mt-2 text-sm text-red-700">
               #{favoriteRider?.numberplate} {favoriteRider?.firstname} {favoriteRider?.lastname}
             </p>
           </div>

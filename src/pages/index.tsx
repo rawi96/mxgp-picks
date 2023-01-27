@@ -13,7 +13,7 @@ const Index: FC = () => {
   return (
     <Layout>
       <div className="flex justify-center">
-        <h2 className="font-semibold text-gray-700 text-2xl mb-10">Races</h2>
+        <h2 className="font-semibold text-red-700 text-2xl mb-10">Races</h2>
       </div>
       <PicksCrud races={races} riders={riders} mutateRaces={mutateRaces} isLoadingRaces={isLoadingRaces} />
       <PersonalRanking users={users} />

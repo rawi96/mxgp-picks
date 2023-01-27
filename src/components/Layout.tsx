@@ -64,6 +64,7 @@ const Layout: FC<Props> = ({ children, hideVerifyAccountMessage = false }) => {
           </Disclosure.Button>
         ))}
       </div>
+
       <div className="border-t border-gray-700 pt-4 pb-3">
         {session.data?.user ? (
           <>

@@ -129,6 +129,62 @@ async function main() {
     createdAt: new Date(),
   };
 
+  const besucher1: User = {
+    id: uuidv4(),
+    username: 'besucher1',
+    email: 'besucher1@gmail.com',
+    password: await hashPassword('zBw_1234'),
+    isAdmin: false,
+    score: 0,
+    scorePerRace: null,
+    isVerified: true,
+    verifyToken: null,
+    resetPasswordToken: null,
+    createdAt: new Date(),
+  };
+
+  const besucher2: User = {
+    id: uuidv4(),
+    username: 'besucher2',
+    email: 'besucher2@gmail.com',
+    password: await hashPassword('zBw_1234'),
+    isAdmin: false,
+    score: 0,
+    scorePerRace: null,
+    isVerified: true,
+    verifyToken: null,
+    resetPasswordToken: null,
+    createdAt: new Date(),
+  };
+
+  const besucher3: User = {
+    id: uuidv4(),
+    username: 'besucher3',
+    email: 'besucher3@gmail.com',
+    password: await hashPassword('zBw_1234'),
+    isAdmin: false,
+    score: 0,
+    scorePerRace: null,
+    isVerified: true,
+    verifyToken: null,
+    resetPasswordToken: null,
+    createdAt: new Date(),
+  };
+
+  const besucher4: User = {
+    id: uuidv4(),
+    username: 'besucher4',
+    email: 'besucher4@gmail.com',
+    password: await hashPassword('zBw_1234'),
+    isAdmin: false,
+    score: 0,
+    scorePerRace: null,
+    isVerified: true,
+    verifyToken: null,
+    resetPasswordToken: null,
+    createdAt: new Date(),
+  };
+
   const seewer: Rider = {
     id: uuidv4(),
     firstname: 'Jeremy',
@@ -420,7 +476,20 @@ async function main() {
   };
 
   await prisma.user.createMany({
-    data: [admin, roesti, skaterboy, beautyQueen, ironman, schuegaKing, betreuer, experte],
+    data: [
+      admin,
+      roesti,
+      skaterboy,
+      beautyQueen,
+      ironman,
+      schuegaKing,
+      betreuer,
+      experte,
+      besucher1,
+      besucher2,
+      besucher3,
+      besucher4,
+    ],
     skipDuplicates: true,
   });
 

@@ -48,6 +48,7 @@ export function ModalsContextProvider({ children }: Props) {
   const [verifyAccountOpen, setVerifyAccountOpen] = useState(false);
   const [notificationModalMessage, setNotificationModalMessage] = useState('');
   const [notificationType, setNotificationType] = useState<'Success' | 'Error'>('Success');
+
   const value = {
     loginModalOpen,
     signUpModalOpen,

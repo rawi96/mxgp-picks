@@ -20,6 +20,7 @@ export const Footer: FC = () => {
               </a>
             </Link>
           </div>
+
           <nav className="flex flex-wrap justify-center mt-5" aria-label="Footer">
             {sessionNavigation.map((item) => (
               <div key={item.name} className="px-5 py-2">

@@ -17,7 +17,7 @@
   },
   "dependencies": {
     "@headlessui/react": "1.7.3",
-    "@heroicons/react": "2.0.12",
+    "@heroicons/react": "2.0.17",
     "@next-auth/prisma-adapter": "1.0.1",
     "@prisma/client": "3.9.1",
     "@sendgrid/mail": "^7.7.0",
